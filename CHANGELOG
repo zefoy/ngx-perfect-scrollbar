@@ -1,3 +1,7 @@
+0.0.5 Packaging update
+
+  - Added git and bugs url into npm package file
+
 0.0.1 First public release
 
-	- Initial release of the angular2-perfect-scrollbar
+  - Initial release of the angular2-perfect-scrollbar
