@@ -1,0 +1,9 @@
+lib/*
+src/*.css
+npm-debug.log
+node_modules/*
+example/dist/*
+example/src/*.js*
+example/src/*.d.ts
+example/npm-debug.log
+example/node_modules/*

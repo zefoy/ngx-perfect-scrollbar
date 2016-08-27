@@ -1,0 +1,16 @@
+.container {
+  padding: 16px;
+}
+
+.list {
+  position: relative;
+  display: flex;
+  padding: 16px;
+  max-height: 100px;
+  border: 1px solid #ccc;
+}
+
+.flex {
+  position: relative;
+  flex: auto 1 1;
+}
