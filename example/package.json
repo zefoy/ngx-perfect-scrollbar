@@ -1,11 +1,11 @@
 {
   "name": "angular2-perfect-scrollbar-example",
-  "version": "0.0.1",
+  "license": "MIT",
+  "version": "0.0.5",
   "scripts": {
     "build": "webpack --config webpack.config.js",
     "start": "webpack-dev-server --open --inline"
   },
-  "license": "MIT",
   "dependencies": {
     "@angular/common": "2.0.0-rc.5",
     "@angular/compiler": "2.0.0-rc.5",
