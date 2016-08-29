@@ -4,8 +4,8 @@
   "bugs": "https://github.com/zefoy/angular2-perfect-scrollbar/issues",
   "license": "MIT",
   "version": "0.5.0",
-  "main": "lib/index.js",
-  "typings": "lib/src/index.d.ts",
+  "main": "./lib/index.js",
+  "typings": "./lib/src/index.d.ts",
   "files": [
     "lib"
   ],
