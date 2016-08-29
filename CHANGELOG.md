@@ -1,3 +1,7 @@
+0.5.0 Build system changes
+
+  - Changed from gulp to webpack
+
 0.1.0 Packaging update
 
   - Added missing files to the npm package

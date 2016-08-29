@@ -1,4 +1,5 @@
-import { BrowserModule } from '@angular/platform-browser';
+import { CommonModule } from '@angular/common';
+
 import { NgModule, ModuleWithProviders, OpaqueToken } from '@angular/core';
 
 import { PerfectScrollbarComponent }   from './perfect-scrollbar.component';
@@ -8,9 +9,9 @@ import { PerfectScrollbarConfig, PerfectScrollbarConfigInterface } from './perfe
 export const PERFECT_SCROLLBAR_CONFIG = new OpaqueToken('PERFECT_SCROLLBAR_CONFIG');
 
 @NgModule({
-    imports: [BrowserModule],
+    imports: [CommonModule],
     declarations: [PerfectScrollbarComponent],
-    exports: [BrowserModule, PerfectScrollbarComponent]
+    exports: [CommonModule, PerfectScrollbarComponent]
 })
 export class PerfectScrollbarModule {
   static forRoot(config: PerfectScrollbarConfigInterface): ModuleWithProviders {
