@@ -1,4 +1,8 @@
-0.0.5 Packaging update
+0.1.0 Packaging update
+
+  - Added missing files to the npm package
+
+0.5.0 Packaging update
 
   - Added git and bugs url into npm package file
 

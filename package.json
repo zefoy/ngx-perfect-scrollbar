@@ -2,7 +2,7 @@
   "name": "angular2-perfect-scrollbar",
   "description": "Angular 2 wrapper library for perfect scrollbar",
   "license": "MIT",
-  "version": "0.0.5",
+  "version": "0.1.0",
   "scripts": {
     "gulp": "gulp",
     "start": "rm -rf lib && npm run gulp"
