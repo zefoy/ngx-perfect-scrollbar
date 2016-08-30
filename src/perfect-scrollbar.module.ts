@@ -4,7 +4,7 @@ import { NgModule, ModuleWithProviders, OpaqueToken, Optional, SkipSelf } from '
 
 import { PerfectScrollbarComponent }   from './perfect-scrollbar.component';
 
-import { PerfectScrollbarConfig, PerfectScrollbarConfigInterface } from './perfect-scrollbar.config';
+import { PerfectScrollbarConfig, PerfectScrollbarConfigInterface } from './perfect-scrollbar.interfaces';
 
 export const PERFECT_SCROLLBAR_CONFIG = new OpaqueToken('PERFECT_SCROLLBAR_CONFIG');
 

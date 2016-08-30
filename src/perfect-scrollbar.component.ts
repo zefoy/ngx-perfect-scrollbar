@@ -2,7 +2,7 @@ import * as Ps from 'perfect-scrollbar';
 
 import { Component, DoCheck, OnDestroy, Input, Optional, ElementRef, AfterViewInit, ViewEncapsulation } from '@angular/core';
 
-import { PerfectScrollbarConfig, PerfectScrollbarConfigInterface } from './perfect-scrollbar.config';
+import { PerfectScrollbarConfig, PerfectScrollbarConfigInterface } from './perfect-scrollbar.interfaces';
 
 @Component({
   selector: 'perfect-scrollbar',
