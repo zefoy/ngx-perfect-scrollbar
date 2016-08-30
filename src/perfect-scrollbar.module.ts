@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 
-import { NgModule, ModuleWithProviders, OpaqueToken } from '@angular/core';
+import { NgModule, ModuleWithProviders, OpaqueToken, Optional, SkipSelf } from '@angular/core';
 
 import { PerfectScrollbarComponent }   from './perfect-scrollbar.component';
 
@@ -14,6 +14,13 @@ export const PERFECT_SCROLLBAR_CONFIG = new OpaqueToken('PERFECT_SCROLLBAR_CONFI
     exports: [CommonModule, PerfectScrollbarComponent]
 })
 export class PerfectScrollbarModule {
+  constructor (@Optional() @SkipSelf() parentModule: PerfectScrollbarModule) {
+   if (parentModule) {
+     throw new Error(
+       'PerfectScrollbarModule is already loaded. Import it in the AppModule only');
+   }
+ }
+
   static forRoot(config: PerfectScrollbarConfigInterface): ModuleWithProviders {
     return {
       ngModule: PerfectScrollbarModule,

@@ -1,6 +1,6 @@
 import * as Ps from 'perfect-scrollbar';
 
-import { Component, DoCheck, OnDestroy, Input, Inject, ElementRef, KeyValueDiffers, AfterViewInit, ViewEncapsulation } from '@angular/core';
+import { Component, DoCheck, OnDestroy, Input, Optional, ElementRef, AfterViewInit, ViewEncapsulation } from '@angular/core';
 
 import { PerfectScrollbarConfig, PerfectScrollbarConfigInterface } from './perfect-scrollbar.config';
 
@@ -17,7 +17,7 @@ export class PerfectScrollbarComponent implements DoCheck, OnDestroy, AfterViewI
 
   @Input() config: PerfectScrollbarConfigInterface;
 
-  constructor( @Inject(PerfectScrollbarConfig) private defaults: PerfectScrollbarConfig, private elementRef: ElementRef, private differs: KeyValueDiffers ) {
+  constructor( private elementRef: ElementRef, @Optional() private defaults: PerfectScrollbarConfig ) {
   }
 
   ngDoCheck() {
