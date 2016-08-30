@@ -1,16 +1,38 @@
-.container {
-  padding: 16px;
+.app-title {
+  font-size: 1.8em;
 }
 
-.list {
+.box-container {
+  display: flex;
+  box-sizing: border-box;
+  flex-direction: column;
+  padding: 32px;
+  max-width: 800px;
+  max-height: 600px;
+  border-radius: 4px;
+  margin: 32px auto;
+
+  color: #555;
+  background-color: #eee;
+  font-family: sans-serif;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.18), 0 6px 6px rgba(0, 0, 0, 0.25);
+}
+
+.info-container {
+  padding: 16px;
+  line-height: 1.5em;
+}
+
+.list-container {
   position: relative;
   display: flex;
+  flex: auto 1 1;
   padding: 16px;
-  max-height: 100px;
   border: 1px solid #ccc;
+  background-color: #fff;
 }
 
-.flex {
+.scrollbar-element {
   position: relative;
   flex: auto 1 1;
 }

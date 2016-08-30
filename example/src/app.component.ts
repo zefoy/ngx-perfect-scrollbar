@@ -6,7 +6,7 @@ import { Component } from '@angular/core';
   styleUrls: ['app.component.css']
 })
 export class AppComponent {
-  private title = 'Simple test app';
+  private title = 'Simple example app for the angular2-perfect-scrollbar';
 
   constructor() {}
 }
