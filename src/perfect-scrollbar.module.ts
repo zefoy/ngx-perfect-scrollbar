@@ -15,11 +15,11 @@ export const PERFECT_SCROLLBAR_CONFIG = new OpaqueToken('PERFECT_SCROLLBAR_CONFI
 })
 export class PerfectScrollbarModule {
   constructor (@Optional() @SkipSelf() parentModule: PerfectScrollbarModule) {
-   if (parentModule) {
-     throw new Error(
-       'PerfectScrollbarModule is already loaded. Import it in the AppModule only');
-   }
- }
+    if (parentModule) {
+      throw new Error(`PerfectScrollbarModule is already loaded. 
+        Import it in the AppModule only!`);
+    }
+  }
 
   static forRoot(config: PerfectScrollbarConfigInterface): ModuleWithProviders {
     return {

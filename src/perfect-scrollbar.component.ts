@@ -10,7 +10,6 @@ import { PerfectScrollbarConfig, PerfectScrollbarConfigInterface } from './perfe
   styles: [require('perfect-scrollbar/dist/css/perfect-scrollbar.min.css')],
   encapsulation: ViewEncapsulation.None
 })
-
 export class PerfectScrollbarComponent implements DoCheck, OnDestroy, AfterViewInit {
   private width: number;
   private height: number;

@@ -22,5 +22,4 @@ const PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
       PerfectScrollbarModule.forRoot(PERFECT_SCROLLBAR_CONFIG)
     ]
 })
-
 export class AppModule {}
