@@ -1,5 +1,3 @@
-import { provide, Provider } from '@angular/core';
-
 export interface PerfectScrollbarConfigInterface {
   wheelSpeed?: number;
   wheelPropagation?: boolean;

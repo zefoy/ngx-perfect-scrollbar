@@ -1,3 +1,7 @@
+0.6.0 Version updates
+
+  - Updated to use the latest Angular 2 version
+
 0.5.0 Build system changes
 
   - Changed from gulp to webpack
