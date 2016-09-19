@@ -31,7 +31,6 @@
     "@angular/common": "2.0.0",
     "@angular/compiler": "2.0.0",
     "@angular/core": "2.0.0",
-    "@angular/forms": "0.3.0",
     "@angular/http": "2.0.0",
     "@types/core-js": "^0.9.32",
     "@types/node": "^6.0.38",
