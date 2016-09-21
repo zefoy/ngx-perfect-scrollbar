@@ -1,3 +1,7 @@
+0.6.1 Bug fix release
+
+  - Fixed content size changing bug (Issue #1)
+
 0.6.0 Version updates
 
   - Updated to use the latest Angular 2 version

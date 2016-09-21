@@ -6,7 +6,7 @@ import { PerfectScrollbarConfig, PerfectScrollbarConfigInterface } from './perfe
 
 @Component({
   selector: 'perfect-scrollbar',
-  template: '<ng-content></ng-content>',
+  template: '<div class="ps-content"><ng-content></ng-content></div>',
   styles: [require('perfect-scrollbar/dist/css/perfect-scrollbar.min.css')],
   encapsulation: ViewEncapsulation.None
 })
@@ -14,20 +14,31 @@ export class PerfectScrollbarComponent implements DoCheck, OnDestroy, AfterViewI
   private width: number;
   private height: number;
 
+  private contentWidth: number;
+  private contentHeight: number;
+
   @Input() config: PerfectScrollbarConfigInterface;
 
   constructor( private elementRef: ElementRef, @Optional() private defaults: PerfectScrollbarConfig ) {
   }
 
   ngDoCheck() {
-    var width = this.elementRef.nativeElement.offsetWidth;
-    var height = this.elementRef.nativeElement.offsetHeight;
+    if (this.elementRef.nativeElement.children) {
+      var width = this.elementRef.nativeElement.offsetWidth;
+      var height = this.elementRef.nativeElement.offsetHeight;
 
-    if (width !== this.width || height !== this.height) {
-      this.width = width;
-      this.height = height;
+      var contentWidth = this.elementRef.nativeElement.children[0].offsetWidth;
+      var contentHeight = this.elementRef.nativeElement.children[0].offsetHeight;
 
-      Ps.update(this.elementRef.nativeElement);
+      if (width !== this.width || height !== this.height || contentWidth !== this.contentWidth || contentHeight !== this.contentHeight) {
+        this.width = width;
+        this.height = height;
+
+        this.contentWidth = contentWidth;
+        this.contentHeight = contentHeight;
+
+        Ps.update(this.elementRef.nativeElement);
+      }
     }
   }
 
