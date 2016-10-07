@@ -4,6 +4,8 @@
 
 This is an Angular 2 wrapper library for perfect scrollbar by Hyunje Alex Jun.
 
+See a live example application <a href="https://zefoy.github.io/angular2-perfect-scrollbar/">here</a>.
+
 ### Building the library
 
     npm install
@@ -48,7 +50,7 @@ const PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 [config]                // Custom config to override the global defaults.
 ```
 
-##### Available configuration options (for the global configuration):
+##### Available configuration options (custom / global configuration):
 
 ```javascript
 wheelSpeed              // Scroll speed for the mousewheel event (Default: 1).

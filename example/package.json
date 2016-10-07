@@ -1,7 +1,7 @@
 {
   "name": "angular2-perfect-scrollbar-example",
   "license": "MIT",
-  "version": "0.2.0",
+  "version": "0.6.0",
   "tslint": {
     "extends": "./tslint.json"
   },
@@ -10,8 +10,23 @@
   },
   "scripts": {
     "clean": "rm -rf dist node_modules",
-    "build": "webpack --config config/webpack.config.js",
-    "start": "webpack-dev-server --open --inline --config config/webpack.config.js"
+    "build": "webpack --config config/webpack-deploy.config.js",
+    "start": "webpack-dev-server --open --inline --config config/webpack-server.config.js",
+    "deploy": "rm -rf dist >/dev/null 2>&1; deploy-to-git",
+    "lint": "tslint 'src/**/*.ts' ; stylelint 'src/**/*.css' --syntax css"
+  },
+  "config": {
+    "deployToGit": {
+      "repository": "git@github.com:zefoy/angular2-perfect-scrollbar.git",
+      "branch": "gh-pages",
+      "folder": "dist",
+      "script": "npm run build",
+      "commit": "Publishing $npm_package_version",
+      "user": {
+        "name": "ZEF Devel",
+        "email": "devel@zef.fi"
+      }
+    }
   },
   "dependencies": {
     "@angular/common": "2.0.0",
@@ -20,7 +35,7 @@
     "@angular/http": "2.0.0",
     "@angular/platform-browser": "2.0.0",
     "@angular/platform-browser-dynamic": "2.0.0",
-    "angular2-perfect-scrollbar": "0.6.2",
+    "angular2-perfect-scrollbar": "0.6.3",
     "core-js": "^2.4.0",
     "reflect-metadata": "^0.1.3",
     "rxjs": "5.0.0-beta.12",
@@ -32,6 +47,7 @@
     "angular2-template-loader": "^0.5.0",
     "awesome-typescript-loader": "^2.2.0",
     "copy-webpack-plugin": "^3.0.0",
+    "deploy-to-git": "0.0.7",
     "html-webpack-plugin": "^2.22.0",
     "raw-loader": "^0.5.0",
     "stylelint": "7.2.0",

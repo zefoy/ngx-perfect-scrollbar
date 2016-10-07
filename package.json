@@ -3,7 +3,7 @@
   "description": "Angular 2 wrapper library for perfect scrollbar",
   "bugs": "https://github.com/zefoy/angular2-perfect-scrollbar/issues",
   "license": "MIT",
-  "version": "0.6.2",
+  "version": "0.6.3",
   "main": "./lib/index.js",
   "typings": "./lib/src/index.d.ts",
   "files": [
@@ -18,7 +18,9 @@
   "scripts": {
     "clean": "rm -rf lib node_modules",
     "build": "webpack --config config/webpack.config.js",
-    "start": "echo \"Building the library\" && rm -rf lib && npm run build"
+    "start": "echo \"Building the library\" && rm -rf lib && npm run build",
+    "deploy": "echo \"Deploying the example\" && cd example ; npm run deploy",
+    "lint": "tslint 'src/**/*.ts' ; stylelint 'src/**/*.scss' --syntax scss"
   },
   "repository": {
     "type": "git",
