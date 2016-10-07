@@ -1,6 +1,6 @@
-lib/*
+lib/
 npm-debug.log
-node_modules/*
-example/dist/*
+node_modules/
+example/dist/
 example/npm-debug.log
-example/node_modules/*
+example/node_modules/
