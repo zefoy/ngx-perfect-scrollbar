@@ -46,6 +46,7 @@ const PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 
 ```javascript
 [config]                // Custom config to override the global defaults.
+```
 
 ##### Available configuration options (for the global configuration):
 
