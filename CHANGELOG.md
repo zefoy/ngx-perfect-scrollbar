@@ -1,3 +1,7 @@
+0.6.2 Packaging updates
+
+  - Added basic information into the readme
+
 0.6.1 Bug fix release
 
   - Fixed content size changing bug (Issue #1)
