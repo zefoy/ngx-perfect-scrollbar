@@ -14,12 +14,16 @@ module.exports = {
   module: {
     loaders: [
       {
-    	  test: /\.ts$/,
-    	  loaders: [
-					'awesome-typescript-loader',
-					'angular2-template-loader'
-				]
-    	},
+        test: /\.ts$/,
+        loaders: [
+          'awesome-typescript-loader',
+          'angular2-template-loader'
+        ]
+      },
+      {
+        test: /\.scss$/,
+        loaders: ["raw-loader", "sass"]
+      },
       {
         test: /\.(html|css)$/,
         loader: 'raw-loader'
@@ -27,14 +31,15 @@ module.exports = {
     ]
   },
   resolve: {
-    root: path.resolve('./src'),
-    extensions: ['', '.js', '.ts']
+    extensions: ['.js', '.ts'],
+    modules: [ '../src', path.join(__dirname, "../node_modules") ]
   },
-	externals: [
-		"@angular/common",
+  externals: [
+    "@angular/common",
     "@angular/compiler",
     "@angular/core",
     "@angular/forms",
-    "@angular/http"
-	]
+    "@angular/http",
+    "rxjs/Rx"
+  ]
 };

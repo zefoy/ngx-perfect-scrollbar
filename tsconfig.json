@@ -5,18 +5,15 @@
     "experimentalDecorators": true,
     "module": "commonjs",
     "moduleResolution": "node",
-    "outDir": "./lib",
+    "outDir": "./lib/out-tsc",
     "sourceMap": true,
-    "target": "es5",
-    "typeRoots": [
-      "./node_modules/@types"
-    ]
+    "target": "es5"
   },
-	"exclude": [
-		"example",
-		"node_modules"
-	],
+  "exclude": [
+    "example/**/*",
+    "node_modules/**/*"
+  ],
   "filesGlob": [
-    "!node_modules/**"
+    "!node_modules/**/*"
   ]
 }

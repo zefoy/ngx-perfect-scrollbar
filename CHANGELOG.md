@@ -1,3 +1,7 @@
+0.8.0 Packaging updates
+
+  - Moved to using the latest webpack 2
+
 0.6.2 Packaging updates
 
   - Added basic information into the readme

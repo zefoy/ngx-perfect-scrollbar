@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 
 import { NgModule, ModuleWithProviders, OpaqueToken, Optional, SkipSelf } from '@angular/core';
 
-import { PerfectScrollbarComponent }   from './perfect-scrollbar.component';
+import { PerfectScrollbarComponent } from './perfect-scrollbar.component';
 
 import { PerfectScrollbarConfig, PerfectScrollbarConfigInterface } from './perfect-scrollbar.interfaces';
 
@@ -25,24 +25,24 @@ export class PerfectScrollbarModule {
     return {
       ngModule: PerfectScrollbarModule,
       providers: [
-				{
-					provide: PERFECT_SCROLLBAR_CONFIG,
-					useValue: config ? config : {}
-				},
-				{
-					provide: PerfectScrollbarConfig,
-			    useFactory: providePerfectScrollbarConfig,
-					deps: [
-						PERFECT_SCROLLBAR_CONFIG
-					]
-				}
-			]
+        {
+          provide: PERFECT_SCROLLBAR_CONFIG,
+          useValue: config ? config : {}
+        },
+        {
+          provide: PerfectScrollbarConfig,
+          useFactory: providePerfectScrollbarConfig,
+          deps: [
+            PERFECT_SCROLLBAR_CONFIG
+          ]
+        }
+      ]
     };
   }
 }
 
 export function providePerfectScrollbarConfig(configInterface: PerfectScrollbarConfigInterface) {
-	const config = new PerfectScrollbarConfig(configInterface);
+  const config = new PerfectScrollbarConfig(configInterface);
 
   return config;
 }
