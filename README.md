@@ -66,4 +66,4 @@ scrollYMarginOffset     // Offset before enabling the Y scroller (Default: 0).
 stopPropagationOnClick  // Stop the propagation of click event (Default: true).
 ```
 
-For more detailed documentation with all the supported options see [perfect-scrollbar documentation](https://noraesae.github.io/perfect-scrollbar/).
+For more detailed documentation with all the supported options see [perfect-scrollbar documentation](https://github.com/noraesae/perfect-scrollbar/).
