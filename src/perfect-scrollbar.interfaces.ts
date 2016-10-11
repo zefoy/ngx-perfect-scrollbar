@@ -13,17 +13,17 @@ export interface PerfectScrollbarConfigInterface {
 }
 
 export class PerfectScrollbarConfig implements PerfectScrollbarConfigInterface {
-  public wheelSpeed: number = 1;
-  public wheelPropagation: boolean = false;
-  public swipePropagation: boolean = true;
-  public minScrollbarLength: number = null;
-  public maxScrollbarLength: number = null;
-  public useBothWheelAxes: boolean = false;
-  public suppressScrollX: boolean = false;
-  public suppressScrollY: boolean = false;
-  public scrollXMarginOffset: number = 0;
-  public scrollYMarginOffset: number = 0;
-  public stopPropagationOnClick: boolean = true;
+  public wheelSpeed: number;
+  public wheelPropagation: boolean;
+  public swipePropagation: boolean;
+  public minScrollbarLength: number;
+  public maxScrollbarLength: number;
+  public useBothWheelAxes: boolean;
+  public suppressScrollX: boolean;
+  public suppressScrollY: boolean;
+  public scrollXMarginOffset: number;
+  public scrollYMarginOffset: number;
+  public stopPropagationOnClick: boolean;
 
   constructor(config: PerfectScrollbarConfigInterface = {}) {
     this.assign(config);
