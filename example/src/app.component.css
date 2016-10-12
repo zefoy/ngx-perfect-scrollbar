@@ -28,7 +28,7 @@
 .list-container {
   position: relative;
   display: flex;
-  flex: auto 1 1;
+  flex: 1 1 auto;
   padding: 24px;
   border: 1px solid #ccc;
   background-color: #fff;
@@ -36,5 +36,5 @@
 
 .scrollbar-element {
   position: relative;
-  flex: auto 1 1;
+  flex: 1 1 auto;
 }
