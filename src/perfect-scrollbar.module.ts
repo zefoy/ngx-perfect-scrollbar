@@ -1,11 +1,12 @@
 import { CommonModule } from '@angular/common';
 
-import { NgModule, ModuleWithProviders, OpaqueToken, Optional, SkipSelf } from '@angular/core';
+import { NgModule, ModuleWithProviders, OpaqueToken, Optional, SkipSelf, Inject } from '@angular/core';
 
 import { PerfectScrollbarComponent } from './perfect-scrollbar.component';
 
 import { PerfectScrollbarConfig, PerfectScrollbarConfigInterface } from './perfect-scrollbar.interfaces';
 
+export const PERFECT_SCROLLBAR_GUARD = new OpaqueToken('PERFECT_SCROLLBAR_GUARD');
 export const PERFECT_SCROLLBAR_CONFIG = new OpaqueToken('PERFECT_SCROLLBAR_CONFIG');
 
 @NgModule({
@@ -14,17 +15,23 @@ export const PERFECT_SCROLLBAR_CONFIG = new OpaqueToken('PERFECT_SCROLLBAR_CONFI
     exports: [CommonModule, PerfectScrollbarComponent]
 })
 export class PerfectScrollbarModule {
-  constructor (@Optional() @SkipSelf() parentModule: PerfectScrollbarModule) {
-    if (parentModule) {
-      throw new Error(`PerfectScrollbarModule is already loaded. 
-        Import it in the AppModule only!`);
-    }
-  }
+  constructor (@Optional() @Inject(PERFECT_SCROLLBAR_GUARD) guard: any) {}
 
-  static forRoot(config: PerfectScrollbarConfigInterface): ModuleWithProviders {
+  static forRoot(config?: PerfectScrollbarConfigInterface): ModuleWithProviders {
     return {
       ngModule: PerfectScrollbarModule,
       providers: [
+        {
+          provide: PERFECT_SCROLLBAR_GUARD,
+          useFactory: provideForRootGuard,
+          deps: [
+            [
+              PerfectScrollbarConfig,
+              new Optional(),
+              new SkipSelf()
+            ]
+          ]
+        },
         {
           provide: PERFECT_SCROLLBAR_CONFIG,
           useValue: config ? config : {}
@@ -39,6 +46,23 @@ export class PerfectScrollbarModule {
       ]
     };
   }
+
+  static forChild(): ModuleWithProviders {
+    return {
+      ngModule: PerfectScrollbarModule
+    };
+  }
+}
+
+export function provideForRootGuard(config: PerfectScrollbarConfig): any {
+  if (config) {
+    throw new Error(`
+      Application called PerfectScrollbarModule.forRoot() twice.
+      For submodules use PerfectScrollbarModule.forChild() instead.
+    `);
+  }
+
+  return 'guarded';
 }
 
 export function providePerfectScrollbarConfig(configInterface: PerfectScrollbarConfigInterface) {

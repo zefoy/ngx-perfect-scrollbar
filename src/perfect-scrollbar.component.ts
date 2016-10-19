@@ -19,8 +19,7 @@ export class PerfectScrollbarComponent implements DoCheck, OnDestroy, AfterViewI
 
   @Input() config: PerfectScrollbarConfigInterface;
 
-  constructor( private elementRef: ElementRef, @Optional() private defaults: PerfectScrollbarConfig ) {
-  }
+  constructor( private elementRef: ElementRef, @Optional() private defaults: PerfectScrollbarConfig ) {}
 
   ngDoCheck() {
     if (this.elementRef.nativeElement.children) {

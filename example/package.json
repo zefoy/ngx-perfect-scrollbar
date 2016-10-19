@@ -1,7 +1,7 @@
 {
   "name": "angular2-perfect-scrollbar-example",
   "license": "MIT",
-  "version": "0.8.0",
+  "version": "0.9.0",
   "tslint": {
     "extends": "./tslint.json"
   },
@@ -9,10 +9,10 @@
     "extends": "./stylelint.json"
   },
   "scripts": {
+    "deploy": "deploy-to-git",
     "clean": "rm -rf dist node_modules",
-    "build": "webpack --config config/webpack-deploy.config.js",
+    "build": "rm -rf dist && webpack --config config/webpack-deploy.config.js",
     "start": "webpack-dev-server --open --inline --config config/webpack-server.config.js",
-    "deploy": "rm -rf dist >/dev/null 2>&1; deploy-to-git",
     "lint": "tslint 'src/**/*.ts' ; stylelint 'src/**/*.css' --syntax css"
   },
   "config": {
@@ -35,7 +35,8 @@
     "@angular/http": "2.0.0",
     "@angular/platform-browser": "2.0.0",
     "@angular/platform-browser-dynamic": "2.0.0",
-    "angular2-perfect-scrollbar": "0.8.0",
+    "@angular/router": "3.0.0",
+    "angular2-perfect-scrollbar": "0.9.0",
     "core-js": "^2.4.0",
     "reflect-metadata": "^0.1.8",
     "rxjs": "5.0.0-beta.12",
@@ -44,6 +45,7 @@
   "devDependencies": {
     "@types/core-js": "^0.9.0",
     "@types/node": "^6.0.0",
+    "angular2-router-loader": "^0.3.0",
     "angular2-template-loader": "^0.5.0",
     "awesome-typescript-loader": "^2.2.0",
     "copy-webpack-plugin": "^3.0.0",

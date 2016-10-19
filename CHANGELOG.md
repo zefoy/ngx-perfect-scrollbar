@@ -1,3 +1,7 @@
+0.9.0 Feature release
+
+  - Added support for using in submodules
+
 0.8.0 Packaging updates
 
   - Moved to using the latest webpack 2
