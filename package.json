@@ -16,10 +16,10 @@
     "extends": "./stylelint.json"
   },
   "scripts": {
-    "deploy": "npm publish",
     "clean": "rm -rf lib node_modules",
-    "build": "rm -rf lib && webpack --config config/webpack.config.js",
-    "start": "echo \"Building the library\" && rm -rf lib && npm run build",
+    "deploy": "rm -rf lib/out-tsc && npm publish",
+    "build": "webpack --config config/webpack.config.js",
+    "start": "echo \"Building the library\" && npm run build",
     "lint": "tslint 'src/**/*.ts' ; stylelint 'src/**/*.scss' --syntax scss"
   },
   "repository": {

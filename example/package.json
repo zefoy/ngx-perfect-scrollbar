@@ -9,9 +9,9 @@
     "extends": "./stylelint.json"
   },
   "scripts": {
-    "deploy": "deploy-to-git",
     "clean": "rm -rf dist node_modules",
-    "build": "rm -rf dist && webpack --config config/webpack-deploy.config.js",
+    "deploy": "rm -rf dist && deploy-to-git",
+    "build": "webpack --config config/webpack-deploy.config.js",
     "start": "webpack-dev-server --open --inline --config config/webpack-server.config.js",
     "lint": "tslint 'src/**/*.ts' ; stylelint 'src/**/*.css' --syntax css"
   },
