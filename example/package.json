@@ -13,7 +13,7 @@
     "deploy": "rm -rf dist && deploy-to-git",
     "build": "webpack --config config/webpack-deploy.config.js",
     "start": "webpack-dev-server --open --inline --config config/webpack-server.config.js",
-    "lint": "tslint 'src/**/*.ts' ; stylelint 'src/**/*.css' --syntax css"
+    "lint": "tslint 'src/**/*.ts' && stylelint 'src/**/*.css' --syntax css"
   },
   "config": {
     "deployToGit": {
