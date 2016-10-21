@@ -49984,7 +49984,7 @@ var PerfectScrollbarModule = (function () {
                 },
                 {
                     provide: perfect_scrollbar_interfaces_1.PerfectScrollbarConfig,
-                    useFactory: providePerfectScrollbarConfig,
+                    useFactory: function (config) { return new perfect_scrollbar_interfaces_1.PerfectScrollbarConfig(config); },
                     deps: [
                         exports.PERFECT_SCROLLBAR_CONFIG
                     ]
@@ -50017,11 +50017,6 @@ function provideForRootGuard(config) {
     return 'guarded';
 }
 exports.provideForRootGuard = provideForRootGuard;
-function providePerfectScrollbarConfig(configInterface) {
-    var config = new perfect_scrollbar_interfaces_1.PerfectScrollbarConfig(configInterface);
-    return config;
-}
-exports.providePerfectScrollbarConfig = providePerfectScrollbarConfig;
 
 
 /***/ },
