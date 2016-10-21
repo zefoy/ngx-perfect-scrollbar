@@ -1,3 +1,7 @@
+0.9.1 Feature release
+
+  - Fixed global configuration setting
+
 0.9.0 Feature release
 
   - Added support for using in submodules

@@ -38,7 +38,7 @@ export class PerfectScrollbarModule {
         },
         {
           provide: PerfectScrollbarConfig,
-          useFactory: () => new PerfectScrollbarConfig(PERFECT_SCROLLBAR_CONFIG),
+          useFactory: (config) => new PerfectScrollbarConfig(config),
           deps: [
             PERFECT_SCROLLBAR_CONFIG
           ]
