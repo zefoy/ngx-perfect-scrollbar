@@ -14,6 +14,12 @@ module.exports = {
   module: {
     loaders: [
       {
+        test: /\.js$/,
+        loaders: [
+          'strip-sourcemap-loader'
+        ]
+      },
+      {
         test: /\.ts$/,
         loaders: [
           'awesome-typescript-loader',
