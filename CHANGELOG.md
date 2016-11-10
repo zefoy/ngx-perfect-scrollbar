@@ -1,3 +1,7 @@
+1.0.0 Feature release
+
+  - Made elementRef public for advanced use
+
 0.9.1 Feature release
 
   - Fixed global configuration setting

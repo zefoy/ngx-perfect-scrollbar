@@ -1,7 +1,7 @@
 {
   "name": "angular2-perfect-scrollbar-example",
   "license": "MIT",
-  "version": "0.9.1",
+  "version": "1.0.0",
   "tslint": {
     "extends": "./tslint.json"
   },
@@ -36,7 +36,7 @@
     "@angular/platform-browser": "2.0.0",
     "@angular/platform-browser-dynamic": "2.0.0",
     "@angular/router": "3.0.0",
-    "angular2-perfect-scrollbar": "0.9.1",
+    "angular2-perfect-scrollbar": "1.0.0",
     "core-js": "^2.4.0",
     "reflect-metadata": "^0.1.8",
     "rxjs": "5.0.0-beta.12",
