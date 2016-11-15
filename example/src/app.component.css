@@ -33,6 +33,7 @@
   display: flex;
   flex: 1 1 auto;
   padding: 24px;
+  min-height: 0;
   border: 1px solid #ccc;
   background-color: #fff;
 }
