@@ -47592,7 +47592,7 @@ process.umask = function() { return 0; };
 /* 523 */
 /***/ function(module, exports) {
 
-module.exports = ".app-title {\n  font-size: 24px;\n}\n\n.box-container {\n  display: flex;\n  box-sizing: border-box;\n  flex-direction: column;\n  width: 800px;\n  height: 500px;\n  max-width: 90%;\n  max-height: 90%;\n  padding: 24px;\n  margin: 24px auto;\n  border-radius: 4px;\n\n  color: #555;\n  font-family: sans-serif;\n  box-shadow:\n    0 6px 20px rgba(0, 0, 0, 0.18),\n    0 6px 6px rgba(0, 0, 0, 0.25);\n  background-color: #eee;\n}\n\n.info-container {\n  padding: 12px 16px;\n\n  line-height: 24px;\n}\n\n.list-container {\n  position: relative;\n  display: flex;\n  flex: 1 1 auto;\n  padding: 24px;\n  border: 1px solid #ccc;\n  background-color: #fff;\n}\n\n.scrollbar-element {\n  position: relative;\n  flex: 1 1 auto;\n}\n"
+module.exports = ".app-title {\n  font-size: 24px;\n}\n\n.box-container {\n  display: flex;\n  box-sizing: border-box;\n  flex-direction: column;\n  width: 800px;\n  height: 500px;\n  max-width: 90%;\n  max-height: 90%;\n  padding: 24px;\n  margin: 24px auto;\n  border-radius: 4px;\n\n  color: #555;\n  font-family: sans-serif;\n  box-shadow:\n    0 6px 20px rgba(0, 0, 0, 0.18),\n    0 6px 6px rgba(0, 0, 0, 0.25);\n  background-color: #eee;\n}\n\n.info-container {\n  padding: 12px 16px;\n\n  line-height: 24px;\n}\n\n.list-container {\n  position: relative;\n  display: flex;\n  flex: 1 1 auto;\n  padding: 24px;\n  min-height: 0;\n  border: 1px solid #ccc;\n  background-color: #fff;\n}\n\n.scrollbar-element {\n  position: relative;\n  flex: 1 1 auto;\n}\n"
 
 /***/ },
 /* 524 */
