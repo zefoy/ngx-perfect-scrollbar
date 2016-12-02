@@ -42,12 +42,12 @@ const PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 
 ##### Use it in your html template (with custom configuration):
 
-```html
-<perfect-scrollbar [config]="config">Scrollable content</perfect-scrollbar>
-```
+Simply replace the element that would ordinarily be passed to `Ps.initialize` with the perfect-scollbar component. Custom configurations to override the global defaults may be passed in as a directive.
 
-```javascript
-[config]                // Custom config to override the global defaults.
+```html
+<perfect-scrollbar class="container" [config]="config">
+  <div class="content"></div>
+</perfect-scrollbar>
 ```
 
 ##### Available configuration options (custom / global configuration):
