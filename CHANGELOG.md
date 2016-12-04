@@ -1,4 +1,4 @@
-1.0.1 Enhancement release
+1.0.1 Feature release
 
   - Added host styles for easier usage
 
