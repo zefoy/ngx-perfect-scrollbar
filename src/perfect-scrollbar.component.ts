@@ -8,7 +8,10 @@ import { PerfectScrollbarConfig, PerfectScrollbarConfigInterface } from './perfe
   selector: 'perfect-scrollbar',
   template: '<div class="ps-content"><ng-content></ng-content></div>',
   styles: [require('perfect-scrollbar/dist/css/perfect-scrollbar.min.css')],
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  host: {
+    style: 'position: relative;'
+  }
 })
 export class PerfectScrollbarComponent implements DoCheck, OnDestroy, AfterViewInit {
   private width: number;
