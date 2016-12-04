@@ -1,3 +1,7 @@
+1.0.1 Enhancement release
+
+  - Added host styles for easier usage
+
 1.0.0 Feature release
 
   - Made elementRef public for advanced use

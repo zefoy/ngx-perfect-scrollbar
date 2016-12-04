@@ -39,6 +39,5 @@
 }
 
 .scrollbar-element {
-  position: relative;
   flex: 1 1 auto;
 }
