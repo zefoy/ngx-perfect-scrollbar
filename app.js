@@ -49961,9 +49961,11 @@ var Ps = __webpack_require__(11);
 var core_1 = __webpack_require__(8);
 var perfect_scrollbar_interfaces_1 = __webpack_require__(6);
 var PerfectScrollbarComponent = (function () {
-    function PerfectScrollbarComponent(elementRef, defaults) {
+    function PerfectScrollbarComponent(elementRef, defaults, zone) {
         this.elementRef = elementRef;
         this.defaults = defaults;
+        this.zone = zone;
+        this.runInsideAngular = false;
     }
     PerfectScrollbarComponent.prototype.ngDoCheck = function () {
         if (this.elementRef.nativeElement.children) {
@@ -49984,9 +49986,17 @@ var PerfectScrollbarComponent = (function () {
         Ps.destroy(this.elementRef.nativeElement);
     };
     PerfectScrollbarComponent.prototype.ngAfterViewInit = function () {
+        var _this = this;
         var config = new perfect_scrollbar_interfaces_1.PerfectScrollbarConfig(this.defaults);
         config.assign(this.config);
-        Ps.initialize(this.elementRef.nativeElement, config);
+        if (this.runInsideAngular) {
+            Ps.initialize(this.elementRef.nativeElement, config);
+        }
+        else {
+            this.zone.runOutsideAngular(function () {
+                Ps.initialize(_this.elementRef.nativeElement, config);
+            });
+        }
     };
     PerfectScrollbarComponent.prototype.update = function () {
         Ps.update(this.elementRef.nativeElement);
@@ -49995,6 +50005,10 @@ var PerfectScrollbarComponent = (function () {
         this.elementRef.nativeElement.scrollTop = position;
         Ps.update(this.elementRef.nativeElement);
     };
+    __decorate([
+        core_1.Input(), 
+        __metadata('design:type', Boolean)
+    ], PerfectScrollbarComponent.prototype, "runInsideAngular", void 0);
     __decorate([
         core_1.Input(), 
         __metadata('design:type', Object)
@@ -50006,11 +50020,11 @@ var PerfectScrollbarComponent = (function () {
             styles: [__webpack_require__(10)],
             encapsulation: core_1.ViewEncapsulation.None,
             host: {
-                style: 'position: relative;'
+                style: 'display: block; position: relative;'
             }
         }),
         __param(1, core_1.Optional()), 
-        __metadata('design:paramtypes', [core_1.ElementRef, perfect_scrollbar_interfaces_1.PerfectScrollbarConfig])
+        __metadata('design:paramtypes', [core_1.ElementRef, perfect_scrollbar_interfaces_1.PerfectScrollbarConfig, core_1.NgZone])
     ], PerfectScrollbarComponent);
     return PerfectScrollbarComponent;
 }());
