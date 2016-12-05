@@ -1,6 +1,6 @@
 import * as Ps from 'perfect-scrollbar';
 
-import { Component, DoCheck, OnDestroy, Input, Optional, ElementRef, AfterViewInit, ViewEncapsulation } from '@angular/core';
+import { Component, DoCheck, OnDestroy, Input, Optional, ElementRef, AfterViewInit, ViewEncapsulation, NgZone } from '@angular/core';
 
 import { PerfectScrollbarConfig, PerfectScrollbarConfigInterface } from './perfect-scrollbar.interfaces';
 
@@ -21,8 +21,9 @@ export class PerfectScrollbarComponent implements DoCheck, OnDestroy, AfterViewI
   private contentHeight: number;
 
   @Input() config: PerfectScrollbarConfigInterface;
+  @Input() runOutsideAngular: boolean = false;
 
-  constructor( public elementRef: ElementRef, @Optional() private defaults: PerfectScrollbarConfig ) {}
+  constructor( public elementRef: ElementRef, @Optional() private defaults: PerfectScrollbarConfig, private zone: NgZone ) {}
 
   ngDoCheck() {
     if (this.elementRef.nativeElement.children) {
@@ -53,7 +54,14 @@ export class PerfectScrollbarComponent implements DoCheck, OnDestroy, AfterViewI
 
     config.assign(this.config);
 
-    Ps.initialize(this.elementRef.nativeElement, config);
+    if (this.runOutsideAngular) {
+      this.zone.runOutsideAngular(() => {
+        Ps.initialize(this.elementRef.nativeElement, config);
+      })
+    }
+    else {
+      Ps.initialize(this.elementRef.nativeElement, config);
+    }
   }
 
   update() {

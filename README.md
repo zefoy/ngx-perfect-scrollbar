@@ -45,13 +45,14 @@ const PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 Simply replace the element that would ordinarily be passed to `Ps.initialize` with the perfect-scollbar component.
 
 ```html
-<perfect-scrollbar class="container" [config]="config">
+<perfect-scrollbar class="container" [config]="config" [runOutsideAngular]="false">
   <div class="content">Scrollable content</div>
 </perfect-scrollbar>
 ```
 
 ```javascript
 [config]                // Custom config to override the global defaults.
+[runOutsideAngular]     // Set to true to prevent Angular's change detection on all events
 ```
 
 ##### Available configuration options (custom / global configuration):
