@@ -1,3 +1,7 @@
+1.1.0 Feature release
+
+  - Added runInsideAngular option
+
 1.0.1 Feature release
 
   - Added host styles for easier usage

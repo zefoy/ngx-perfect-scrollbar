@@ -10,7 +10,7 @@ import { PerfectScrollbarConfig, PerfectScrollbarConfigInterface } from './perfe
   styles: [require('perfect-scrollbar/dist/css/perfect-scrollbar.min.css')],
   encapsulation: ViewEncapsulation.None,
   host: {
-    style: 'position: relative;'
+    style: 'display: block; position: relative;'
   }
 })
 export class PerfectScrollbarComponent implements DoCheck, OnDestroy, AfterViewInit {
@@ -20,8 +20,9 @@ export class PerfectScrollbarComponent implements DoCheck, OnDestroy, AfterViewI
   private contentWidth: number;
   private contentHeight: number;
 
+  @Input() runInsideAngular: boolean = false;
+
   @Input() config: PerfectScrollbarConfigInterface;
-  @Input() runOutsideAngular: boolean = false;
 
   constructor( public elementRef: ElementRef, @Optional() private defaults: PerfectScrollbarConfig, private zone: NgZone ) {}
 
@@ -54,13 +55,12 @@ export class PerfectScrollbarComponent implements DoCheck, OnDestroy, AfterViewI
 
     config.assign(this.config);
 
-    if (this.runOutsideAngular) {
-      this.zone.runOutsideAngular(() => {
-        Ps.initialize(this.elementRef.nativeElement, config);
-      })
-    }
-    else {
+    if (this.runInsideAngular) {
       Ps.initialize(this.elementRef.nativeElement, config);
+    } else {
+       this.zone.runOutsideAngular(() => {
+        Ps.initialize(this.elementRef.nativeElement, config);
+      });
     }
   }
 
