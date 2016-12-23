@@ -2,6 +2,10 @@
   font-size: 24px;
 }
 
+.box-title {
+  font-size: 20px;
+}
+
 .box-container {
   display: flex;
   box-sizing: border-box;
@@ -28,12 +32,27 @@
   line-height: 24px;
 }
 
+.horizontal-container {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: row;
+  align-items: stretch;
+}
+
+.vertical-container {
+  display: flex;
+  flex: 1 1 50%;
+  flex-direction: column;
+  align-items: stretch;
+}
+
 .list-container {
   position: relative;
   display: flex;
   flex: 1 1 auto;
-  padding: 24px;
   min-height: 0;
+  padding: 24px;
+  margin: 0 10px;
   border: 1px solid #ccc;
   background-color: #fff;
 }

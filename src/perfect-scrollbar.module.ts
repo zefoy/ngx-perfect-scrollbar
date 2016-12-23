@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule, ModuleWithProviders, OpaqueToken, Optional, SkipSelf, Inject } from '@angular/core';
 
 import { PerfectScrollbarComponent } from './perfect-scrollbar.component';
+import { PerfectScrollbarDirective } from './perfect-scrollbar.directive';
 
 import { PerfectScrollbarConfig, PerfectScrollbarConfigInterface } from './perfect-scrollbar.interfaces';
 
@@ -11,8 +12,8 @@ export const PERFECT_SCROLLBAR_CONFIG = new OpaqueToken('PERFECT_SCROLLBAR_CONFI
 
 @NgModule({
     imports: [CommonModule],
-    declarations: [PerfectScrollbarComponent],
-    exports: [CommonModule, PerfectScrollbarComponent]
+    declarations: [PerfectScrollbarComponent, PerfectScrollbarDirective],
+    exports: [CommonModule, PerfectScrollbarComponent, PerfectScrollbarDirective]
 })
 export class PerfectScrollbarModule {
   constructor (@Optional() @Inject(PERFECT_SCROLLBAR_GUARD) guard: any) {}
