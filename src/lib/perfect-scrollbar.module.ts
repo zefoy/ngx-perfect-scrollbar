@@ -39,7 +39,7 @@ export class PerfectScrollbarModule {
         },
         {
           provide: PerfectScrollbarConfig,
-          useFactory: (config) => new PerfectScrollbarConfig(config),
+          useFactory: provideDefaultConfig,
           deps: [
             PERFECT_SCROLLBAR_CONFIG
           ]
@@ -64,4 +64,8 @@ export function provideForRootGuard(config: PerfectScrollbarConfig): any {
   }
 
   return 'guarded';
+}
+
+export function provideDefaultConfig(config: PerfectScrollbarConfigInterface): PerfectScrollbarConfig {
+  return new PerfectScrollbarConfig(config);
 }

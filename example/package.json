@@ -1,7 +1,8 @@
 {
   "name": "angular2-perfect-scrollbar-example",
+  "description": "Example app for the angular2-perfect-scrollbar",
   "license": "MIT",
-  "version": "1.1.0",
+  "version": "2.0.0",
   "tslint": {
     "extends": "./tslint.json"
   },
@@ -9,11 +10,15 @@
     "extends": "./stylelint.json"
   },
   "scripts": {
-    "clean": "rm -rf dist node_modules",
-    "deploy": "rm -rf dist && deploy-to-git",
-    "build": "webpack --config config/webpack-deploy.config.js",
+    "init": "npm install",
     "start": "webpack-dev-server --open --inline --config config/webpack-server.config.js",
-    "lint": "tslint 'src/**/*.ts' && stylelint 'src/**/*.css' --syntax css"
+    "clean": "rm -rf dist node_modules",
+    "lint": "npm run lint:ts && npm run lint:css",
+    "build": "rm -rf dist/* && npm run build:jit",
+    "deploy": "rm -rf dist && deploy-to-git",
+    "lint:ts": "tslint 'src/**/*.ts'",
+    "lint:css": "stylelint 'src/**/*.css' --syntax css",
+    "build:jit": "webpack --config config/webpack-deploy.config.js"
   },
   "config": {
     "deployToGit": {
@@ -29,34 +34,34 @@
     }
   },
   "dependencies": {
-    "@angular/common": "2.0.0",
-    "@angular/compiler": "2.0.0",
-    "@angular/core": "2.0.0",
-    "@angular/http": "2.0.0",
-    "@angular/platform-browser": "2.0.0",
-    "@angular/platform-browser-dynamic": "2.0.0",
-    "@angular/router": "3.0.0",
-    "angular2-perfect-scrollbar": "1.1.0",
-    "core-js": "^2.4.0",
-    "reflect-metadata": "^0.1.8",
-    "rxjs": "5.0.0-beta.12",
-    "zone.js": "^0.6.25"
+    "@angular/common": "~2.4.0",
+    "@angular/compiler": "~2.4.0",
+    "@angular/core": "~2.4.0",
+    "@angular/http": "~2.4.0",
+    "@angular/platform-browser": "~2.4.0",
+    "@angular/platform-browser-dynamic": "~2.4.0",
+    "angular2-dropzone-wrapper": "~2.0.0",
+    "core-js": "~2.4.0",
+    "perfect-scrollbar": "~0.6.0",
+    "rxjs": "~5.0.0",
+    "zone.js": "~0.7.0"
   },
   "devDependencies": {
-    "@types/core-js": "^0.9.0",
-    "@types/node": "^6.0.0",
-    "angular2-router-loader": "^0.3.0",
-    "angular2-template-loader": "^0.5.0",
-    "awesome-typescript-loader": "^2.2.0",
-    "copy-webpack-plugin": "^3.0.0",
-    "deploy-to-git": "0.0.7",
-    "html-webpack-plugin": "^2.22.0",
-    "raw-loader": "^0.5.0",
-    "stylelint": "7.2.0",
-    "stylelint-config-standard": "^13.0.0",
-    "tslint": "3.15.0",
-    "typescript": "2.0.10",
-    "webpack": "^2.1.0-beta.25",
-    "webpack-dev-server": "^2.1.0-beta.8"
+    "@types/core-js": "~0.9.0",
+    "@types/node": "~6.0.0",
+    "angular2-router-loader": "~0.3.0",
+    "angular2-template-loader": "~0.5.0",
+    "awesome-typescript-loader": "~2.2.0",
+    "copy-webpack-plugin": "~3.0.0",
+    "deploy-to-git": "~0.1.0",
+    "html-webpack-plugin": "~2.22.0",
+    "raw-loader": "~0.5.0",
+    "sass-loader": "~4.0.0",
+    "stylelint": "~7.2.0",
+    "stylelint-config-standard": "~13.0.0",
+    "tslint": "~3.15.0",
+    "typescript": "~2.0.0",
+    "webpack": "~2.1.0-beta.25",
+    "webpack-dev-server": "~2.1.0-beta.10"
   }
 }

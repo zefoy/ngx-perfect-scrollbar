@@ -6,8 +6,8 @@ import { PerfectScrollbarConfig, PerfectScrollbarConfigInterface } from './perfe
 
 @Component({
   selector: 'perfect-scrollbar',
-  template: '<div class="ps-content"><ng-content></ng-content></div>',
-  styles: [require('perfect-scrollbar/dist/css/perfect-scrollbar.min.css')],
+  templateUrl: './perfect-scrollbar.component.html',
+  styleUrls: ['./perfect-scrollbar.component.css', '../../node_modules/perfect-scrollbar/dist/css/perfect-scrollbar.min.css'],
   encapsulation: ViewEncapsulation.None,
   host: {
     style: 'display: block; position: relative;'

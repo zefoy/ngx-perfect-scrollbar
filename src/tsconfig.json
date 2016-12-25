@@ -1,0 +1,34 @@
+{
+  "compilerOptions": {
+    "declaration": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "inlineSources": true,
+    "lib": ["dom", "es2015"],
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "outDir": "../dist",
+    "sourceMap": true,
+    "target": "es5",
+    "typeRoots": [
+      "../node_modules/@types"
+    ],
+    "types": [
+      "node"
+    ]
+  },
+  "files": [
+    "index.ts",
+    "lib/perfect-scrollbar.module.ts",
+    "lib/perfect-scrollbar.component.ts",
+    "lib/perfect-scrollbar.directive.ts",
+    "lib/perfect-scrollbar.interfaces.ts"
+  ],
+  "angularCompilerOptions": {
+    "skipMetadataEmit" : false,
+    "skipTemplateCodegen": true
+  },
+  "awesomeTypescriptLoaderOptions": {
+    "useWebpackText": true
+  }
+}

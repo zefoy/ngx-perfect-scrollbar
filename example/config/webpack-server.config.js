@@ -6,6 +6,9 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   devtool: 'cheap-module-source-map',
+  performance: {
+    hints: false
+  },
   entry: {
     app: [
       './src/polyfills.ts',
@@ -18,14 +21,25 @@ module.exports = {
     publicPath: 'http://localhost:8080/'
   },
   module: {
-    loaders: [
+    rules: [
+      {
+        test: /\.js$/,
+        loaders: [
+          'angular2-template-loader'
+        ],
+        exclude: /node_modules/
+      },
       {
         test: /\.ts$/,
         loaders: [
-          'awesome-typescript-loader',
+          'awesome-typescript-loader?tsconfig=src/tsconfig.json',
           'angular2-template-loader',
           'angular2-router-loader'
         ]
+      },
+      {
+        test: /\.scss$/,
+        loaders: ["raw-loader", "sass-loader"]
       },
       {
         test: /\.(html|css)$/,
@@ -39,13 +53,13 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: 'index.html'
+      template: './src/index.html'
     }),
 
     new CopyWebpackPlugin([{
-      context: './assets',
+      context: './src/assets',
       from: '**/*',
-      to: './assets'
+      to: '../dist/assets'
     }]),
 
     new webpack.ContextReplacementPlugin(

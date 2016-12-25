@@ -1,14 +1,12 @@
 {
   "name": "angular2-perfect-scrollbar",
-  "description": "Angular 2 wrapper library for perfect scrollbar",
+  "description": "Angular 2 wrapper library for Perfect Scrollbar",
   "bugs": "https://github.com/zefoy/angular2-perfect-scrollbar/issues",
   "license": "MIT",
-  "version": "1.1.0",
-  "main": "./lib/index.js",
-  "typings": "./lib/src/index.d.ts",
-  "files": [
-    "lib"
-  ],
+  "version": "2.0.0",
+  "main": "bundles/angular2-perfect-scrollbar.umd.js",
+  "module": "./dist/index.js",
+  "typings": "./dist/index.d.ts",
   "tslint": {
     "extends": "./tslint.json"
   },
@@ -16,38 +14,65 @@
     "extends": "./stylelint.json"
   },
   "scripts": {
-    "clean": "rm -rf lib node_modules",
-    "deploy": "rm -rf lib/out-tsc && npm publish",
-    "build": "webpack --config config/webpack.config.js",
-    "start": "echo \"Building the library\" && npm run build",
-    "lint": "tslint 'src/**/*.ts' && stylelint 'src/**/*.scss' --syntax scss"
+    "init": "npm install",
+    "start": "npm run build",
+    "watch": "watch 'npm run build' src/",
+    "clean": "rm -rf dist bundles node_modules",
+    "lint": "npm run lint:js && npm run lint:scss",
+    "build": "npm run build:umd && npm run build:aot",
+    "deploy": "npm run build && npm run inline && npm publish",
+    "inline": "ng2-inline --compress -b dist/lib/ -o ./ dist/lib/*.js",
+    "lint:ts": "tslint 'src/**/*.ts'",
+    "lint:scss": "stylelint 'src/**/*.scss' --syntax scss",
+    "build:js": "ngc -p src/tsconfig.json",
+    "build:css": "node-sass src/ -o dist/ --source-map=true",
+    "build:html": "cp -f src/lib/*.html dist/lib/ >/dev/null 2>&1",
+    "build:umd": "webpack --config config/webpack.config.js",
+    "build:aot": "npm run build:js && npm run build:css && npm run build:html"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/zefoy/angular2-perfect-scrollbar.git"
   },
   "dependencies": {
-    "perfect-scrollbar": "^0.6.12"
+    "perfect-scrollbar": "~0.6.0"
   },
   "devDependencies": {
-    "@angular/common": "2.0.0",
-    "@angular/compiler": "2.0.0",
-    "@angular/core": "2.0.0",
-    "@angular/http": "2.0.0",
-    "@types/core-js": "^0.9.32",
-    "@types/node": "^6.0.45",
-    "angular2-template-loader": "^0.5.0",
-    "awesome-typescript-loader": "^2.2.0",
+    "@angular/common": "~2.4.0",
+    "@angular/compiler": "~2.4.0",
+    "@angular/compiler-cli": "~2.4.0",
+    "@angular/core": "~2.4.0",
+    "@angular/http": "~2.4.0",
+    "@angular/platform-browser": "~2.4.0",
+    "@types/core-js": "~0.9.0",
+    "@types/node": "~6.0.0",
+    "@types/perfect-scrollbar": "~0.6.0",
+    "angular2-inline-template-style": "~0.2.0",
+    "angular2-template-loader": "~0.5.0",
+    "awesome-typescript-loader": "~2.2.0",
+    "core-js": "~2.4.0",
+    "node-sass": "~3.8.0",
+    "raw-loader": "~0.5.0",
+    "rxjs": "~5.0.0",
+    "sass-loader": "~4.0.0",
+    "string-replace-loader": "~1.0.0",
+    "strip-sourcemap-loader": "~0.0.0",
+    "stylelint": "~7.2.0",
+    "stylelint-config-standard": "~13.0.0",
+    "tslint": "~3.15.0",
+    "typescript": "~2.0.0",
+    "watch": "~1.0.0",
+    "webpack": "~2.1.0-beta.25",
+    "zone.js": "~0.7.0"
+  },
+  "peerDependencies": {
+    "@angular/common": "^2.0.0",
+    "@angular/compiler": "^2.0.0",
+    "@angular/core": "^2.0.0",
+    "@angular/http": "^2.0.0",
+    "@angular/platform-browser": "^2.0.0",
     "core-js": "^2.4.0",
-    "raw-loader": "^0.5.0",
-    "reflect-metadata": "^0.1.8",
-    "rxjs": "5.0.0-beta.12",
-    "strip-sourcemap-loader": "^0.0.1",
-    "stylelint": "7.2.0",
-    "stylelint-config-standard": "^13.0.0",
-    "tslint": "3.15.0",
-    "typescript": "2.0.10",
-    "webpack": "^2.1.0-beta.25",
-    "zone.js": "^0.6.25"
+    "rxjs": "^5.0.0",
+    "zone.js": "^0.7.0"
   }
 }
