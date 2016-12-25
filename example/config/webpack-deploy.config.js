@@ -61,11 +61,11 @@ module.exports = {
       from: '**/*',
       to: '../dist/assets'
     }]),
-/*
+
     new webpack.optimize.UglifyJsPlugin({
       compress: { warnings: false }
     }),
-*/
+
     new webpack.ContextReplacementPlugin(
       /angular(\\|\/)core(\\|\/)(esm(\\|\/)src|src)(\\|\/)linker/,
       path.join(__dirname, '../')
