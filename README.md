@@ -2,7 +2,7 @@
 
 <a href="https://badge.fury.io/js/angular2-perfect-scrollbar"><img src="https://badge.fury.io/js/angular2-perfect-scrollbar.svg" align="right" alt="npm version" height="18"></a>
 
-This is an Angular 2 wrapper library for [perfect-scrollbar](https://noraesae.github.io/perfect-scrollbar/).
+This is an Angular 2 wrapper library for [Perfect Scrollbar](https://noraesae.github.io/perfect-scrollbar/).
 
 See a live example application <a href="https://zefoy.github.io/angular2-perfect-scrollbar/">here</a>.
 
@@ -42,6 +42,10 @@ const PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 
 ##### Use it in your html template (with custom configuration):
 
+This library provides two ways to create a Dropzone element, simple component and custom directive.
+
+**COMPONENT USAGE**
+
 Simply replace the element that would ordinarily be passed to `Ps.initialize` with the perfect-scollbar component.
 
 ```html
@@ -52,8 +56,24 @@ Simply replace the element that would ordinarily be passed to `Ps.initialize` wi
 
 ```javascript
 [config]                // Custom config to override the global defaults.
+```
 
-[runInsideAngular]      // Run PS initialization inside the angular zone.
+**DIRECTIVE USAGE**
+
+When using only the directive you need to provide your own theming or import the default theme:
+
+```css
+@import 'https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.15/css/perfect-scrollbar.min.css';
+```
+
+Perfect scrollbar directive should be used with div elements and can take optional custom configuration:
+
+```html
+<div [perfect-scrollbar]="config"></div>
+```
+
+```javascript
+[perfect-scrollbar]     // Can be used to provide optional custom config.
 ```
 
 ##### Available configuration options (custom / global configuration):
@@ -72,4 +92,4 @@ scrollYMarginOffset     // Offset before enabling the Y scroller (Default: 0).
 stopPropagationOnClick  // Stop the propagation of click event (Default: true).
 ```
 
-For more detailed documentation with all the supported options see [perfect-scrollbar documentation](https://github.com/noraesae/perfect-scrollbar/).
+For more detailed documentation with all the supported options see [Perfect Scrollbar documentation](https://github.com/noraesae/perfect-scrollbar/).
