@@ -40,6 +40,7 @@
     "@angular/http": "~2.4.0",
     "@angular/platform-browser": "~2.4.0",
     "@angular/platform-browser-dynamic": "~2.4.0",
+    "@angular/router": "~3.4.0",
     "angular2-dropzone-wrapper": "~2.0.0",
     "core-js": "~2.4.0",
     "perfect-scrollbar": "~0.6.0",
