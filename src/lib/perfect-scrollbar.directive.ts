@@ -38,13 +38,19 @@ export class PerfectScrollbarDirective implements DoCheck, OnDestroy, AfterViewI
         this.contentWidth = contentWidth;
         this.contentHeight = contentHeight;
 
-        Ps.update(this.elementRef.nativeElement);
+        this.update();
       }
     }
   }
 
   ngOnDestroy() {
-    Ps.destroy(this.elementRef.nativeElement);
+    if (this.runInsideAngular) {
+      Ps.destroy(this.elementRef.nativeElement);
+    } else {
+      this.zone.runOutsideAngular(() => {
+        Ps.destroy(this.elementRef.nativeElement);
+      });
+    }
   }
 
   ngAfterViewInit() {
@@ -55,19 +61,25 @@ export class PerfectScrollbarDirective implements DoCheck, OnDestroy, AfterViewI
     if (this.runInsideAngular) {
       Ps.initialize(this.elementRef.nativeElement, config);
     } else {
-       this.zone.runOutsideAngular(() => {
+      this.zone.runOutsideAngular(() => {
         Ps.initialize(this.elementRef.nativeElement, config);
       });
     }
   }
 
   update() {
-    Ps.update(this.elementRef.nativeElement);
+    if (this.runInsideAngular) {
+      Ps.update(this.elementRef.nativeElement);
+    } else {
+      this.zone.runOutsideAngular(() => {
+        Ps.update(this.elementRef.nativeElement);
+      });
+    }
   }
 
   scrollTo(position: number) {
     this.elementRef.nativeElement.scrollTop = position;
 
-    Ps.update(this.elementRef.nativeElement);
+    this.update();
   }
 }
