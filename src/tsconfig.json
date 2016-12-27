@@ -19,6 +19,7 @@
   },
   "files": [
     "index.ts",
+    "types/perfect-scrollbar.d.ts",
     "lib/perfect-scrollbar.module.ts",
     "lib/perfect-scrollbar.component.ts",
     "lib/perfect-scrollbar.directive.ts",
