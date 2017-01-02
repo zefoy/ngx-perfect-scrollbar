@@ -1,3 +1,7 @@
+2.0.2 Bug fix release
+
+  - Fixed errors for AOT compilations
+
 2.0.1 Bug fix release
 
   - Added missing type definition file
