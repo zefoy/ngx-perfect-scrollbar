@@ -22,7 +22,7 @@
   },
   "config": {
     "deployToGit": {
-      "repository": "git@github.com:zefoy/angular2-perfect-scrollbar.git",
+      "repository": "git@github.com:zefoy/ngx-perfect-scrollbar.git",
       "branch": "gh-pages",
       "folder": "dist",
       "script": "npm run build",

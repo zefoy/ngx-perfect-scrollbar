@@ -4,7 +4,7 @@
 
 This is an Angular 2 wrapper library for [Perfect Scrollbar](https://noraesae.github.io/perfect-scrollbar/).
 
-See a live example application <a href="https://zefoy.github.io/angular2-perfect-scrollbar/">here</a>.
+See a live example application <a href="https://zefoy.github.io/ngx-perfect-scrollbar/">here</a>.
 
 ### Building the library
 
