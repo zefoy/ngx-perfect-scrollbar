@@ -26,7 +26,7 @@
     "lint:scss": "stylelint 'src/**/*.scss' --syntax scss",
     "build:js": "ngc -p src/tsconfig.json",
     "build:css": "node-sass src/ -o dist/ --source-map=true",
-    "build:html": "cp -f src/lib/*.html dist/lib/ >/dev/null 2>&1",
+    "build:html": "cpx src/lib/*.html dist/lib/",
     "build:umd": "webpack --config config/webpack.config.js",
     "build:aot": "npm run build:js && npm run build:css && npm run build:html"
   },
@@ -51,6 +51,7 @@
     "angular2-template-loader": "~0.5.0",
     "awesome-typescript-loader": "~2.2.0",
     "core-js": "~2.4.0",
+    "cpx": "~1.5.0",
     "node-sass": "~3.8.0",
     "raw-loader": "~0.5.0",
     "rxjs": "~5.0.0",
