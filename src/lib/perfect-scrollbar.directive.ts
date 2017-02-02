@@ -82,4 +82,18 @@ export class PerfectScrollbarDirective implements DoCheck, OnDestroy, AfterViewI
 
     this.update();
   }
+
+  scrollToTop() {
+    this.elementRef.nativeElement.scrollTop = 0;
+
+    this.update();
+  }
+
+  scrollToBottom() {
+    let height = this.elementRef.nativeElement.scrollHeight;
+
+    this.elementRef.nativeElement.scrollTop = height;
+
+    this.update();
+  }
 }

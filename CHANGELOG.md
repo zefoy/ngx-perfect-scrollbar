@@ -1,3 +1,7 @@
+2.0.3 Feature release
+
+  - Added scroll to top / bottom functions
+
 2.0.2 Bug fix release
 
   - Fixed errors for AOT compilations
