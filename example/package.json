@@ -14,11 +14,12 @@
     "start": "webpack-dev-server --open --inline --config config/webpack-server.config.js",
     "clean": "rm -rf dist node_modules",
     "lint": "npm run lint:ts && npm run lint:css",
-    "build": "rm -rf dist/* && npm run build:jit",
+    "build": "rm -rf dist/* && npm run build:aot",
     "deploy": "rm -rf dist && deploy-to-git",
     "lint:ts": "tslint 'src/**/*.ts'",
     "lint:css": "stylelint 'src/**/*.css' --syntax css",
-    "build:jit": "webpack --config config/webpack-deploy.config.js"
+    "build:aot": "webpack --config config/webpack-build-aot.config.js",
+    "build:jit": "webpack --config config/webpack-build-jit.config.js"
   },
   "config": {
     "deployToGit": {
@@ -48,6 +49,8 @@
     "zone.js": "~0.7.0"
   },
   "devDependencies": {
+    "@angular/compiler-cli": "~2.4.0",
+    "@ngtools/webpack": "~1.2.3",
     "@types/core-js": "~0.9.0",
     "@types/node": "~6.0.0",
     "angular2-router-loader": "~0.3.0",

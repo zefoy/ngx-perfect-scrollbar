@@ -1,5 +1,6 @@
 var path = require('path');
 var webpack = require('webpack');
+var ngtools = require('@ngtools/webpack');
 
 var CopyWebpackPlugin = require('copy-webpack-plugin');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -21,21 +22,15 @@ module.exports = {
     publicPath: 'https://zefoy.github.io/ngx-perfect-scrollbar/'
   },
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.js$/,
-        loaders: [
-          'angular2-template-loader'
-        ],
+        loaders: ['angular2-template-loader'],
         exclude: /node_modules/
       },
       {
         test: /\.ts$/,
-        loaders: [
-          'awesome-typescript-loader?tsconfig=src/tsconfig.json',
-          'angular2-template-loader',
-          'angular2-router-loader'
-        ]
+        loaders: ['@ngtools/webpack']
       },
       {
         test: /\.scss$/,
@@ -64,6 +59,11 @@ module.exports = {
 
     new webpack.optimize.UglifyJsPlugin({
       compress: { warnings: false }
+    }),
+
+    new ngtools.AotPlugin({
+      tsConfigPath: path.join(__dirname, '../src/tsconfig.json'),
+      entryModule: path.join(__dirname, '../src/app/app.module#AppModule')
     }),
 
     new webpack.ContextReplacementPlugin(
