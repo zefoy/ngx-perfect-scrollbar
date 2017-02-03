@@ -1,4 +1,4 @@
-<div class="box-container">
+<div class="box-container" fxLayout="column">
   <div class="app-title">Simple example app for the angular2-perfect-scrollbar</div>
 
   <div class="info-container">
@@ -13,12 +13,12 @@
     <button class="action-button" (click)="onScrollToBottom()">Scroll To Bottom</button>
   </div>
 
-  <div class="horizontal-container">
-    <div class="vertical-container">
+  <div class="horizontal-container" fxLayout="row" fxLayoutAlign="stretch" fxFlex>
+    <div class="vertical-container" fxLayout="column" fxLayoutAlign="stretch" fxFlex="50%">
       <div class="box-title">Component</div>
 
-      <div class="list-container">
-        <perfect-scrollbar class="scrollbar-element">
+      <div class="list-container" fxLayout="column" fxLayoutAlign="stretch" fxFlex>
+        <perfect-scrollbar fxFlex>
           Scroll<br>
           me!<br>
           <br>
@@ -49,11 +49,11 @@
       </div>
     </div>
 
-    <div class="vertical-container">
+    <div class="vertical-container" fxLayout="column" fxLayoutAlign="stretch" fxFlex="50%">
       <div class="box-title">Directive</div>
 
-      <div class="list-container">
-        <div perfect-scrollbar class="scrollbar-element">
+      <div class="list-container" fxLayout="column" fxLayoutAlign="stretch" fxFlex>
+        <div perfect-scrollbar fxFlex>
           Scroll<br>
           me!<br>
           <br>

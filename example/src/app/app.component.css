@@ -7,9 +7,7 @@
 }
 
 .box-container {
-  display: flex;
   box-sizing: border-box;
-  flex-direction: column;
   width: 800px;
   height: 500px;
   max-width: 90%;
@@ -40,32 +38,11 @@
   margin-right: 16px;
 }
 
-.horizontal-container {
-  display: flex;
-  flex: 1 1 auto;
-  flex-direction: row;
-  align-items: stretch;
-}
-
-.vertical-container {
-  display: flex;
-  flex: 1 1 50%;
-  flex-direction: column;
-  align-items: stretch;
-}
-
 .list-container {
   position: relative;
-  display: flex;
-  flex: 1 1 auto;
-  flex-direction: column;
   min-height: 0;
   padding: 24px;
   margin: 0 10px;
   border: 1px solid #ccc;
   background-color: #fff;
-}
-
-.scrollbar-element {
-  flex: 1 1 0;
 }
