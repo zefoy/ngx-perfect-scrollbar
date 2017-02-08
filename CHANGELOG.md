@@ -1,3 +1,7 @@
+2.0.5 Feature release
+
+  - Added scroll to left / right functions
+
 2.0.4 Bug fix release
 
   - Fixed directive for all usage scenarios

@@ -9,7 +9,6 @@ import { PerfectScrollbarModule, PerfectScrollbarConfigInterface } from 'angular
 import { AppComponent } from './app.component';
 
 const PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
-  suppressScrollX: true
 };
 
 @NgModule({

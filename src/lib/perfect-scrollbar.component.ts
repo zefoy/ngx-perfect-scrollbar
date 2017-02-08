@@ -77,22 +77,42 @@ export class PerfectScrollbarComponent implements DoCheck, OnDestroy, AfterViewI
     }
   }
 
-  scrollTo(position: number) {
-    this.elementRef.nativeElement.scrollTop = position;
+  scrollTo(x: number, y?: number) {
+    if (y == null) {
+      this.elementRef.nativeElement.scrollTop = x;
+    } else {
+      this.elementRef.nativeElement.scrollTop = y;
+
+      this.elementRef.nativeElement.scrollLeft = x;
+    }
 
     this.update();
   }
 
-  scrollToTop() {
-    this.elementRef.nativeElement.scrollTop = 0;
+  scrollToTop(offset: number = 0) {
+    this.elementRef.nativeElement.scrollTop = 0 + offset;
 
     this.update();
   }
 
-  scrollToBottom() {
+  scrollToLeft(offset: number = 0) {
+    this.elementRef.nativeElement.scrollLeft = 0 + offset;
+
+    this.update();
+  }
+
+  scrollToRight(offset: number = 0) {
+    let width = this.elementRef.nativeElement.scrollWidth;
+
+    this.elementRef.nativeElement.scrollLeft = width - offset;
+
+    this.update();
+  }
+
+  scrollToBottom(offset: number = 0) {
     let height = this.elementRef.nativeElement.scrollHeight;
 
-    this.elementRef.nativeElement.scrollTop = height;
+    this.elementRef.nativeElement.scrollTop = height - offset;
 
     this.update();
   }

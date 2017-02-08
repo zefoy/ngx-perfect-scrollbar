@@ -13,9 +13,24 @@ export class AppComponent {
 
   constructor() {}
 
+  onScrollToXY(x: number, y: number) {
+    this.componentScroll.scrollTo(x, y);
+    this.directiveScroll.scrollTo(x, y);
+  }
+
   onScrollToTop() {
     this.componentScroll.scrollToTop();
     this.directiveScroll.scrollToTop();
+  }
+
+  onScrollToLeft() {
+    this.componentScroll.scrollToLeft();
+    this.directiveScroll.scrollToLeft();
+  }
+
+  onScrollToRight() {
+    this.componentScroll.scrollToRight();
+    this.directiveScroll.scrollToRight();
   }
 
   onScrollToBottom() {
