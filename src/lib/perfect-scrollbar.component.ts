@@ -8,10 +8,7 @@ import { PerfectScrollbarConfig, PerfectScrollbarConfigInterface } from './perfe
   selector: 'perfect-scrollbar',
   templateUrl: './perfect-scrollbar.component.html',
   styleUrls: ['./perfect-scrollbar.component.css'],
-  encapsulation: ViewEncapsulation.None,
-  host: {
-    style: 'display: block; position: relative;'
-  }
+  encapsulation: ViewEncapsulation.None
 })
 export class PerfectScrollbarComponent implements DoCheck, OnDestroy, AfterViewInit {
   private width: number;
@@ -27,12 +24,12 @@ export class PerfectScrollbarComponent implements DoCheck, OnDestroy, AfterViewI
   constructor( public elementRef: ElementRef, @Optional() private defaults: PerfectScrollbarConfig, private zone: NgZone ) {}
 
   ngDoCheck() {
-    if (this.elementRef.nativeElement.children) {
-      var width = this.elementRef.nativeElement.offsetWidth;
-      var height = this.elementRef.nativeElement.offsetHeight;
+    if (this.elementRef.nativeElement.children && this.elementRef.nativeElement.children.length) {
+      let width = this.elementRef.nativeElement.offsetWidth;
+      let height = this.elementRef.nativeElement.offsetHeight;
 
-      var contentWidth = this.elementRef.nativeElement.children[0].offsetWidth;
-      var contentHeight = this.elementRef.nativeElement.children[0].offsetHeight;
+      let contentWidth = this.elementRef.nativeElement.children[0].offsetWidth;
+      let contentHeight = this.elementRef.nativeElement.children[0].offsetHeight;
 
       if (width !== this.width || height !== this.height || contentWidth !== this.contentWidth || contentHeight !== this.contentHeight) {
         this.width = width;

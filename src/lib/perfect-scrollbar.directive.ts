@@ -1,13 +1,13 @@
 import * as Ps from 'perfect-scrollbar';
 
-import { Directive, DoCheck, OnDestroy, Input, Optional, ElementRef, AfterViewInit, ViewEncapsulation, NgZone } from '@angular/core';
+import { Directive, DoCheck, OnDestroy, Input, Optional, ElementRef, AfterViewInit, NgZone } from '@angular/core';
 
 import { PerfectScrollbarConfig, PerfectScrollbarConfigInterface } from './perfect-scrollbar.interfaces';
 
 @Directive({
   selector: '[perfect-scrollbar]',
   host: {
-    style: 'display: block; position: relative;'
+    style: 'position: relative;'
   }
 })
 export class PerfectScrollbarDirective implements DoCheck, OnDestroy, AfterViewInit {
@@ -24,12 +24,17 @@ export class PerfectScrollbarDirective implements DoCheck, OnDestroy, AfterViewI
   constructor( public elementRef: ElementRef, @Optional() private defaults: PerfectScrollbarConfig, private zone: NgZone ) {}
 
   ngDoCheck() {
-    if (this.elementRef.nativeElement.children) {
-      var width = this.elementRef.nativeElement.offsetWidth;
-      var height = this.elementRef.nativeElement.offsetHeight;
+    if (this.elementRef.nativeElement) {
+      let contentWidth = this.contentWidth;
+      let contentHeight = this.contentHeight;
 
-      var contentWidth = this.elementRef.nativeElement.children[0].offsetWidth;
-      var contentHeight = this.elementRef.nativeElement.children[0].offsetHeight;
+      let width = this.elementRef.nativeElement.offsetWidth;
+      let height = this.elementRef.nativeElement.offsetHeight;
+
+      if (this.elementRef.nativeElement.children && this.elementRef.nativeElement.children.length) {
+        contentWidth = this.elementRef.nativeElement.children[0].offsetWidth;
+        contentHeight = this.elementRef.nativeElement.children[0].offsetHeight;
+      }
 
       if (width !== this.width || height !== this.height || contentWidth !== this.contentWidth || contentHeight !== this.contentHeight) {
         this.width = width;

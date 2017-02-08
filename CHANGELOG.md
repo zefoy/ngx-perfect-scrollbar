@@ -1,3 +1,7 @@
+2.0.4 Bug fix release
+
+  - Fixed directive for all usage scenarios
+
 2.0.3 Feature release
 
   - Added scroll to top / bottom functions

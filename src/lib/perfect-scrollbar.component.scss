@@ -1,1 +1,11 @@
 @import '../../node_modules/perfect-scrollbar/dist/css/perfect-scrollbar.min';
+
+.ps-container {
+  position: relative;
+
+  display: block;
+
+  .ps-content {
+    min-height: 100%;
+  }
+}
