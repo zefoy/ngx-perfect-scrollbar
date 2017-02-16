@@ -1,4 +1,7 @@
 {
+  "rulesDirectory": [
+    "node_modules/codelyzer"
+  ],
   "rules": {
     "max-line-length": [true, 360],
     "no-inferrable-types": true,

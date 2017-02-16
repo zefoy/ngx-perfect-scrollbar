@@ -3,6 +3,7 @@ import { Component, ViewChild } from '@angular/core';
 import { PerfectScrollbarComponent, PerfectScrollbarDirective } from 'angular2-perfect-scrollbar';
 
 @Component({
+  moduleId: module.id + '',
   selector: 'my-app',
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.css']
