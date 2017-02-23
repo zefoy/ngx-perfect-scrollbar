@@ -2,7 +2,7 @@
   "name": "angular2-perfect-scrollbar-example",
   "description": "Example app for the angular2-perfect-scrollbar",
   "license": "MIT",
-  "version": "2.0.5",
+  "version": "2.0.6",
   "tslint": {
     "extends": "./tslint.json"
   },

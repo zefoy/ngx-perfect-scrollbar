@@ -3,7 +3,7 @@
   "description": "Angular 2 wrapper library for Perfect Scrollbar",
   "bugs": "https://github.com/zefoy/angular2-perfect-scrollbar/issues",
   "license": "MIT",
-  "version": "2.0.5",
+  "version": "2.0.6",
   "main": "bundles/angular2-perfect-scrollbar.umd.js",
   "module": "./dist/index.js",
   "typings": "./dist/index.d.ts",

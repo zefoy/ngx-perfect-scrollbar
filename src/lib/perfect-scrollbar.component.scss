@@ -8,4 +8,14 @@
   .ps-content {
     min-height: 100%;
   }
+
+  &[hidden] {
+    display: none;
+  }
+
+  &[fxlayout] {
+    & > .ps-content {
+      display: flex;
+    }
+  }
 }

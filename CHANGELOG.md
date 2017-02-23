@@ -1,3 +1,7 @@
+2.0.6 Bug fix release
+
+  - Added better support for flex-layout
+
 2.0.5 Feature release
 
   - Added scroll to left / right functions
