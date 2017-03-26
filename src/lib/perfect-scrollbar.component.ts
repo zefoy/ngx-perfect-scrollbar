@@ -1,6 +1,6 @@
 import * as Ps from 'perfect-scrollbar';
 
-import { Component, DoCheck, OnDestroy, Input, Optional, ElementRef, AfterViewInit, ViewEncapsulation, NgZone } from '@angular/core';
+import { Component, DoCheck, OnDestroy, OnChanges, Input, Optional, HostBinding, ElementRef, AfterViewInit, ViewEncapsulation, SimpleChanges, NgZone } from '@angular/core';
 
 import { PerfectScrollbarConfig, PerfectScrollbarConfigInterface } from './perfect-scrollbar.interfaces';
 
@@ -10,12 +10,15 @@ import { PerfectScrollbarConfig, PerfectScrollbarConfigInterface } from './perfe
   styleUrls: ['./perfect-scrollbar.component.css'],
   encapsulation: ViewEncapsulation.None
 })
-export class PerfectScrollbarComponent implements DoCheck, OnDestroy, AfterViewInit {
+export class PerfectScrollbarComponent implements DoCheck, OnDestroy, OnChanges, AfterViewInit {
   private width: number;
   private height: number;
 
   private contentWidth: number;
   private contentHeight: number;
+
+  @HostBinding('hidden')
+  @Input() hidden: boolean = false;
 
   @Input() runInsideAngular: boolean = false;
 
@@ -50,6 +53,12 @@ export class PerfectScrollbarComponent implements DoCheck, OnDestroy, AfterViewI
       this.zone.runOutsideAngular(() => {
         Ps.destroy(this.elementRef.nativeElement);
       });
+    }
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['hidden'] && !this.hidden) {
+      this.update();
     }
   }
 

@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 
-import { PerfectScrollbarComponent, PerfectScrollbarDirective } from 'angular2-perfect-scrollbar';
+import { PerfectScrollbarComponent, PerfectScrollbarDirective } from 'ngx-perfect-scrollbar';
 
 @Component({
   moduleId: module.id + '',
