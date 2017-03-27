@@ -7,13 +7,13 @@ module.exports = {
     hints: false
   },
   entry: {
-    'angular2-perfect-scrollbar.umd': './src/index.ts',
-    'angular2-perfect-scrollbar.umd.min': './src/index.ts'
+    'ngx-perfect-scrollbar.umd': './src/index.ts',
+    'ngx-perfect-scrollbar.umd.min': './src/index.ts'
   },
   output: {
     path: './bundles',
     filename: '[name].js',
-    library: 'angular2-perfect-scrollbar',
+    library: 'ngx-perfect-scrollbar',
     libraryTarget: 'umd',
     umdNamedDefine: true
   },

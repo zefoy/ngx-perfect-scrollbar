@@ -2,7 +2,7 @@
   "name": "ngx-perfect-scrollbar-example",
   "description": "Example app for the ngx-perfect-scrollbar",
   "license": "MIT",
-  "version": "2.5.0",
+  "version": "2.5.2",
   "tslint": {
     "extends": "./tslint.json"
   },

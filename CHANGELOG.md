@@ -1,3 +1,7 @@
+2.5.2 Bug fix release
+
+  - Fixed umd bundle to use the new name
+
 2.5.0 Last 2.x release
 
   - Preparing for moving to Angular 4.x
