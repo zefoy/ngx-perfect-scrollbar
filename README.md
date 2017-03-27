@@ -42,7 +42,11 @@ const PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 
 ##### Use it in your html template (with custom configuration):
 
+<<<<<<< HEAD
+This library provides two ways to create a Perfect Scrollbar element, a component and a directive.
+=======
 This library provides two ways to create a Perfect Scollbar element, a component and a directive.
+>>>>>>> 7cdd3c3169e3dc1bf4b1cc021f918b911ed94dae
 
 **COMPONENT USAGE**
 
