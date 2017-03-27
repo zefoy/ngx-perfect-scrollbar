@@ -42,7 +42,7 @@ const PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 
 ##### Use it in your html template (with custom configuration):
 
-This library provides two ways to create a Dropzone element, simple component and custom directive.
+This library provides two ways to create a Perfect Scollbar element, a component and a directive.
 
 **COMPONENT USAGE**
 
