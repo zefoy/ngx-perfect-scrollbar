@@ -1,8 +1,8 @@
-# Angular 2 Perfect Scrollbar
+# Angular Perfect Scrollbar
 
-<a href="https://badge.fury.io/js/angular2-perfect-scrollbar"><img src="https://badge.fury.io/js/angular2-perfect-scrollbar.svg" align="right" alt="npm version" height="18"></a>
+<a href="https://badge.fury.io/js/ngx-perfect-scrollbar"><img src="https://badge.fury.io/js/ngx-perfect-scrollbar.svg" align="right" alt="npm version" height="18"></a>
 
-This is an Angular 2 wrapper library for [Perfect Scrollbar](https://noraesae.github.io/perfect-scrollbar/).
+This is an Angular wrapper library for the [Perfect Scrollbar](https://noraesae.github.io/perfect-scrollbar/).
 
 See a live example application <a href="https://zefoy.github.io/ngx-perfect-scrollbar/">here</a>.
 
@@ -19,13 +19,13 @@ See a live example application <a href="https://zefoy.github.io/ngx-perfect-scro
 
 ### Installing and usage
 
-    npm install angular2-perfect-scrollbar --save-dev
+    npm install ngx-perfect-scrollbar --save-dev
 
 ##### Load the module for your app (with global configuration):
 
 ```javascript
-import { PerfectScrollbarModule } from 'angular2-perfect-scrollbar';
-import { PerfectScrollbarConfigInterface } from 'angular2-perfect-scrollbar';
+import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
+import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
 
 const PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true
