@@ -11,7 +11,7 @@ module.exports = {
     'ngx-perfect-scrollbar.umd.min': './src/index.ts'
   },
   output: {
-    path: './bundles',
+    path: path.join(__dirname, '../bundles'),
     filename: '[name].js',
     library: 'ngx-perfect-scrollbar',
     libraryTarget: 'umd',
@@ -29,13 +29,13 @@ module.exports = {
         test: /\.ts$/,
         loaders: [
           'string-replace-loader?search=component\.css&replace=component\.scss',
-          'awesome-typescript-loader?tsconfig=src/tsconfig.json&declaration=false',
+          'awesome-typescript-loader?configFileName=src/tsconfig.json&declaration=false',
           'angular2-template-loader'
         ]
       },
       {
         test: /\.scss$/,
-        loaders: ["raw-loader", "sass-loader"]
+        loaders: ['raw-loader', 'sass-loader']
       },
       {
         test: /\.(html|css)$/,
@@ -45,7 +45,7 @@ module.exports = {
   },
   resolve: {
     extensions: ['.js', '.ts'],
-    modules: [ '../src', path.join(__dirname, "../node_modules") ]
+    modules: [ '../src', path.join(__dirname, '../node_modules') ]
   },
   plugins: [
     new webpack.optimize.UglifyJsPlugin({
@@ -54,11 +54,11 @@ module.exports = {
     })
   ],
   externals: [
-    "@angular/common",
-    "@angular/compiler",
-    "@angular/core",
-    "@angular/forms",
-    "@angular/http",
-    "rxjs/Rx"
+    '@angular/common',
+    '@angular/compiler',
+    '@angular/core',
+    '@angular/forms',
+    '@angular/http',
+    'rxjs/Rx'
   ]
 };

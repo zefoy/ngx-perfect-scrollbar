@@ -35,7 +35,7 @@ module.exports = {
       },
       {
         test: /\.scss$/,
-        loaders: ["raw-loader", "sass-loader"]
+        loaders: ['raw-loader', 'sass-loader']
       },
       {
         test: /\.(html|css)$/,
@@ -45,7 +45,7 @@ module.exports = {
   },
   resolve: {
     extensions: ['.js', '.ts'],
-    modules: [ '../src', path.join(__dirname, "../node_modules") ]
+    modules: [ '../src', path.join(__dirname, '../node_modules') ]
   },
   plugins: [
     new HtmlWebpackPlugin({
@@ -68,7 +68,7 @@ module.exports = {
     }),
 
     new webpack.ContextReplacementPlugin(
-      /angular(\\|\/)core(\\|\/)(esm(\\|\/)src|src)(\\|\/)linker/,
+      /angular(\\|\/)core(\\|\/)@angular/,
       path.join(__dirname, '../')
     )
   ]
