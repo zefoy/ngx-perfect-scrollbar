@@ -1,3 +1,7 @@
+4.0.0 Feature release
+
+  - Switched to using Angular 4.0.0 version
+
 2.5.2 Bug fix release
 
   - Fixed umd bundle to use the new name
