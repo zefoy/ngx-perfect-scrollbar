@@ -6,16 +6,25 @@ This is an Angular wrapper library for the [Perfect Scrollbar](https://noraesae.
 
 See a live example application <a href="https://zefoy.github.io/ngx-perfect-scrollbar/">here</a>.
 
-### Building the library
+### Library building
 
     npm install
     npm run build
+    npm run inline
+
+### Library development
+
+    npm link
+    cd example
+    npm link ngx-perfect-scrollbar
 
 ### Running the example
 
     cd example
     npm install
     npm start
+
+    (or 'npm run start:sjs' for using systemjs)
 
 ### Installing and usage
 
