@@ -27,7 +27,7 @@
       'rxjs': 'npm:rxjs',
       'ts': 'npm:plugin-typescript/lib/plugin.js',
       'typescript': 'npm:typescript/lib/typescript.js',
-      'angular2-perfect-scrollbar': 'node_modules/angular2-perfect-scrollbar'
+      'ngx-perfect-scrollbar': 'node_modules/ngx-perfect-scrollbar'
     },
     packages: {
       'app': {
@@ -42,8 +42,8 @@
       'rxjs': {
         defaultExtension: 'js'
       },
-      'angular2-perfect-scrollbar': {
-        main: 'bundles/angular2-perfect-scrollbar.umd.js',
+      'ngx-perfect-scrollbar': {
+        main: 'bundles/ngx-perfect-scrollbar.umd.js',
         defaultExtension: 'js'
       }
     }
