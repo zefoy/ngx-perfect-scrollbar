@@ -46,7 +46,7 @@
     "@angular/router": "^4.0.0",
     "ngx-perfect-scrollbar": "^4.0.0",
     "core-js": "~2.4.0",
-    "perfect-scrollbar": "~0.6.0",
+    "perfect-scrollbar": "~0.7.0",
     "rxjs": "~5.1.0",
     "zone.js": "~0.8.0"
   },

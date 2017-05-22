@@ -24,6 +24,8 @@ export class PerfectScrollbarDirective implements DoCheck, OnDestroy, OnChanges,
 
   @Input('perfect-scrollbar') config: PerfectScrollbarConfigInterface;
 
+  @HostBinding('class.ps') @Input() usePSClass: boolean = true;
+
   constructor( public elementRef: ElementRef, @Optional() private defaults: PerfectScrollbarConfig, private zone: NgZone ) {}
 
   ngDoCheck() {

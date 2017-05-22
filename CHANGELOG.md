@@ -1,3 +1,7 @@
+4.1.0 Feature release
+
+  - Updated perfect-scrollbar version
+
 4.0.0 Feature release
 
   - Switched to using Angular 4.0.0 version
