@@ -1,3 +1,7 @@
+4.3.0 Feature release
+
+  - Added support for disabling ps functionality
+
 4.2.0 Feature release
 
   - Added change detection for config changes
