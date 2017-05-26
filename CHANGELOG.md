@@ -1,3 +1,7 @@
+4.2.0 Feature release
+
+  - Added change detection for config changes
+
 4.1.0 Feature release
 
   - Updated perfect-scrollbar version

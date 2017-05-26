@@ -1,6 +1,6 @@
 import * as Ps from 'perfect-scrollbar';
 
-import { Component, DoCheck, OnDestroy, OnChanges, Input, Optional, HostBinding, ElementRef, AfterViewInit, ViewEncapsulation, SimpleChanges, NgZone } from '@angular/core';
+import { Component, DoCheck, OnDestroy, OnChanges, Input, Optional, HostBinding, ElementRef, AfterViewInit, ViewEncapsulation, SimpleChanges, KeyValueDiffers, NgZone } from '@angular/core';
 
 import { PerfectScrollbarConfig, PerfectScrollbarConfigInterface } from './perfect-scrollbar.interfaces';
 
@@ -14,6 +14,8 @@ export class PerfectScrollbarComponent implements DoCheck, OnDestroy, OnChanges,
   private width: number;
   private height: number;
 
+  private configDiff: any;
+
   private contentWidth: number;
   private contentHeight: number;
 
@@ -26,24 +28,35 @@ export class PerfectScrollbarComponent implements DoCheck, OnDestroy, OnChanges,
 
   @HostBinding('class.ps') @Input() usePSClass: boolean = true;
 
-  constructor( public elementRef: ElementRef, @Optional() private defaults: PerfectScrollbarConfig, private zone: NgZone ) {}
+  constructor( public elementRef: ElementRef, @Optional() private defaults: PerfectScrollbarConfig, private differs: KeyValueDiffers, private zone: NgZone ) {}
 
   ngDoCheck() {
-    if (this.elementRef.nativeElement.children && this.elementRef.nativeElement.children.length) {
-      let width = this.elementRef.nativeElement.offsetWidth;
-      let height = this.elementRef.nativeElement.offsetHeight;
+    if (this.configDiff) {
+      let changes = this.configDiff.diff(this.config || {});
 
-      let contentWidth = this.elementRef.nativeElement.children[0].offsetWidth;
-      let contentHeight = this.elementRef.nativeElement.children[0].offsetHeight;
+      if (changes) {
+        this.ngOnDestroy();
 
-      if (width !== this.width || height !== this.height || contentWidth !== this.contentWidth || contentHeight !== this.contentHeight) {
-        this.width = width;
-        this.height = height;
+        // Timeout is needed for the styles to update properly
+        setTimeout(() => {
+          this.ngAfterViewInit();
+        }, 0);
+      } else if (this.elementRef.nativeElement.children && this.elementRef.nativeElement.children.length) {
+        let width = this.elementRef.nativeElement.offsetWidth;
+        let height = this.elementRef.nativeElement.offsetHeight;
 
-        this.contentWidth = contentWidth;
-        this.contentHeight = contentHeight;
+        let contentWidth = this.elementRef.nativeElement.children[0].offsetWidth;
+        let contentHeight = this.elementRef.nativeElement.children[0].offsetHeight;
 
-        this.update();
+        if (width !== this.width || height !== this.height || contentWidth !== this.contentWidth || contentHeight !== this.contentHeight) {
+          this.width = width;
+          this.height = height;
+
+          this.contentWidth = contentWidth;
+          this.contentHeight = contentHeight;
+
+          this.update();
+        }
       }
     }
   }
@@ -59,8 +72,10 @@ export class PerfectScrollbarComponent implements DoCheck, OnDestroy, OnChanges,
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes['hidden'] && !this.hidden) {
-      this.update();
+    if (this.configDiff) {
+      if (changes['hidden'] && !this.hidden) {
+        this.update();
+      }
     }
   }
 
@@ -75,6 +90,10 @@ export class PerfectScrollbarComponent implements DoCheck, OnDestroy, OnChanges,
       this.zone.runOutsideAngular(() => {
         Ps.initialize(this.elementRef.nativeElement, config);
       });
+    }
+
+    if (!this.configDiff) {
+      this.configDiff = this.differs.find(this.config || {}).create(null);
     }
   }
 

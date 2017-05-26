@@ -26,7 +26,7 @@
       <div class="box-title">Component</div>
 
       <div class="list-container" fxLayout="column" fxLayoutAlign="stretch" fxFlex>
-        <perfect-scrollbar fxFlex>
+        <perfect-scrollbar fxFlex [config]="config">
           Scroll<br>
           me!<br>
           <br>
@@ -62,7 +62,7 @@
       <div class="box-title">Directive</div>
 
       <div class="list-container" fxLayout="column" fxLayoutAlign="stretch" fxFlex>
-        <div perfect-scrollbar fxFlex>
+        <div fxFlex [perfect-scrollbar]="config">
           Scroll<br>
           me!<br>
           <br>
