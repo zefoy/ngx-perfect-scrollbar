@@ -21,12 +21,14 @@
   &.ps-static {
     position: static;
 
-    .ps__scrollbar-x-rail {
-      left: 0 !important;
-    }
+    & > .ps-content {
+      .ps__scrollbar-x-rail {
+        left: 0 !important;
+      }
 
-    .ps__scrollbar-y-rail {
-      top: 0 !important;
+      .ps__scrollbar-y-rail {
+        top: 0 !important;
+      }
     }
   }
 }

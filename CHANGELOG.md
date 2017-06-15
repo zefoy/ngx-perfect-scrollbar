@@ -1,3 +1,7 @@
+4.3.2 Bug fix release
+
+  - Fixed the static styles leaking to childs
+
 4.3.1 Bug fix release
 
   - Fixed version of the css import in the readme
