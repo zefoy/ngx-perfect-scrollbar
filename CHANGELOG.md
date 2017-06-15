@@ -1,3 +1,7 @@
+4.3.1 Bug fix release
+
+  - Fixed version of the css import in the readme
+
 4.3.0 Feature release
 
   - Added support for disabling ps functionality
