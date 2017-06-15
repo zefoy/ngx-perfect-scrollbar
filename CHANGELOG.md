@@ -1,3 +1,7 @@
+4.3.3 Bug fix release
+
+  - Proper fix for the styles leaking bug
+
 4.3.2 Bug fix release
 
   - Fixed the static styles leaking to childs
