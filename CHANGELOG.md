@@ -1,3 +1,7 @@
+4.4.0 Feature release
+
+  - Added static and outside class inputs
+
 4.3.3 Bug fix release
 
   - Proper fix for the styles leaking bug

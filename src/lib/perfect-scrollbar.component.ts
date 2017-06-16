@@ -30,6 +30,9 @@ export class PerfectScrollbarComponent implements DoCheck, OnDestroy, OnChanges,
 
   @HostBinding('class.ps') @Input() usePSClass: boolean = true;
 
+  @HostBinding('class.ps-static') @Input() static: boolean = false;
+  @HostBinding('class.ps-outside') @Input() outside: boolean = false;
+
   constructor( public elementRef: ElementRef, @Optional() private defaults: PerfectScrollbarConfig, private differs: KeyValueDiffers, private zone: NgZone ) {}
 
   ngDoCheck() {

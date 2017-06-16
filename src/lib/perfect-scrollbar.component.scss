@@ -21,14 +21,32 @@
   &.ps-static {
     position: static;
 
-    & > .ps-content {
-      & > .ps__scrollbar-x-rail {
-        left: 0 !important;
-      }
+    & > .ps__scrollbar-x-rail {
+      left: 0 !important;
+    }
 
-      & > .ps__scrollbar-y-rail {
-        top: 0 !important;
-      }
+    & > .ps__scrollbar-y-rail {
+      top: 0 !important;
+    }
+  }
+
+  &.ps-outside {
+    &.ps--active-x {
+      padding-bottom: 24px;
+      margin-bottom: -24px;
+    }
+
+    &.ps--active-y {
+      padding-right: 24px;
+      margin-right: -24px;
+    }
+
+    & > .ps__scrollbar-x-rail {
+      margin: 0 8px;
+    }
+
+    & > .ps__scrollbar-y-rail {
+      margin: 8px 0;
     }
   }
 }
