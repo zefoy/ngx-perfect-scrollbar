@@ -1,1 +1,5 @@
-<div class="ps-content"><ng-content></ng-content></div>
+<div #ps="ngxPerfectScrollbar" [perfect-scrollbar]="config" [disabled]="disabled" [usePSClass]="usePSClass" [psPosStyle]="null" [runInsideAngular]="runInsideAngular">
+  <div class="ps-content">
+    <ng-content></ng-content>
+  </div>
+</div>

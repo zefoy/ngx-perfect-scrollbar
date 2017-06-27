@@ -4,7 +4,7 @@
   ],
   "rules": {
     "max-line-length": [true, 360],
-    "no-inferrable-types": true,
+    "no-inferrable-types": false,
     "class-name": true,
     "comment-format": [
       true,
@@ -26,9 +26,8 @@
     "no-var-keyword": true,
     "one-line": [
       true,
-      "check-catch",
       "check-else",
-      "check-open-brace",
+      "check-catch",
       "check-whitespace"
     ],
     "quotemark": [

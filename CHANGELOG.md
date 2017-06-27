@@ -1,3 +1,17 @@
+4.5.0 Feature release
+
+  * BREAKING CHANGES for the component
+
+  - Made component to use the directive
+
+  - Added geometry API / helper function
+
+  - Added autoPropagation component feature
+
+  - Removed unneeded static input / feature
+
+  - Replaced outside input with flexBreakpoint
+
 4.4.0 Feature release
 
   - Added static and outside class inputs

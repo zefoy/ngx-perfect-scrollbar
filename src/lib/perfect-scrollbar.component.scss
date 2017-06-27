@@ -1,52 +1,125 @@
 @import '../../node_modules/perfect-scrollbar/dist/css/perfect-scrollbar.min';
 
-.ps {
-  position: relative;
-
-  display: block;
-
+perfect-scrollbar {
   &[hidden] {
     display: none;
   }
 
+  &[fxflex],
   &[fxlayout] {
-    & > .ps-content {
+    & {
+      display: flex;
+    }
+/*
+    & > .ps,
+    & > .ps > .ps-content {
       display: flex;
       -webkit-box-flex: 1;
       -ms-flex: 1 1 auto;
       flex: 1 1 auto;
+    }*/
+  }
+
+  & > .ps {
+    position: relative;
+
+    display: block;
+
+    &.ps--active-x.ps--active-y {
+      & > .ps__scrollbar-y-rail {
+        margin: 0 0 8px;
+      }
+
+      & > .ps__scrollbar-x-rail {
+        margin: 0 8px 0 0;
+      }
     }
   }
 
-  &.ps-static {
-    position: static;
+  &.ps-spacing-tn,
+  &.ps-spacing-xs,
+  &.ps-spacing-sm {
+    padding: 0 8px 8px 0;
+    margin: 0 -8px -8px 0;
+  }
 
-    & > .ps__scrollbar-x-rail {
-      left: 0 !important;
-    }
+  &.ps-spacing-md,
+  &.ps-spacing-lg,
+  &.ps-spacing-xl {
+    padding: 0 24px 24px 0;
+    margin: 0 -24px -24px 0;
+  }
 
-    & > .ps__scrollbar-y-rail {
-      top: 0 !important;
+  &.ps-spacing-tn,
+  &.ps-spacing-xs,
+  &.ps-spacing-sm,
+  &.ps-spacing-md,
+  &.ps-spacing-lg,
+  &.ps-spacing-xl {
+    position: relative;
+
+    & > .ps {
+      position: static;
+
+      &.ps--active-y {
+        & > .ps__scrollbar-y-rail {
+          top: 0 !important;
+          right: 0 !important;
+
+          margin: 0;
+        }
+      }
+
+      &.ps--active-x {
+        & > .ps__scrollbar-x-rail {
+          bottom: 0 !important;
+          left: 0 !important;
+
+          margin: 0;
+        }
+      }
     }
   }
 
-  &.ps-outside {
-    &.ps--active-x {
-      padding-bottom: 24px;
-      margin-bottom: -24px;
+  &.ps-show-limits {
+    & > .ps {
+      & > .ps-content {
+        border: 2px solid rgba(0, 0, 0, 0);
+
+        transition: border-color 300ms ease-in-out;
+      }
     }
 
-    &.ps--active-y {
-      padding-right: 24px;
-      margin-right: -24px;
+    &.ps-start-y {
+      & > .ps {
+        & > .ps-content {
+          border-top-color: rgba(0, 0, 0, 0.3);
+        }
+      }
     }
 
-    & > .ps__scrollbar-x-rail {
-      margin: 0 8px;
+    &.ps-end-y {
+      & > .ps {
+        & > .ps-content {
+          border-bottom-color: rgba(0, 0, 0, 0.3);
+        }
+      }
     }
 
-    & > .ps__scrollbar-y-rail {
-      margin: 8px 0;
+    &.ps-start-x {
+      & > .ps {
+        & > .ps-content {
+          border-left-color: rgba(0, 0, 0, 0.3);
+        }
+      }
+    }
+
+    &.ps-end-x {
+      & > .ps {
+        & > .ps-content {
+          border-right-color: rgba(0, 0, 0, 0.3);
+        }
+      }
     }
   }
 }

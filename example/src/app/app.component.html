@@ -25,8 +25,8 @@
     <div class="vertical-container" fxLayout="column" fxLayoutAlign="stretch" fxFlex="50%">
       <div class="box-title">Component</div>
 
-      <div class="list-container" fxLayout="column" fxLayoutAlign="stretch" fxFlex>
-        <perfect-scrollbar fxFlex [config]="config">
+      <div class="list-container" fxLayout="column" style="position: relative" fxLayoutAlign="stretch" fxFlex>
+        <perfect-scrollbar fxFlex [config]="config" [flexBreakpoint]="'md'">
           Scroll<br>
           me!<br>
           <br>

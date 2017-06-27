@@ -1,8 +1,7 @@
-import * as Ps from 'perfect-scrollbar';
+import { Component, DoCheck, AfterViewInit, Input, HostBinding, HostListener, ViewChild, ElementRef, ChangeDetectorRef, ViewEncapsulation } from '@angular/core';
 
-import { Component, DoCheck, OnDestroy, OnChanges, AfterViewInit, Input, Optional, HostBinding, ElementRef, ViewEncapsulation, SimpleChanges, KeyValueDiffers, NgZone } from '@angular/core';
-
-import { PerfectScrollbarConfig, PerfectScrollbarConfigInterface } from './perfect-scrollbar.interfaces';
+import { PerfectScrollbarDirective } from './perfect-scrollbar.directive';
+import { PerfectScrollbarConfigInterface } from './perfect-scrollbar.interfaces';
 
 @Component({
   selector: 'perfect-scrollbar',
@@ -10,168 +9,204 @@ import { PerfectScrollbarConfig, PerfectScrollbarConfigInterface } from './perfe
   styleUrls: ['./perfect-scrollbar.component.css'],
   encapsulation: ViewEncapsulation.None
 })
-export class PerfectScrollbarComponent implements DoCheck, OnDestroy, OnChanges, AfterViewInit {
-  private width: number;
-  private height: number;
+export class PerfectScrollbarComponent implements DoCheck, AfterViewInit {
+  @HostBinding('class')
+  private state: string = '';
 
-  private configDiff: any;
+  @HostBinding('class')
+  private spacing: string = '';
 
-  private contentWidth: number;
-  private contentHeight: number;
+  private timeout: number = null;
+
+  private usePropagationX: boolean = false;
+  private usePropagationY: boolean = false;
+  private allowPropagation: boolean = false;
 
   @HostBinding('hidden')
   @Input() hidden: boolean = false;
 
   @Input() disabled: boolean = false;
 
+  @Input() usePSClass: boolean = true;
+
+  @Input()
+  set flexBreakpoint(bp: string) {
+    this.spacing = 'ps-spacing-' + bp;
+  };
+
+  @HostBinding('class.ps-show-limits')
+  @Input() autoPropagation: boolean = false;
+
   @Input() runInsideAngular: boolean = false;
 
   @Input() config: PerfectScrollbarConfigInterface;
 
-  @HostBinding('class.ps') @Input() usePSClass: boolean = true;
+  @ViewChild(PerfectScrollbarDirective) directiveRef: PerfectScrollbarDirective;
 
-  @HostBinding('class.ps-static') @Input() static: boolean = false;
-  @HostBinding('class.ps-outside') @Input() outside: boolean = false;
+  @HostListener('touchmove', ['$event']) onMove(event: any) {
+    if (!this.disabled && this.autoPropagation)
+    {
+      event.stopPropagation();
+    }
+  }
 
-  constructor( public elementRef: ElementRef, @Optional() private defaults: PerfectScrollbarConfig, private differs: KeyValueDiffers, private zone: NgZone ) {}
+  @HostListener('touchstart', ['$event']) onStart(event: any) {
+    if (!this.disabled && this.autoPropagation) {
+      this.allowPropagation = true;
+    }
+
+    if (!this.disabled && this.autoPropagation &&
+        this.directiveRef && this.directiveRef.settings &&
+        this.directiveRef.settings.swipePropagation)
+    {
+      if (!this.usePropagationX || !this.usePropagationY) {
+        console.log("OFF");
+        this.directiveRef.settings.swipePropagation = false;
+        this.directiveRef.settings.wheelPropagation = false;
+      }
+
+      if (this.elementRef.nativeElement.parentElement) {
+        let newEvent = new MouseEvent('touchstart', event);
+
+        newEvent['touches'] = event.touches;
+        newEvent['targetTouches'] = event.targetTouches;
+
+        this.elementRef.nativeElement.parentElement.dispatchEvent(newEvent);
+      }
+    }
+  }
+
+  @HostListener('ps-x-reach-end', ['$event']) onEndX(event: any) {
+    if (!this.disabled && this.autoPropagation &&
+        !this.usePropagationX && this.allowPropagation)
+    {
+      this.setPropagation(true, 'ps-end-x');
+    }
+  }
+
+  @HostListener('ps-y-reach-end', ['$event']) onEndY(event: any) {
+    if (!this.disabled && this.autoPropagation &&
+        !this.usePropagationY && this.allowPropagation)
+    {
+      this.setPropagation(true, 'ps-end-y');
+    }
+  }
+
+  @HostListener('ps-x-reach-start', ['$event']) onStartX(event: any) {
+    if (!this.disabled && this.autoPropagation &&
+        !this.usePropagationX && this.allowPropagation)
+    {
+      this.setPropagation(true, 'ps-start-x');
+    }
+  }
+
+  @HostListener('ps-y-reach-start', ['$event']) onStartY(event: any) {
+    if (!this.disabled && this.autoPropagation &&
+        !this.usePropagationY && this.allowPropagation)
+    {
+      this.setPropagation(true, 'ps-start-y');
+    }
+  }
+
+  @HostListener('ps-scroll-x', ['$event']) onScrollX(event: any) {
+    if (!this.disabled && this.autoPropagation && !this.usePropagationX) {
+      this.setPropagation(false, 'ps-scroll-x');
+    }
+  }
+
+  @HostListener('ps-scroll-y', ['$event']) onScrollY(event: any) {
+    if (!this.disabled && this.autoPropagation && !this.usePropagationY) {
+      this.setPropagation(false, 'ps-scroll-y');
+    }
+  }
+
+  constructor(private elementRef: ElementRef, private cdRef: ChangeDetectorRef) {}
 
   ngDoCheck() {
-    if (!this.disabled && this.configDiff) {
-      let changes = this.configDiff.diff(this.config || {});
+    if (!this.disabled && this.directiveRef && this.directiveRef.elementRef.nativeElement) {
+      if (this.autoPropagation) {
+        const element = this.directiveRef.elementRef.nativeElement;
 
-      if (changes) {
-        this.ngOnDestroy();
+        this.usePropagationX = !element.classList.contains('ps--active-x');
 
-        // Timeout is needed for the styles to update properly
-        setTimeout(() => {
-          this.ngAfterViewInit();
-        }, 0);
-      } else if (this.elementRef.nativeElement) {
-        let contentWidth = this.contentWidth;
-        let contentHeight = this.contentHeight;
+        this.usePropagationY = !element.classList.contains('ps--active-y');
 
-        let width = this.elementRef.nativeElement.offsetWidth;
-        let height = this.elementRef.nativeElement.offsetHeight;
-
-        if (this.elementRef.nativeElement.children && this.elementRef.nativeElement.children.length) {
-          contentWidth = this.elementRef.nativeElement.children[0].offsetWidth;
-          contentHeight = this.elementRef.nativeElement.children[0].offsetHeight;
-        }
-
-        if (width !== this.width || height !== this.height || contentWidth !== this.contentWidth || contentHeight !== this.contentHeight) {
-          this.width = width;
-          this.height = height;
-
-          this.contentWidth = contentWidth;
-          this.contentHeight = contentHeight;
-
-          this.update();
-        }
-      }
-    }
-  }
-
-  ngOnDestroy() {
-    if (this.runInsideAngular) {
-      Ps.destroy(this.elementRef.nativeElement);
-    } else {
-      this.zone.runOutsideAngular(() => {
-        Ps.destroy(this.elementRef.nativeElement);
-      });
-    }
-  }
-
-  ngOnChanges(changes: SimpleChanges) {
-    if (!this.disabled && this.configDiff) {
-      if (changes['hidden'] && !this.hidden) {
-        this.update();
-      }
-
-      if (changes['disabled'] && !this.disabled) {
-        this.ngOnDestroy();
+        this.directiveRef.settings.swipePropagation = this.usePropagationX && this.usePropagationY;
+        this.directiveRef.settings.wheelPropagation = this.usePropagationX && this.usePropagationY;
       }
     }
   }
 
   ngAfterViewInit() {
     if (!this.disabled) {
-      let config = new PerfectScrollbarConfig(this.defaults);
+      if (this.autoPropagation) {
+        this.directiveRef.settings.swipePropagation = false;
+        this.directiveRef.settings.wheelPropagation = false;
 
-      config.assign(this.config);
-
-      if (this.runInsideAngular) {
-        Ps.initialize(this.elementRef.nativeElement, config);
-      } else {
-        this.zone.runOutsideAngular(() => {
-          Ps.initialize(this.elementRef.nativeElement, config);
-        });
-      }
-
-      if (!this.configDiff) {
-        this.configDiff = this.differs.find(this.config || {}).create(null);
+        this.cdRef.markForCheck();
       }
     }
   }
 
   update() {
-    if (!this.disabled) {
-      if (this.runInsideAngular) {
-        Ps.update(this.elementRef.nativeElement);
-      } else {
-        this.zone.runOutsideAngular(() => {
-          Ps.update(this.elementRef.nativeElement);
-        });
-      }
-    }
+    console.warn('Deprecated, call API through directive reference (#reference="PerfectScrollbarDirective")');
+
+    this.directiveRef.update();
   }
 
   scrollTo(x: number, y?: number) {
-    if (!this.disabled) {
-      if (y == null) {
-        this.elementRef.nativeElement.scrollTop = x;
-      } else {
-        this.elementRef.nativeElement.scrollTop = y;
+    console.warn('Deprecated function, you should call PS API through directiveRef!');
 
-        this.elementRef.nativeElement.scrollLeft = x;
-      }
-
-      this.update();
-    }
+    this.directiveRef.scrollTo(x, y);
   }
 
   scrollToTop(offset: number = 0) {
-    if (!this.disabled) {
-      this.elementRef.nativeElement.scrollTop = 0 + offset;
+    console.warn('Deprecated function, you should call PS API through directiveRef!');
 
-      this.update();
-    }
+    this.directiveRef.scrollToTop(offset);
   }
 
   scrollToLeft(offset: number = 0) {
-    if (!this.disabled) {
-      this.elementRef.nativeElement.scrollLeft = 0 + offset;
+    console.warn('Deprecated function, you should call PS API through directiveRef!');
 
-      this.update();
-    }
+    this.directiveRef.scrollToLeft(offset);
   }
 
   scrollToRight(offset: number = 0) {
-    if (!this.disabled) {
-      let width = this.elementRef.nativeElement.scrollWidth;
+    console.warn('Deprecated function, you should call PS API through directiveRef!');
 
-      this.elementRef.nativeElement.scrollLeft = width - offset;
-
-      this.update();
-    }
+    this.directiveRef.scrollToRight(offset);
   }
 
   scrollToBottom(offset: number = 0) {
-    if (!this.disabled) {
-      let height = this.elementRef.nativeElement.scrollHeight;
+    console.warn('Deprecated function, you should call PS API through directiveRef!');
 
-      this.elementRef.nativeElement.scrollTop = height - offset;
+    this.directiveRef.scrollToBottom(offset);
+  }
 
-      this.update();
+  setPropagation(setting: boolean = false, state: string) {
+    this.state = state;
+console.log(state);
+    window.clearTimeout(this.timeout);
+
+    if (setting) {
+      this.timeout = window.setTimeout(() => {
+        console.log("ON");
+        this.state = '';
+
+        this.cdRef.markForCheck();
+
+        this.timeout = window.setTimeout(() => {
+          this.directiveRef.settings.swipePropagation = true;
+          this.directiveRef.settings.wheelPropagation = true;
+        }, 0);
+      }, 1000);
+    } else {
+      console.log("OFF");
+      this.allowPropagation = true;
+
+      this.directiveRef.settings.swipePropagation = false;
+      this.directiveRef.settings.wheelPropagation = false;
     }
   }
 }

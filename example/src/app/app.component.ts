@@ -11,33 +11,38 @@ import { PerfectScrollbarComponent, PerfectScrollbarDirective, PerfectScrollbarC
 export class AppComponent {
   public config: PerfectScrollbarConfigInterface = {};
 
-  @ViewChild(PerfectScrollbarComponent) componentScroll;
-  @ViewChild(PerfectScrollbarDirective) directiveScroll;
+  @ViewChild(PerfectScrollbarComponent) componentScroll: PerfectScrollbarComponent;
+  @ViewChild(PerfectScrollbarDirective) directiveScroll: PerfectScrollbarDirective;
 
   constructor() {}
 
   onScrollToXY(x: number, y: number) {
-    this.componentScroll.scrollTo(x, y);
     this.directiveScroll.scrollTo(x, y);
+
+    this.componentScroll.directiveRef.scrollTo(x, y);
   }
 
   onScrollToTop() {
-    this.componentScroll.scrollToTop();
     this.directiveScroll.scrollToTop();
+
+    this.componentScroll.directiveRef.scrollToTop();
   }
 
   onScrollToLeft() {
-    this.componentScroll.scrollToLeft();
     this.directiveScroll.scrollToLeft();
+
+    this.componentScroll.directiveRef.scrollToLeft();
   }
 
   onScrollToRight() {
-    this.componentScroll.scrollToRight();
     this.directiveScroll.scrollToRight();
+
+    this.componentScroll.directiveRef.scrollToRight();
   }
 
   onScrollToBottom() {
-    this.componentScroll.scrollToBottom();
     this.directiveScroll.scrollToBottom();
+
+    this.componentScroll.directiveRef.scrollToBottom();
   }
 }

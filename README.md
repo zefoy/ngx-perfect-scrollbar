@@ -65,6 +65,18 @@ Simply replace the element that would ordinarily be passed to `Ps.initialize` wi
 
 ```javascript
 [config]                // Custom config to override the global defaults.
+
+[static]                // Static position (effects scrollbar positioning).
+[disabled]              // Disables the perfect scrollbar initialization.
+
+[usePSClass]            // Use ps class (needed by the ps theme styles).
+
+[flexBreakpoint]        // Flex breakpoint class (used for responsivity).
+[autoPropagation]       // Automatic swipe and wheel propagation control.
+
+[runInsideAngular]      // Run perfect scrollbar inside the Angular zone.
+
+(<ps-event-name>)       // All perfect scrollbar events work as bindings.
 ```
 
 **DIRECTIVE USAGE**
@@ -83,6 +95,28 @@ Perfect scrollbar directive should be used with div elements and can take option
 
 ```javascript
 [perfect-scrollbar]     // Can be used to provide optional custom config.
+
+[disabled]              // Disables the perfect scrollbar initialization.
+
+[usePSClass]            // Use ps class (needed by the ps theme styles).
+[psPosStyle]            // Position style (controls scrollbar placement).
+
+[runInsideAngular]      // Run perfect scrollbar inside the Angular zone.
+
+(<ps-event-name>)       // All perfect scrollbar events work as bindings.
+```
+
+Public API functions which can be accessed through the component / directive reference:
+
+```javascript
+update()                // Updates the size / position of the scrollbar.
+geometry()              // Returns current scroll position and element size.
+
+scrollTo(y | x, y)      // Scroll to given position (instant, no animation).
+scrollToTop(offset)     // Scroll to given offset from the top (offset optional).
+scrollToLeft(offset)    // Scroll to given offset from the left (offset optional).
+scrollToRight(offset)   // Scroll to given offset from the right (offset optional).
+scrollToBottom(offset)  // Scroll to given offset from the bottom (offset optional).
 ```
 
 ##### Available configuration options (custom / global configuration):

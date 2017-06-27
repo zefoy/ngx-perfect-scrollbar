@@ -6,11 +6,11 @@ import { PerfectScrollbarConfig, PerfectScrollbarConfigInterface } from './perfe
 
 @Directive({
   selector: '[perfect-scrollbar]',
-  host: {
-    style: 'position: relative;'
-  }
+  exportAs: 'ngxPerfectScrollbar'
 })
 export class PerfectScrollbarDirective implements DoCheck, OnDestroy, OnChanges, AfterViewInit {
+  public settings: PerfectScrollbarConfig = null;
+
   private width: number;
   private height: number;
 
@@ -24,13 +24,17 @@ export class PerfectScrollbarDirective implements DoCheck, OnDestroy, OnChanges,
 
   @Input() disabled: boolean = false;
 
+  @HostBinding('class.ps')
+  @Input() usePSClass: boolean = true;
+
+  @HostBinding('style.position')
+  @Input() psPosStyle: string = 'relative';
+
   @Input() runInsideAngular: boolean = false;
 
   @Input('perfect-scrollbar') config: PerfectScrollbarConfigInterface;
 
-  @HostBinding('class.ps') @Input() usePSClass: boolean = true;
-
-  constructor( public elementRef: ElementRef, @Optional() private defaults: PerfectScrollbarConfig, private differs: KeyValueDiffers, private zone: NgZone ) {}
+  constructor(public elementRef: ElementRef, @Optional() private defaults: PerfectScrollbarConfig, private differs: KeyValueDiffers, private zone: NgZone) {}
 
   ngDoCheck() {
     if (!this.disabled && this.configDiff) {
@@ -92,15 +96,15 @@ export class PerfectScrollbarDirective implements DoCheck, OnDestroy, OnChanges,
 
   ngAfterViewInit() {
     if (!this.disabled) {
-      let config = new PerfectScrollbarConfig(this.defaults);
+      this.settings = new PerfectScrollbarConfig(this.defaults);
 
-      config.assign(this.config);
+      this.settings.assign(this.config);
 
       if (this.runInsideAngular) {
-        Ps.initialize(this.elementRef.nativeElement, config);
+        Ps.initialize(this.elementRef.nativeElement, this.settings);
       } else {
         this.zone.runOutsideAngular(() => {
-          Ps.initialize(this.elementRef.nativeElement, config);
+          Ps.initialize(this.elementRef.nativeElement, this.settings);
         });
       }
 
@@ -120,6 +124,15 @@ export class PerfectScrollbarDirective implements DoCheck, OnDestroy, OnChanges,
         });
       }
     }
+  }
+
+  geometry(): any {
+    return {
+      top: this.elementRef.nativeElement.scrollTop,
+      left: this.elementRef.nativeElement.scrollLeft,
+      width: this.elementRef.nativeElement.scrollWidth,
+      height: this.elementRef.nativeElement.scrollHeight
+    };
   }
 
   scrollTo(x: number, y?: number) {
