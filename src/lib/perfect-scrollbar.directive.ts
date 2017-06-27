@@ -1,6 +1,6 @@
 import * as Ps from 'perfect-scrollbar';
 
-import { Directive, DoCheck, OnDestroy, OnChanges, AfterViewInit, Input, Optional, HostBinding, ElementRef, SimpleChanges, KeyValueDiffers, NgZone } from '@angular/core';
+import { Directive, DoCheck, OnDestroy, OnChanges, AfterViewInit, Input, Optional, HostBinding, HostListener, ElementRef, SimpleChanges, KeyValueDiffers, NgZone } from '@angular/core';
 
 import { PerfectScrollbarConfig, PerfectScrollbarConfigInterface } from './perfect-scrollbar.interfaces';
 
@@ -29,6 +29,11 @@ export class PerfectScrollbarDirective implements DoCheck, OnDestroy, OnChanges,
   @Input('perfect-scrollbar') config: PerfectScrollbarConfigInterface;
 
   @HostBinding('class.ps') @Input() usePSClass: boolean = true;
+
+  @HostListener('window:resize', ['$event'])
+  onResize($event: Event) {
+    this.update();
+  }
 
   constructor( public elementRef: ElementRef, @Optional() private defaults: PerfectScrollbarConfig, private differs: KeyValueDiffers, private zone: NgZone ) {}
 
