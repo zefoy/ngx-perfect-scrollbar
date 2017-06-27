@@ -31,7 +31,7 @@ export class PerfectScrollbarDirective implements DoCheck, OnDestroy, OnChanges,
   @HostBinding('class.ps') @Input() usePSClass: boolean = true;
 
   @HostListener('window:resize', ['$event'])
-  onResize($event: Event) {
+  onResize($event: Event): void {
     this.update();
   }
 

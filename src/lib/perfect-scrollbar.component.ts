@@ -34,7 +34,7 @@ export class PerfectScrollbarComponent implements DoCheck, OnDestroy, OnChanges,
   @HostBinding('class.ps-outside') @Input() outside: boolean = false;
 
   @HostListener('window:resize', ['$event'])
-  onResize($event: Event) {
+  onResize($event: Event): void {
     this.update();
   }
 
