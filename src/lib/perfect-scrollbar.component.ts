@@ -1,6 +1,6 @@
 import * as Ps from 'perfect-scrollbar';
 
-import { Component, DoCheck, OnDestroy, OnChanges, AfterViewInit, Input, Optional, HostBinding, ElementRef, ViewEncapsulation, SimpleChanges, KeyValueDiffers, NgZone } from '@angular/core';
+import { Component, DoCheck, OnDestroy, OnChanges, AfterViewInit, Input, Optional, HostBinding, HostListener, ElementRef, ViewEncapsulation, SimpleChanges, KeyValueDiffers, NgZone } from '@angular/core';
 
 import { PerfectScrollbarConfig, PerfectScrollbarConfigInterface } from './perfect-scrollbar.interfaces';
 
@@ -32,6 +32,11 @@ export class PerfectScrollbarComponent implements DoCheck, OnDestroy, OnChanges,
 
   @HostBinding('class.ps-static') @Input() static: boolean = false;
   @HostBinding('class.ps-outside') @Input() outside: boolean = false;
+
+  @HostListener('window:resize', ['$event'])
+  onResize($event: Event): void {
+    this.update();
+  }
 
   constructor( public elementRef: ElementRef, @Optional() private defaults: PerfectScrollbarConfig, private differs: KeyValueDiffers, private zone: NgZone ) {}
 
