@@ -1,6 +1,6 @@
 import { Subject, Subscription } from 'rxjs';
 
-import { Component, OnInit, OnDestroy, DoCheck, AfterViewInit, Input, HostBinding, HostListener, ViewChild, ElementRef, ChangeDetectorRef, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, OnDestroy, DoCheck, Input, HostBinding, HostListener, ViewChild, ElementRef, ChangeDetectorRef, ViewEncapsulation } from '@angular/core';
 
 import { PerfectScrollbarDirective } from './perfect-scrollbar.directive';
 import { PerfectScrollbarConfigInterface } from './perfect-scrollbar.interfaces';
@@ -11,16 +11,17 @@ import { PerfectScrollbarConfigInterface } from './perfect-scrollbar.interfaces'
   styleUrls: ['./perfect-scrollbar.component.css'],
   encapsulation: ViewEncapsulation.None
 })
-export class PerfectScrollbarComponent implements OnInit, OnDestroy, DoCheck, AfterViewInit {
+export class PerfectScrollbarComponent implements OnInit, OnDestroy, DoCheck {
   private states: any = {};
   private notify: boolean = null;
 
   private timeout: number = null;
 
-  private userInteraction: boolean = false;
-
   private usePropagationX: boolean = false;
   private usePropagationY: boolean = false;
+
+  private userInteraction: boolean = false;
+  private allowPropagation: boolean = false;
 
   private statesSub: Subscription = null;
   private statesUpdate: Subject<string> = new Subject();
@@ -52,71 +53,10 @@ export class PerfectScrollbarComponent implements OnInit, OnDestroy, DoCheck, Af
 
   @ViewChild(PerfectScrollbarDirective) directiveRef: PerfectScrollbarDirective;
 
-
-
-  /*@HostListener('touchmove', ['$event']) onMove(event: any) {
-    if (!this.disabled && this.autoPropagation &&
-        this.directiveRef && this.directiveRef.settings &&
-        !this.directiveRef.settings.swipePropagation)
-    {
-      event.stopPropagation();
-    }
-  }*/
-
-  @HostListener('touchstart', ['$event']) onStart(event: any) {
-    console.log("TS", event);
-    if (!this.disabled && this.autoPropagation) {
-      this.userInteraction = true;
-    }
-
-    if (!this.disabled && this.autoPropagation &&
-        this.directiveRef && this.directiveRef.settings &&
-        this.directiveRef.settings.swipePropagation)
-    {
-      if (!this.usePropagationX || !this.usePropagationY) {
-        console.log("OFF");
-        this.directiveRef.settings.swipePropagation = false;
-        this.directiveRef.settings.wheelPropagation = false;
-      }
-    }
-  }
   @HostListener('document:touchstart', ['$event']) onTestOne(event: any) {
-    event.stopPropagation();
-  }
-
-  @HostListener('ps-x-reach-end', ['$event']) onEndX(event: any) {
-    if (!this.disabled && (this.autoPropagation || this.scrollIndicators)) {
-      this.statesUpdate.next('right');
-    }
-  }
-
-  @HostListener('ps-y-reach-end', ['$event']) onEndY(event: any) {
-    if (!this.disabled && (this.autoPropagation || this.scrollIndicators)) {
-      this.statesUpdate.next('bottom');
-    }
-  }
-
-  @HostListener('ps-x-reach-start', ['$event']) onStartX(event: any) {
-    if (!this.disabled && (this.autoPropagation || this.scrollIndicators)) {
-      this.statesUpdate.next('left');
-    }
-  }
-
-  @HostListener('ps-y-reach-start', ['$event']) onStartY(event: any) {
-    if (!this.disabled && (this.autoPropagation || this.scrollIndicators)) {
-      this.statesUpdate.next('top');
-    }
-  }
-
-  @HostListener('ps-scroll-x', ['$event']) onScrollX(event: any) {
-    if (!this.disabled && (this.autoPropagation || this.scrollIndicators)) {
-      this.statesUpdate.next(null);
-    }
-  }
-
-  @HostListener('ps-scroll-y', ['$event']) onScrollY(event: any) {
-    if (!this.disabled && (this.autoPropagation || this.scrollIndicators)) {
-      this.statesUpdate.next(null);
+    // Stop the generated event from reaching window for PS to work correctly
+    if (event['psGenerated']) {
+      event.stopPropagation();
     }
   }
 
@@ -126,8 +66,7 @@ export class PerfectScrollbarComponent implements OnInit, OnDestroy, DoCheck, Af
     this.activeSub = this.activeUpdate
       .distinctUntilChanged()
       .subscribe((active: boolean) => {
-        this.directiveRef.settings.swipePropagation = active;
-        this.directiveRef.settings.wheelPropagation = active;
+        this.allowPropagation = active;
       });
 
     this.statesSub = this.statesUpdate
@@ -135,10 +74,37 @@ export class PerfectScrollbarComponent implements OnInit, OnDestroy, DoCheck, Af
       .subscribe((state: string) => {
         window.clearTimeout(this.timeout);
 
-        window.setTimeout(() => {
-          if (state) {
+        if (state) {
+          this.notify = true;
+          this.states[state] = true;
+
+          this.cdRef.markForCheck();
+
+          this.timeout = window.setTimeout(() => {
+            this.notify = false;
+
+            this.cdRef.markForCheck();
+            if (this.autoPropagation && this.userInteraction &&
+               ((!this.usePropagationX && (this.states.left || this.states.right)) ||
+               (!this.usePropagationY && (this.states.top || this.states.bottom))))
+            {
+              this.allowPropagation = true;
+            }
+          }, 500);
+        } else {
+          this.states = {};
+          this.notify = false;
+
+          this.cdRef.markForCheck();
+
+          this.userInteraction = true;
+
+          if (this.autoPropagation &&
+            (!this.usePropagationX || !this.usePropagationY))
+          {
+            this.allowPropagation = false;
+          } else if (this.scrollIndicators) {
             this.notify = true;
-            this.states[state] = true;
 
             this.cdRef.markForCheck();
 
@@ -146,43 +112,9 @@ export class PerfectScrollbarComponent implements OnInit, OnDestroy, DoCheck, Af
               this.notify = false;
 
               this.cdRef.markForCheck();
-
-              if (this.autoPropagation && this.userInteraction &&
-                 ((!this.usePropagationX && (state === 'left' || state === 'right')) ||
-                 (!this.usePropagationY && (state === 'top' || state === 'bottom'))))
-              {
-                console.log("ON");
-                this.directiveRef.settings.swipePropagation = true;
-                this.directiveRef.settings.wheelPropagation = true;
-              }
             }, 500);
-          } else {
-            this.states = {};
-            this.notify = false;
-
-            this.cdRef.markForCheck();
-
-            this.userInteraction = true;
-
-            if (this.autoPropagation &&
-              (!this.usePropagationX || !this.usePropagationY))
-            {
-              console.log("OFF");
-              this.directiveRef.settings.swipePropagation = false;
-              this.directiveRef.settings.wheelPropagation = false;
-            } else if (this.scrollIndicators) {
-              this.notify = true;
-
-              this.cdRef.markForCheck();
-
-              this.timeout = window.setTimeout(() => {
-                this.notify = false;
-
-                this.cdRef.markForCheck();
-              }, 500);
-            }
           }
-        }, 0);
+        }
       });
   }
 
@@ -197,9 +129,7 @@ export class PerfectScrollbarComponent implements OnInit, OnDestroy, DoCheck, Af
   }
 
   ngDoCheck() {
-    if (!this.disabled && this.autoPropagation &&
-        this.directiveRef && this.directiveRef.settings)
-    {
+    if (!this.disabled && this.autoPropagation && this.directiveRef) {
       const element = this.directiveRef.elementRef.nativeElement;
 
       this.usePropagationX = !element.classList.contains('ps--active-x');
@@ -210,16 +140,15 @@ export class PerfectScrollbarComponent implements OnInit, OnDestroy, DoCheck, Af
     }
   }
 
-  ngAfterViewInit() {
-    if (!this.disabled && this.autoPropagation) {
-      this.directiveRef.settings.swipePropagation = false;
-      this.directiveRef.settings.wheelPropagation = false;
+  getConfig(): PerfectScrollbarConfigInterface {
+    const config = this.config || {};
+
+    if (this.autoPropagation) {
+      config.swipePropagation = true;
+      config.wheelPropagation = true;
     }
 
-    if (!this.disabled && (this.autoPropagation || this.scrollIndicators)) {
-      this.cdRef.markForCheck();
-      this.cdRef.detectChanges();
-    }
+    return config;
   }
 
   update() {
@@ -258,22 +187,58 @@ export class PerfectScrollbarComponent implements OnInit, OnDestroy, DoCheck, Af
     this.directiveRef.scrollToBottom(offset);
   }
 
-  onTouchStart(event: Event = null) {
-    // PS stops the touchmove event so we duplicate it here
-console.log("START", this.directiveRef.settings.swipePropagation);
-    if (!this.disabled && this.autoPropagation &&
-        this.directiveRef && this.directiveRef.settings &&
-        this.directiveRef.settings.swipePropagation)
-    {
-      if (this.elementRef.nativeElement) {
-        console.log("SEND");
-        let newEvent = new MouseEvent('touchstart', event);
-
-        newEvent['touches'] = event['touches'];
-        newEvent['targetTouches'] = event['targetTouches'];
-
-        this.elementRef.nativeElement.dispatchEvent(newEvent);
+  onTouchEnd(event: Event = null) {
+    if (!this.disabled && this.autoPropagation) {
+      if (!this.usePropagationX || !this.usePropagationY) {
+        this.allowPropagation = false;
       }
+    }
+  }
+
+  onTouchMove(event: Event = null) {
+    if (!this.disabled && this.autoPropagation) {
+      if (!this.allowPropagation) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+    }
+  }
+
+  onTouchStart(event: Event = null) {
+    if (!this.disabled && this.autoPropagation) {
+      this.userInteraction = true;
+
+      if (this.allowPropagation) {
+        // PS stops the touchmove event so we re-emit it here
+        if (this.elementRef.nativeElement) {
+          let newEvent = new MouseEvent('touchstart', event);
+
+          newEvent['psGenerated'] = true;
+          newEvent['touches'] = event['touches'];
+          newEvent['targetTouches'] = event['targetTouches'];
+
+          this.elementRef.nativeElement.dispatchEvent(newEvent);
+        }
+      }
+    }
+  }
+
+  onWheelEvent(event: Event = null) {
+    if (!this.disabled && this.autoPropagation) {
+      this.userInteraction = true;
+
+      if (!this.allowPropagation) {
+        event.preventDefault();
+        event.stopPropagation();
+      } else if (!this.usePropagationX || !this.usePropagationY) {
+        this.allowPropagation = false;
+      }
+    }
+  }
+
+  onReachEvent(event: Event = null, edge: string) {
+    if (!this.disabled && (this.autoPropagation || this.scrollIndicators)) {
+      this.statesUpdate.next(edge);
     }
   }
 }

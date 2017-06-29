@@ -1,4 +1,4 @@
-<div #ps="ngxPerfectScrollbar" [perfect-scrollbar]="config" [disabled]="disabled" [usePSClass]="usePSClass" [psPosStyle]="null" [runInsideAngular]="runInsideAngular" (touchstart)="onTouchStart($event)">
+<div #ps="ngxPerfectScrollbar" [perfect-scrollbar]="getConfig()" [disabled]="disabled" [usePSClass]="usePSClass" [psPosStyle]="null" [runInsideAngular]="runInsideAngular" (wheel)="onWheelEvent($event)" (touchstart)="onTouchStart($event)" (touchmove)="onTouchMove($event)" (touchend)="onTouchEnd($event)" (ps-scroll-x)="onReachEvent($event, null)"  (ps-scroll-y)="onReachEvent($event, null)" (ps-x-reach-end)="onReachEvent($event, 'right')" (ps-y-reach-end)="onReachEvent($event, 'bottom')" (ps-x-reach-start)="onReachEvent($event, 'left')" (ps-y-reach-start)="onReachEvent($event, 'top')">
   <div class="ps-content">
     <ng-content></ng-content>
   </div>
