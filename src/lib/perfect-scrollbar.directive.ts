@@ -132,8 +132,8 @@ export class PerfectScrollbarDirective implements DoCheck, OnDestroy, OnChanges,
 
   position(): any {
     return {
-      top: this.elementRef.nativeElement.scrollTop,
-      left: this.elementRef.nativeElement.scrollLeft
+      x: this.elementRef.nativeElement.scrollLeft,
+      y: this.elementRef.nativeElement.scrollTop
     };
   }
 

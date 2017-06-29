@@ -106,21 +106,6 @@ Perfect scrollbar directive should be used with div elements and can take option
 (<ps-event-name>)       // All perfect scrollbar events work as bindings.
 ```
 
-API functions which can be accessed through the directive reference (directiveRef under the component reference):
-
-```javascript
-update()                        // Updates the scrollbar size / position.
-position()                      // Returns the current scroll position.
-
-scrollTo(x, y, speed)           // Scroll to given x,y coordinates.
-scrollToY(position, speed)      // Scroll vertically to given position.
-scrollToX(position, speed)      // Scroll horizontally to given position.
-scrollToTop(offset, speed)      // Scroll to given offset from the top.
-scrollToLeft(offset, speed)     // Scroll to given offset from the left.
-scrollToRight(offset, speed)    // Scroll to given offset from the right.
-scrollToBottom(offset, speed)   // Scroll to given offset from the bottom.
-```
-
 ##### Available configuration options (custom / global configuration):
 
 ```javascript
@@ -138,3 +123,20 @@ stopPropagationOnClick  // Stop the propagation of click event (Default: true).
 ```
 
 For more detailed documentation with all the supported events / options see the [Perfect Scrollbar documentation](https://github.com/noraesae/perfect-scrollbar/).
+
+##### Available control / helper functions (provided by the directive):
+
+```javascript
+update()                        // Updates the scrollbar size and position.
+position()                      // Returns the current scroll position (x,y).
+
+scrollTo(x, y, speed)           // Animate scroll to given x,y coordinates.
+scrollToY(position, speed)      // Animate scroll to given vertical position.
+scrollToX(position, speed)      // Animate scroll to given horizontal position.
+scrollToTop(offset, speed)      // Animate scroll to given offset from the top.
+scrollToLeft(offset, speed)     // Animate scroll to given offset from the left.
+scrollToRight(offset, speed)    // Animate scroll to given offset from the right.
+scrollToBottom(offset, speed)   // Animate scroll to given offset from the bottom.
+```
+
+Above functions can be accessed through the directive reference (available as directiveRef in the component).
