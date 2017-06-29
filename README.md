@@ -106,7 +106,7 @@ Perfect scrollbar directive should be used with div elements and can take option
 (<ps-event-name>)       // All perfect scrollbar events work as bindings.
 ```
 
-Public API functions which can be accessed through the directive reference (directiveRef under the component reference):
+API functions which can be accessed through the directive reference (directiveRef under the component reference):
 
 ```javascript
 update()                        // Updates the scrollbar size / position.
@@ -137,4 +137,4 @@ scrollYMarginOffset     // Offset before enabling the Y scroller (Default: 0).
 stopPropagationOnClick  // Stop the propagation of click event (Default: true).
 ```
 
-For more detailed documentation with all the supported options see [Perfect Scrollbar documentation](https://github.com/noraesae/perfect-scrollbar/).
+For more detailed documentation with all the supported events / options see the [Perfect Scrollbar documentation](https://github.com/noraesae/perfect-scrollbar/).
