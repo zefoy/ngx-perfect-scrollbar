@@ -46,7 +46,7 @@ perfect-scrollbar {
 
         opacity: 0;
 
-        transition: opacity 500ms ease-in-out;
+        transition: opacity 300ms ease-in-out;
       }
 
       .ps-indicator-top,
@@ -189,54 +189,53 @@ perfect-scrollbar {
         }
       }
     }
-  }
 
-  &.ps-show-active,
-  &.ps-show-limits {
-    & > .ps {
-      &.ps--active-y {
-        & > .ps-overlay {
-          &.ps-at-top {
-            .ps-indicator-top {
-              &.ps-notify {
-                opacity: 1;
+    &.ps-show-limits {
+      & > .ps {
+        &.ps--active-y {
+          & > .ps-overlay {
+            &.ps-at-top {
+              .ps-indicator-top {
+                &.ps-notify {
+                  opacity: 1;
+                }
+
+                background: linear-gradient(to bottom, rgba(170, 170, 170, 0.5) 0%, rgba(0, 0, 0, 0) 100%);
               }
-
-              background: linear-gradient(to bottom, rgba(170, 170, 170, 0.5) 0%, rgba(0, 0, 0, 0) 100%);
             }
-          }
 
-          &.ps-at-bottom {
-            .ps-indicator-bottom {
-              &.ps-notify {
-                opacity: 1;
+            &.ps-at-bottom {
+              .ps-indicator-bottom {
+                &.ps-notify {
+                  opacity: 1;
+                }
+
+                background: linear-gradient(to top, rgba(170, 170, 170, 0.5) 0%, rgba(0, 0, 0, 0) 100%);
               }
-
-              background: linear-gradient(to top, rgba(170, 170, 170, 0.5) 0%, rgba(0, 0, 0, 0) 100%);
             }
           }
         }
-      }
 
-      &.ps--active-x {
-        & > .ps-overlay {
-          &.ps-at-left {
-            .ps-indicator-left {
-              &.ps-notify {
-                opacity: 1;
+        &.ps--active-x {
+          & > .ps-overlay {
+            &.ps-at-left {
+              .ps-indicator-left {
+                &.ps-notify {
+                  opacity: 1;
+                }
+
+                background: linear-gradient(to right, rgba(170, 170, 170, 0.5) 0%, rgba(0, 0, 0, 0) 100%);
               }
-
-              background: linear-gradient(to right, rgba(170, 170, 170, 0.5) 0%, rgba(0, 0, 0, 0) 100%);
             }
-          }
 
-          &.ps-at-right {
-            .ps-indicator-right {
-              &.ps-notify {
-                opacity: 1;
+            &.ps-at-right {
+              .ps-indicator-right {
+                &.ps-notify {
+                  opacity: 1;
+                }
+
+                background: linear-gradient(to left, rgba(170, 170, 170, 0.5) 0%, rgba(0, 0, 0, 0) 100%);
               }
-
-              background: linear-gradient(to left, rgba(170, 170, 170, 0.5) 0%, rgba(0, 0, 0, 0) 100%);
             }
           }
         }

@@ -90,7 +90,7 @@ export class PerfectScrollbarComponent implements OnInit, OnDestroy, DoCheck {
             {
               this.allowPropagation = true;
             }
-          }, 500);
+          }, 300);
         } else {
           this.states = {};
           this.notify = false;
@@ -209,7 +209,7 @@ export class PerfectScrollbarComponent implements OnInit, OnDestroy, DoCheck {
       this.userInteraction = true;
 
       if (this.allowPropagation) {
-        // PS stops the touchmove event so we re-emit it here
+        // PS stops the touchmove event so lets re-emit it here
         if (this.elementRef.nativeElement) {
           let newEvent = new MouseEvent('touchstart', event);
 
