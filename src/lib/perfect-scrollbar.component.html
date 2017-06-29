@@ -1,5 +1,12 @@
-<div #ps="ngxPerfectScrollbar" [perfect-scrollbar]="config" [disabled]="disabled" [usePSClass]="usePSClass" [psPosStyle]="null" [runInsideAngular]="runInsideAngular">
+<div #ps="ngxPerfectScrollbar" [perfect-scrollbar]="config" [disabled]="disabled" [usePSClass]="usePSClass" [psPosStyle]="null" [runInsideAngular]="runInsideAngular" (touchstart)="onTouchStart($event)">
   <div class="ps-content">
     <ng-content></ng-content>
+  </div>
+
+  <div *ngIf="autoPropagation || scrollIndicators" class="ps-overlay" [class.ps-at-top]="states.top" [class.ps-at-left]="states.left" [class.ps-at-right]="states.right" [class.ps-at-bottom]="states.bottom">
+    <div class="ps-indicator-top" [class.ps-notify]="notify && userInteraction"></div>
+    <div class="ps-indicator-left" [class.ps-notify]="notify && userInteraction"></div>
+    <div class="ps-indicator-right" [class.ps-notify]="notify && userInteraction"></div>
+    <div class="ps-indicator-bottom" [class.ps-notify]="notify && userInteraction"></div>
   </div>
 </div>

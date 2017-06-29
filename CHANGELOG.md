@@ -4,9 +4,15 @@
 
   - Made component to use the directive
 
-  - Added geometry API / helper function
+  - Added position API / helper function
+
+  - Added scrollToX and scrollToY functions
 
   - Added autoPropagation component feature
+
+  - Added scrollIndicators component feature
+
+  - Added speed parameter for scroll functions
 
   - Removed unneeded static input / feature
 

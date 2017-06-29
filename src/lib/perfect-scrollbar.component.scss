@@ -1,6 +1,8 @@
 @import '../../node_modules/perfect-scrollbar/dist/css/perfect-scrollbar.min';
 
 perfect-scrollbar {
+  position: relative;
+
   &[hidden] {
     display: none;
   }
@@ -10,20 +12,89 @@ perfect-scrollbar {
     & {
       display: flex;
     }
-/*
+
     & > .ps,
     & > .ps > .ps-content {
       display: flex;
       -webkit-box-flex: 1;
       -ms-flex: 1 1 auto;
       flex: 1 1 auto;
-    }*/
+    }
   }
 
   & > .ps {
-    position: relative;
+    position: static;
 
     display: block;
+
+    & > .ps-overlay {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+
+      overflow: hidden;
+
+      pointer-events: none;
+
+      .ps-indicator-top,
+      .ps-indicator-left,
+      .ps-indicator-right,
+      .ps-indicator-bottom {
+        position: absolute;
+
+        opacity: 0;
+
+        transition: opacity 500ms ease-in-out;
+      }
+
+      .ps-indicator-top,
+      .ps-indicator-bottom {
+        left: 0;
+
+        min-width: 100%;
+        min-height: 24px;
+      }
+
+      .ps-indicator-left,
+      .ps-indicator-right {
+        top: 0;
+
+        min-width: 24px;
+        min-height: 100%;
+      }
+
+      .ps-indicator-top {
+        top: 0;
+      }
+
+      .ps-indicator-left {
+        left: 0;
+      }
+
+      .ps-indicator-right {
+        right: 0;
+      }
+
+      .ps-indicator-bottom {
+        bottom: 0;
+      }
+    }
+
+    &.ps--active-y {
+      & > .ps__scrollbar-y-rail {
+        top: 0 !important;
+        right: 0 !important;
+      }
+    }
+
+    &.ps--active-x {
+      & > .ps__scrollbar-x-rail {
+        bottom: 0 !important;
+        left: 0 !important;
+      }
+    }
 
     &.ps--active-x.ps--active-y {
       & > .ps__scrollbar-y-rail {
@@ -41,6 +112,13 @@ perfect-scrollbar {
   &.ps-spacing-sm {
     padding: 0 8px 8px 0;
     margin: 0 -8px -8px 0;
+
+    & > .ps {
+      & > .ps-overlay {
+        right: 8px;
+        bottom: 8px;
+      }
+    }
   }
 
   &.ps-spacing-md,
@@ -48,76 +126,119 @@ perfect-scrollbar {
   &.ps-spacing-xl {
     padding: 0 24px 24px 0;
     margin: 0 -24px -24px 0;
-  }
-
-  &.ps-spacing-tn,
-  &.ps-spacing-xs,
-  &.ps-spacing-sm,
-  &.ps-spacing-md,
-  &.ps-spacing-lg,
-  &.ps-spacing-xl {
-    position: relative;
 
     & > .ps {
-      position: static;
+      & > .ps-overlay {
+        right: 24px;
+        bottom: 24px;
+      }
 
       &.ps--active-y {
         & > .ps__scrollbar-y-rail {
-          top: 0 !important;
-          right: 0 !important;
-
-          margin: 0;
+          right: 8px !important;
         }
       }
 
       &.ps--active-x {
         & > .ps__scrollbar-x-rail {
-          bottom: 0 !important;
-          left: 0 !important;
-
-          margin: 0;
+          bottom: 8px !important;
         }
       }
     }
   }
 
+  &.ps-show-active {
+    & > .ps {
+      &.ps--active-y {
+        & > .ps-overlay {
+          &:not(.ps-at-top) {
+            .ps-indicator-top {
+              opacity: 1;
+
+              background: linear-gradient(to bottom, rgba(255, 255, 255, 0.5) 0%, rgba(0, 0, 0, 0) 100%);
+            }
+          }
+
+          &:not(.ps-at-bottom) {
+            .ps-indicator-bottom {
+              opacity: 1;
+
+              background: linear-gradient(to top, rgba(255, 255, 255, 0.5) 0%, rgba(0, 0, 0, 0) 100%);
+            }
+          }
+        }
+      }
+
+      &.ps--active-x {
+        & > .ps-overlay {
+          &:not(.ps-at-left) {
+            .ps-indicator-left {
+              opacity: 1;
+
+              background: linear-gradient(to right, rgba(255, 255, 255, 0.5) 0%, rgba(0, 0, 0, 0) 100%);
+            }
+          }
+
+          &:not(.ps-at-right) {
+            .ps-indicator-right {
+              opacity: 1;
+
+              background: linear-gradient(to left, rgba(255, 255, 255, 0.5) 0%, rgba(0, 0, 0, 0) 100%);
+            }
+          }
+        }
+      }
+    }
+  }
+
+  &.ps-show-active,
   &.ps-show-limits {
     & > .ps {
-      & > .ps-content {
-        border: 2px solid rgba(0, 0, 0, 0);
+      &.ps--active-y {
+        & > .ps-overlay {
+          &.ps-at-top {
+            .ps-indicator-top {
+              &.ps-notify {
+                opacity: 1;
+              }
 
-        transition: border-color 300ms ease-in-out;
-      }
-    }
+              background: linear-gradient(to bottom, rgba(170, 170, 170, 0.5) 0%, rgba(0, 0, 0, 0) 100%);
+            }
+          }
 
-    &.ps-start-y {
-      & > .ps {
-        & > .ps-content {
-          border-top-color: rgba(0, 0, 0, 0.3);
+          &.ps-at-bottom {
+            .ps-indicator-bottom {
+              &.ps-notify {
+                opacity: 1;
+              }
+
+              background: linear-gradient(to top, rgba(170, 170, 170, 0.5) 0%, rgba(0, 0, 0, 0) 100%);
+            }
+          }
         }
       }
-    }
 
-    &.ps-end-y {
-      & > .ps {
-        & > .ps-content {
-          border-bottom-color: rgba(0, 0, 0, 0.3);
-        }
-      }
-    }
+      &.ps--active-x {
+        & > .ps-overlay {
+          &.ps-at-left {
+            .ps-indicator-left {
+              &.ps-notify {
+                opacity: 1;
+              }
 
-    &.ps-start-x {
-      & > .ps {
-        & > .ps-content {
-          border-left-color: rgba(0, 0, 0, 0.3);
-        }
-      }
-    }
+              background: linear-gradient(to right, rgba(170, 170, 170, 0.5) 0%, rgba(0, 0, 0, 0) 100%);
+            }
+          }
 
-    &.ps-end-x {
-      & > .ps {
-        & > .ps-content {
-          border-right-color: rgba(0, 0, 0, 0.3);
+          &.ps-at-right {
+            .ps-indicator-right {
+              &.ps-notify {
+                opacity: 1;
+              }
+
+              background: linear-gradient(to left, rgba(170, 170, 170, 0.5) 0%, rgba(0, 0, 0, 0) 100%);
+            }
+          }
         }
       }
     }

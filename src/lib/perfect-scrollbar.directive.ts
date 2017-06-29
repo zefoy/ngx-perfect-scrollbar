@@ -1,6 +1,6 @@
 import * as Ps from 'perfect-scrollbar';
 
-import { Directive, DoCheck, OnDestroy, OnChanges, AfterViewInit, Input, Optional, HostBinding, ElementRef, SimpleChanges, KeyValueDiffers, NgZone } from '@angular/core';
+import { Directive, DoCheck, OnDestroy, OnChanges, AfterViewInit, Input, Optional, HostBinding, HostListener, ElementRef, SimpleChanges, KeyValueDiffers, NgZone } from '@angular/core';
 
 import { PerfectScrollbarConfig, PerfectScrollbarConfigInterface } from './perfect-scrollbar.interfaces';
 
@@ -34,6 +34,10 @@ export class PerfectScrollbarDirective implements DoCheck, OnDestroy, OnChanges,
 
   @Input('perfect-scrollbar') config: PerfectScrollbarConfigInterface;
 
+  @HostListener('window:resize', ['$event']) onResize($event: Event): void {
+    this.update();
+  }
+
   constructor(public elementRef: ElementRef, @Optional() private defaults: PerfectScrollbarConfig, private differs: KeyValueDiffers, private zone: NgZone) {}
 
   ngDoCheck() {
@@ -59,7 +63,9 @@ export class PerfectScrollbarDirective implements DoCheck, OnDestroy, OnChanges,
           contentHeight = this.elementRef.nativeElement.children[0].offsetHeight;
         }
 
-        if (width !== this.width || height !== this.height || contentWidth !== this.contentWidth || contentHeight !== this.contentHeight) {
+        if (width !== this.width || height !== this.height ||
+            contentWidth !== this.contentWidth || contentHeight !== this.contentHeight)
+        {
           this.width = width;
           this.height = height;
 
@@ -126,62 +132,94 @@ export class PerfectScrollbarDirective implements DoCheck, OnDestroy, OnChanges,
     }
   }
 
-  geometry(): any {
+  position(): any {
     return {
       top: this.elementRef.nativeElement.scrollTop,
-      left: this.elementRef.nativeElement.scrollLeft,
-      width: this.elementRef.nativeElement.scrollWidth,
-      height: this.elementRef.nativeElement.scrollHeight
+      left: this.elementRef.nativeElement.scrollLeft
     };
   }
 
-  scrollTo(x: number, y?: number) {
+  scrollTo(x: number, y?: number, speed?: number) {
     if (!this.disabled) {
-      if (y == null) {
-        this.elementRef.nativeElement.scrollTop = x;
+      if (y == null && speed == null) {
+        this.animateScrolling('scrollTop', x, speed);
       } else {
-        this.elementRef.nativeElement.scrollTop = y;
+        if (x != null) {
+          this.animateScrolling('scrollLeft', x, speed);
+        }
 
-        this.elementRef.nativeElement.scrollLeft = x;
+        if (y != null) {
+          this.animateScrolling('scrollTop', y, speed);
+        }
       }
-
-      this.update();
     }
   }
 
-  scrollToTop(offset: number = 0) {
-    if (!this.disabled) {
-      this.elementRef.nativeElement.scrollTop = 0 + offset;
-
-      this.update();
-    }
+  scrollToX(x: number, speed?: number) {
+    this.scrollTo(x, null, speed);
   }
 
-  scrollToLeft(offset: number = 0) {
-    if (!this.disabled) {
-      this.elementRef.nativeElement.scrollLeft = 0 + offset;
-
-      this.update();
-    }
+  scrollToY(y: number, speed?: number) {
+    this.scrollTo(null, y, speed);
   }
 
-  scrollToRight(offset: number = 0) {
-    if (!this.disabled) {
-      let width = this.elementRef.nativeElement.scrollWidth;
-
-      this.elementRef.nativeElement.scrollLeft = width - offset;
-
-      this.update();
-    }
+  scrollToTop(offset: number = 0, speed?: number) {
+    this.scrollToY(this.elementRef.nativeElement.scrollTop = 0 + offset, speed);
   }
 
-  scrollToBottom(offset: number = 0) {
-    if (!this.disabled) {
-      let height = this.elementRef.nativeElement.scrollHeight;
+  scrollToLeft(offset: number = 0, speed?: number) {
+    this.scrollToX(this.elementRef.nativeElement.scrollLeft = 0 + offset, speed);
+  }
 
-      this.elementRef.nativeElement.scrollTop = height - offset;
+  scrollToRight(offset: number = 0, speed?: number) {
+    const width = this.elementRef.nativeElement.scrollWidth;
+
+    this.scrollToX(this.elementRef.nativeElement.scrollLeft = width - offset, speed);
+  }
+
+  scrollToBottom(offset: number = 0, speed?: number) {
+    const height = this.elementRef.nativeElement.scrollHeight;
+
+    this.scrollToY(this.elementRef.nativeElement.scrollTop = height - offset, speed);
+  }
+
+  animateScrolling(target: string, value: number, speed?: number) {
+    if (!speed) {
+      this.elementRef.nativeElement[target] = value;
 
       this.update();
+    } else {
+      let scrollCount = 0;
+
+      let oldTimestamp = Date.now();
+
+      let oldValue = this.elementRef.nativeElement[target];
+
+      let cosParameter = Math.abs(oldValue - value) / 2;
+
+      let step = (newTimestamp) => {
+        scrollCount += Math.PI / (speed / (newTimestamp - oldTimestamp));
+
+        let newValue = Math.round(cosParameter + cosParameter * Math.cos(scrollCount));
+
+        // Only continue animation if scroll position has not changed
+        if (this.elementRef.nativeElement[target] === oldValue) {
+          if (scrollCount >= Math.PI || newValue === value) {
+            this.elementRef.nativeElement[target] = value;
+
+            this.update();
+          } else {
+            this.elementRef.nativeElement[target] = oldValue = newValue;
+
+            oldTimestamp = newTimestamp;
+
+            window.requestAnimationFrame(step);
+          }
+        }
+      };
+
+      window.requestAnimationFrame(step);
     }
+
   }
 }

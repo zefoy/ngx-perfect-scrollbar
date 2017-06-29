@@ -73,6 +73,7 @@ Simply replace the element that would ordinarily be passed to `Ps.initialize` wi
 
 [flexBreakpoint]        // Flex breakpoint class (used for responsivity).
 [autoPropagation]       // Automatic swipe and wheel propagation control.
+[scrollIndicators]      // Enable fading edges scroll indicators showing.
 
 [runInsideAngular]      // Run perfect scrollbar inside the Angular zone.
 
@@ -106,11 +107,11 @@ Perfect scrollbar directive should be used with div elements and can take option
 (<ps-event-name>)       // All perfect scrollbar events work as bindings.
 ```
 
-Public API functions which can be accessed through the component / directive reference:
+Public API functions which can be accessed through the directive reference (directiveRef under the component reference):
 
 ```javascript
 update()                // Updates the size / position of the scrollbar.
-geometry()              // Returns current scroll position and element size.
+position()              // Returns the current top / left scroll position.
 
 scrollTo(y | x, y)      // Scroll to given position (instant, no animation).
 scrollToTop(offset)     // Scroll to given offset from the top (offset optional).
