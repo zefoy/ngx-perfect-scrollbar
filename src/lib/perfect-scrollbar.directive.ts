@@ -140,6 +140,8 @@ export class PerfectScrollbarDirective implements DoCheck, OnDestroy, OnChanges,
   scrollTo(x: number, y?: number, speed?: number) {
     if (!this.disabled) {
       if (y == null && speed == null) {
+        console.warn('Deprecated use of scrollTo, use the scrollToY function instead!');
+
         this.animateScrolling('scrollTop', x, speed);
       } else {
         if (x != null) {
@@ -218,6 +220,5 @@ export class PerfectScrollbarDirective implements DoCheck, OnDestroy, OnChanges,
 
       window.requestAnimationFrame(step);
     }
-
   }
 }
