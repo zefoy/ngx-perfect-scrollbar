@@ -7,12 +7,13 @@ perfect-scrollbar {
     display: none;
   }
 
-  &[fxflex],
+  &[fxflex] {
+    display: flex;
+  }
+
   &[fxlayout] {
-    & {
-      display: flex;
-      flex-direction: inherit;
-    }
+    display: flex;
+    flex-direction: inherit;
 
     & > .ps,
     & > .ps > .ps-content {
@@ -22,7 +23,6 @@ perfect-scrollbar {
       flex: 1 1 auto;
       flex-direction: inherit;
     }
-
   }
 
   & > .ps {
