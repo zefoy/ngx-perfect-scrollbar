@@ -70,7 +70,6 @@ Simply replace the element that would ordinarily be passed to `Ps.initialize` wi
 
 [usePSClass]            // Use ps class (needed by the ps theme styles).
 
-[flexBreakpoint]        // Flex breakpoint class (used for responsivity).
 [autoPropagation]       // Automatic swipe and wheel propagation control.
 [scrollIndicators]      // Enable fading edges scroll indicators showing.
 

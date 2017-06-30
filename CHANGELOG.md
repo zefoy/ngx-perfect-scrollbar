@@ -16,9 +16,9 @@
 
   - Added scrollbars showing on swipe / scroll
 
-  - Removed unneeded static input / feature
+  - Replaced static input with psPosStyle input
 
-  - Replaced outside input with flexBreakpoint
+  - Replaced outside input with spacing classes
 
 4.4.0 Feature release
 

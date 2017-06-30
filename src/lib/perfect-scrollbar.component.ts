@@ -40,20 +40,15 @@ export class PerfectScrollbarComponent implements OnInit, OnDestroy, DoCheck {
 
   @Input() usePSClass: boolean = true;
 
-  @Input() flexBreakpoint: string = '';
+  @HostBinding('class.ps-show-limits')
   @Input() autoPropagation: boolean = false;
+
+  @HostBinding('class.ps-show-active')
   @Input() scrollIndicators: boolean = false;
 
   @Input() runInsideAngular: boolean = false;
 
   @Input() config: PerfectScrollbarConfigInterface;
-
-  @HostBinding('class')
-  get cssClasses(): string {
-    return 'ps-spacing-' + (this.flexBreakpoint || 'none') +
-           (this.autoPropagation ? ' ps-show-limits' : '') +
-           (this.scrollIndicators ? ' ps-show-active' : '');
-  }
 
   @ViewChild(PerfectScrollbarDirective) directiveRef: PerfectScrollbarDirective;
 
@@ -244,7 +239,6 @@ export class PerfectScrollbarComponent implements OnInit, OnDestroy, DoCheck {
           let newEvent = new MouseEvent('touchstart', event);
 
           newEvent['psGenerated'] = true;
-
           newEvent['touches'] = event['touches'];
           newEvent['targetTouches'] = event['targetTouches'];
 
