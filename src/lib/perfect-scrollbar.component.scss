@@ -11,6 +11,7 @@ perfect-scrollbar {
   &[fxlayout] {
     & {
       display: flex;
+      flex-direction: inherit;
     }
 
     & > .ps,
@@ -19,7 +20,13 @@ perfect-scrollbar {
       -webkit-box-flex: 1;
       -ms-flex: 1 1 auto;
       flex: 1 1 auto;
+      flex-direction: inherit;
+
+      * {
+        flex: none;
+      }
     }
+
   }
 
   & > .ps {

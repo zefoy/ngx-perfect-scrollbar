@@ -239,6 +239,7 @@ export class PerfectScrollbarComponent implements OnInit, OnDestroy, DoCheck {
           let newEvent = new MouseEvent('touchstart', event);
 
           newEvent['psGenerated'] = true;
+
           newEvent['touches'] = event['touches'];
           newEvent['targetTouches'] = event['targetTouches'];
 

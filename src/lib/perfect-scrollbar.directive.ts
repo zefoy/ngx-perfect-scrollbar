@@ -199,6 +199,7 @@ export class PerfectScrollbarDirective implements DoCheck, OnDestroy, OnChanges,
 
       let oldTimestamp = performance.now();
       let oldValue = this.elementRef.nativeElement[target];
+
       let cosParameter = (oldValue - value) / 2;
 
       let step = (newTimestamp) => {
