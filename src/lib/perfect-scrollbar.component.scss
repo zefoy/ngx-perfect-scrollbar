@@ -96,7 +96,7 @@ perfect-scrollbar {
       }
     }
 
-    &.ps--active-x.ps--active-y {
+    &.ps--active-y.ps--active-x {
       & > .ps__scrollbar-y-rail {
         margin: 0 0 8px;
       }
@@ -107,16 +107,32 @@ perfect-scrollbar {
     }
   }
 
+  &.ps-scrolling {
+    & > .ps {
+      &.ps--active-y {
+        & > .ps__scrollbar-y-rail {
+          opacity: 0.9;
+        }
+      }
+
+      &.ps--active-x {
+        & > .ps__scrollbar-x-rail {
+          opacity: 0.9;
+        }
+      }
+    }
+  }
+
   &.ps-spacing-tn,
   &.ps-spacing-xs,
   &.ps-spacing-sm {
-    padding: 0 8px 8px 0;
-    margin: 0 -8px -8px 0;
+    padding: 0 12px 12px 0;
+    margin: 0 -12px -12px 0;
 
     & > .ps {
       & > .ps-overlay {
-        right: 8px;
-        bottom: 8px;
+        right: 12px;
+        bottom: 12px;
       }
     }
   }

@@ -14,6 +14,8 @@
 
   - Added speed parameter for scroll functions
 
+  - Added scrollbars showing on swipe / scroll
+
   - Removed unneeded static input / feature
 
   - Replaced outside input with flexBreakpoint

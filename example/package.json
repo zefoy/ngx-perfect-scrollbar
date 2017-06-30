@@ -47,7 +47,7 @@
     "chokidar-cli": "^1.2.0",
     "core-js": "~2.4.0",
     "ngx-perfect-scrollbar": "^4.0.0",
-    "perfect-scrollbar": "~0.7.0",
+    "perfect-scrollbar": "^0.7.1",
     "rxjs": "~5.4.0",
     "zone.js": "~0.8.0"
   },

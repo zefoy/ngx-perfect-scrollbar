@@ -15,13 +15,17 @@ export class PerfectScrollbarComponent implements OnInit, OnDestroy, DoCheck {
   private states: any = {};
   private notify: boolean = null;
 
-  private timeout: number = null;
+  private timeoutState: number = null;
+  private timeoutScroll: number = null;
 
   private usePropagationX: boolean = false;
   private usePropagationY: boolean = false;
 
   private userInteraction: boolean = false;
   private allowPropagation: boolean = false;
+
+  private scrollSub: Subscription = null;
+  private scrollUpdate: Subject<string> = new Subject();
 
   private statesSub: Subscription = null;
   private statesUpdate: Subject<string> = new Subject();
@@ -69,18 +73,30 @@ export class PerfectScrollbarComponent implements OnInit, OnDestroy, DoCheck {
         this.allowPropagation = active;
       });
 
+    this.scrollSub = this.scrollUpdate
+      .throttleTime(100)
+      .subscribe((state: string) => {
+        window.clearTimeout(this.timeoutScroll);
+
+        this.elementRef.nativeElement.classList.add('ps-scrolling');
+
+        this.timeoutScroll = window.setTimeout(() => {
+          this.elementRef.nativeElement.classList.remove('ps-scrolling');
+        }, 500);
+      });
+
     this.statesSub = this.statesUpdate
       .distinctUntilChanged()
       .subscribe((state: string) => {
-        window.clearTimeout(this.timeout);
+        window.clearTimeout(this.timeoutState);
 
-        if (state) {
+        if (state !== 'x' && state !== 'y') {
           this.notify = true;
           this.states[state] = true;
 
           this.cdRef.markForCheck();
 
-          this.timeout = window.setTimeout(() => {
+          this.timeoutState = window.setTimeout(() => {
             this.notify = false;
 
             this.cdRef.markForCheck();
@@ -92,8 +108,15 @@ export class PerfectScrollbarComponent implements OnInit, OnDestroy, DoCheck {
             }
           }, 300);
         } else {
-          this.states = {};
           this.notify = false;
+
+          if (state === 'x') {
+            this.states.left = false;
+            this.states.right = false;
+          } else if (state === 'y') {
+            this.states.top = false;
+            this.states.bottom = false;
+          }
 
           this.cdRef.markForCheck();
 
@@ -108,11 +131,11 @@ export class PerfectScrollbarComponent implements OnInit, OnDestroy, DoCheck {
 
             this.cdRef.markForCheck();
 
-            this.timeout = window.setTimeout(() => {
+            this.timeoutState = window.setTimeout(() => {
               this.notify = false;
 
               this.cdRef.markForCheck();
-            }, 500);
+            }, 300);
           }
         }
       });
@@ -123,9 +146,16 @@ export class PerfectScrollbarComponent implements OnInit, OnDestroy, DoCheck {
       this.activeSub.unsubscribe();
     }
 
+    if (this.scrollSub) {
+      this.scrollSub.unsubscribe();
+    }
+
     if (this.statesSub) {
       this.statesSub.unsubscribe();
     }
+
+    window.clearTimeout(this.timeoutState);
+    window.clearTimeout(this.timeoutScroll);
   }
 
   ngDoCheck() {
@@ -214,6 +244,7 @@ export class PerfectScrollbarComponent implements OnInit, OnDestroy, DoCheck {
           let newEvent = new MouseEvent('touchstart', event);
 
           newEvent['psGenerated'] = true;
+
           newEvent['touches'] = event['touches'];
           newEvent['targetTouches'] = event['targetTouches'];
 
@@ -236,9 +267,11 @@ export class PerfectScrollbarComponent implements OnInit, OnDestroy, DoCheck {
     }
   }
 
-  onReachEvent(event: Event = null, edge: string) {
+  onScrollEvent(event: Event = null, state: string) {
+    this.scrollUpdate.next(state);
+
     if (!this.disabled && (this.autoPropagation || this.scrollIndicators)) {
-      this.statesUpdate.next(edge);
+      this.statesUpdate.next(state);
     }
   }
 }

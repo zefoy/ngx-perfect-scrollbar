@@ -36,7 +36,7 @@
     "url": "https://github.com/zefoy/ngx-perfect-scrollbar.git"
   },
   "dependencies": {
-    "perfect-scrollbar": "~0.7.0"
+    "perfect-scrollbar": "^0.7.1"
   },
   "devDependencies": {
     "@angular/common": "^4.0.0",

@@ -56,7 +56,9 @@ export class PerfectScrollbarDirective implements DoCheck, OnDestroy, OnChanges,
         let width = this.elementRef.nativeElement.offsetWidth;
         let height = this.elementRef.nativeElement.offsetHeight;
 
-        if (this.elementRef.nativeElement.children && this.elementRef.nativeElement.children.length) {
+        if (this.elementRef.nativeElement.children &&
+            this.elementRef.nativeElement.children.length)
+        {
           contentWidth = this.elementRef.nativeElement.children[0].offsetWidth;
           contentHeight = this.elementRef.nativeElement.children[0].offsetHeight;
         }
@@ -156,36 +158,39 @@ export class PerfectScrollbarDirective implements DoCheck, OnDestroy, OnChanges,
   }
 
   scrollToX(x: number, speed?: number) {
-    this.scrollTo(x, null, speed || 0);
+    this.animateScrolling('scrollLeft', x, speed);
   }
 
   scrollToY(y: number, speed?: number) {
-    this.scrollTo(null, y, speed || 0);
+    this.animateScrolling('scrollTop', y, speed);
   }
 
-  scrollToTop(offset: number = 0, speed?: number) {
-    this.scrollTo(null, 0 + offset, speed || 0);
+  scrollToTop(offset?: number, speed?: number) {
+    this.animateScrolling('scrollTop', (offset || 0), speed);
   }
 
-  scrollToLeft(offset: number = 0, speed?: number) {
-    this.scrollTo(0 + offset, null, speed || 0);
+  scrollToLeft(offset?: number, speed?: number) {
+    this.animateScrolling('scrollLeft', (offset || 0), speed);
   }
 
-  scrollToRight(offset: number = 0, speed?: number) {
+  scrollToRight(offset?: number, speed?: number) {
     const width = this.elementRef.nativeElement.scrollWidth;
 
-    this.scrollTo(width - offset, null, speed || 0);
+    this.animateScrolling('scrollLeft', width - (offset || 0), speed);
   }
 
-  scrollToBottom(offset: number = 0, speed?: number) {
+  scrollToBottom(offset?: number, speed?: number) {
     const height = this.elementRef.nativeElement.scrollHeight;
 
-    this.scrollTo(null, height - offset, speed || 0);
+    this.animateScrolling('scrollTop', height - (offset || 0), speed);
   }
 
   animateScrolling(target: string, value: number, speed?: number) {
     if (!speed) {
       this.elementRef.nativeElement[target] = value;
+
+      // PS has weird event sending order, this is a workaround for that
+      this.update();
 
       this.update();
     } else if (value !== this.elementRef.nativeElement[target]) {
@@ -194,7 +199,6 @@ export class PerfectScrollbarDirective implements DoCheck, OnDestroy, OnChanges,
 
       let oldTimestamp = performance.now();
       let oldValue = this.elementRef.nativeElement[target];
-
       let cosParameter = (oldValue - value) / 2;
 
       let step = (newTimestamp) => {
@@ -206,6 +210,9 @@ export class PerfectScrollbarDirective implements DoCheck, OnDestroy, OnChanges,
         if (this.elementRef.nativeElement[target] === oldValue) {
           if (scrollCount >= Math.PI) {
             this.elementRef.nativeElement[target] = value;
+
+            // PS has weird event sending order, this is a workaround for that
+            this.update();
 
             this.update();
           } else {
