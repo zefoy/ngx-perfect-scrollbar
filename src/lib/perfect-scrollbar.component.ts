@@ -15,6 +15,8 @@ export class PerfectScrollbarComponent implements OnInit, OnDestroy, DoCheck {
   private states: any = {};
   private notify: boolean = null;
 
+  private cancelEvent: Event = null;
+
   private timeoutState: number = null;
   private timeoutScroll: number = null;
 
@@ -121,6 +123,12 @@ export class PerfectScrollbarComponent implements OnInit, OnDestroy, DoCheck {
             (!this.usePropagationX || !this.usePropagationY))
           {
             this.allowPropagation = false;
+
+            if (this.cancelEvent) {
+              this.elementRef.nativeElement.dispatchEvent(this.cancelEvent);
+
+              this.cancelEvent = null;
+            }
           } else if (this.scrollIndicators) {
             this.notify = true;
 
@@ -215,6 +223,8 @@ export class PerfectScrollbarComponent implements OnInit, OnDestroy, DoCheck {
   onTouchEnd(event: Event = null) {
     if (!this.disabled && this.autoPropagation) {
       if (!this.usePropagationX || !this.usePropagationY) {
+        this.cancelEvent = null;
+
         this.allowPropagation = false;
       }
     }
@@ -237,11 +247,11 @@ export class PerfectScrollbarComponent implements OnInit, OnDestroy, DoCheck {
         // PS stops the touchmove event so lets re-emit it here
         if (this.elementRef.nativeElement) {
           let newEvent = new MouseEvent('touchstart', event);
+          this.cancelEvent = new MouseEvent('touchmove', event);
 
-          newEvent['psGenerated'] = true;
-
-          newEvent['touches'] = event['touches'];
-          newEvent['targetTouches'] = event['targetTouches'];
+          newEvent['psGenerated'] = this.cancelEvent['psGenerated'] = true;
+          newEvent['touches'] = this.cancelEvent['touches'] = event['touches'];
+          newEvent['targetTouches'] = this.cancelEvent['targetTouches'] = event['targetTouches'];
 
           this.elementRef.nativeElement.dispatchEvent(newEvent);
         }
