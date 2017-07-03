@@ -4,7 +4,7 @@
 
   - Made component to use the directive
 
-  - Added position API / helper function
+  - Added geometry API / helper function
 
   - Added scrollToX and scrollToY functions
 

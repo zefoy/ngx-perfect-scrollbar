@@ -4,6 +4,8 @@ import { Directive, DoCheck, OnDestroy, OnChanges, AfterViewInit, Input, Optiona
 
 import { PerfectScrollbarConfig, PerfectScrollbarConfigInterface } from './perfect-scrollbar.interfaces';
 
+import { Geometry } from './perfect-scrollbar.classes';
+
 @Directive({
   selector: '[perfect-scrollbar]',
   exportAs: 'ngxPerfectScrollbar'
@@ -132,10 +134,12 @@ export class PerfectScrollbarDirective implements DoCheck, OnDestroy, OnChanges,
     }
   }
 
-  position(): {x: number, y: number} {
+  geometry(property: string = 'scroll'): Geometry {
     return {
-      x: this.elementRef.nativeElement.scrollLeft,
-      y: this.elementRef.nativeElement.scrollTop
+      x: this.elementRef.nativeElement[property + 'Left'],
+      y: this.elementRef.nativeElement[property + 'Top'],
+      w: this.elementRef.nativeElement[property + 'Width'],
+      h: this.elementRef.nativeElement[property + 'Height']
     };
   }
 

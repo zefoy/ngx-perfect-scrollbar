@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, AfterViewInit } from '@angular/core';
 
 import { PerfectScrollbarComponent, PerfectScrollbarDirective, PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
 
@@ -8,13 +8,19 @@ import { PerfectScrollbarComponent, PerfectScrollbarDirective, PerfectScrollbarC
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements AfterViewInit {
   public config: PerfectScrollbarConfigInterface = {};
 
   @ViewChild(PerfectScrollbarComponent) componentScroll: PerfectScrollbarComponent;
   @ViewChild(PerfectScrollbarDirective) directiveScroll: PerfectScrollbarDirective;
 
   constructor() {}
+
+  ngAfterViewInit() {
+    console.log('Directive geometry', this.directiveScroll.geometry());
+
+    console.log('Component geometry', this.componentScroll.directiveRef.geometry());
+  }
 
   onScrollToXY(x: number, y: number) {
     this.directiveScroll.scrollTo(x, y, 500);

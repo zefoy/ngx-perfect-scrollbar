@@ -127,7 +127,7 @@ For more detailed documentation with all the supported events / options see the 
 
 ```javascript
 update()                        // Updates the scrollbar size and position.
-position()                      // Returns the current scroll position (x,y).
+geometry(property)              // Returns the geometry for specified property.
 
 scrollTo(x, y, speed)           // Animate scroll to given x,y coordinates.
 scrollToY(position, speed)      // Animate scroll to given vertical position.
