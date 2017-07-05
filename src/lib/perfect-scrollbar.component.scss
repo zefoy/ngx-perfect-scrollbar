@@ -30,6 +30,8 @@ perfect-scrollbar {
     position: static;
 
     display: block;
+    width: 100%;
+    height: 100%;
 
     & > .ps-overlay {
       position: absolute;
@@ -151,18 +153,6 @@ perfect-scrollbar {
       & > .ps-overlay {
         right: 24px;
         bottom: 24px;
-      }
-
-      &.ps--active-y {
-        & > .ps__scrollbar-y-rail {
-          right: 8px !important;
-        }
-      }
-
-      &.ps--active-x {
-        & > .ps__scrollbar-x-rail {
-          bottom: 8px !important;
-        }
       }
     }
   }
