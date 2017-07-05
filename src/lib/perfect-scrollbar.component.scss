@@ -3,6 +3,8 @@
 perfect-scrollbar {
   position: relative;
 
+  display: block;
+
   &[hidden] {
     display: none;
   }
@@ -11,18 +13,25 @@ perfect-scrollbar {
   &[fxlayout],
   &[fxflexfill] {
     display: flex;
-  }
-
-  &[fxlayout] {
     flex-direction: inherit;
+    -webkit-box-orient: inherit;
+    -webkit-box-direction: inherit;
+    min-width: 0;
+    min-height: 0;
 
     & > .ps,
     & > .ps > .ps-content {
       display: flex;
+      flex: 1 1 auto;
       -webkit-box-flex: 1;
       -ms-flex: 1 1 auto;
-      flex: 1 1 auto;
       flex-direction: inherit;
+      -webkit-box-orient: inherit;
+      -webkit-box-direction: inherit;
+      width: auto;
+      height: auto;
+      min-width: 0;
+      min-height: 0;
     }
   }
 
@@ -165,7 +174,7 @@ perfect-scrollbar {
             .ps-indicator-top {
               opacity: 1;
 
-              background: linear-gradient(to bottom, rgba(255, 255, 255, 0.5) 0%, rgba(0, 0, 0, 0) 100%);
+              background: linear-gradient(to bottom, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0) 100%);
             }
           }
 
@@ -173,7 +182,7 @@ perfect-scrollbar {
             .ps-indicator-bottom {
               opacity: 1;
 
-              background: linear-gradient(to top, rgba(255, 255, 255, 0.5) 0%, rgba(0, 0, 0, 0) 100%);
+              background: linear-gradient(to top, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0) 100%);
             }
           }
         }
@@ -185,7 +194,7 @@ perfect-scrollbar {
             .ps-indicator-left {
               opacity: 1;
 
-              background: linear-gradient(to right, rgba(255, 255, 255, 0.5) 0%, rgba(0, 0, 0, 0) 100%);
+              background: linear-gradient(to right, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0) 100%);
             }
           }
 
@@ -193,7 +202,7 @@ perfect-scrollbar {
             .ps-indicator-right {
               opacity: 1;
 
-              background: linear-gradient(to left, rgba(255, 255, 255, 0.5) 0%, rgba(0, 0, 0, 0) 100%);
+              background: linear-gradient(to left, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0) 100%);
             }
           }
         }
@@ -210,7 +219,7 @@ perfect-scrollbar {
                   opacity: 1;
                 }
 
-                background: linear-gradient(to bottom, rgba(170, 170, 170, 0.5) 0%, rgba(0, 0, 0, 0) 100%);
+                background: linear-gradient(to bottom, rgba(170, 170, 170, 0.5) 0%, rgba(170, 170, 170, 0) 100%);
               }
             }
 
@@ -220,7 +229,7 @@ perfect-scrollbar {
                   opacity: 1;
                 }
 
-                background: linear-gradient(to top, rgba(170, 170, 170, 0.5) 0%, rgba(0, 0, 0, 0) 100%);
+                background: linear-gradient(to top, rgba(170, 170, 170, 0.5) 0%, rgba(170, 170, 170, 0) 100%);
               }
             }
           }
@@ -234,7 +243,7 @@ perfect-scrollbar {
                   opacity: 1;
                 }
 
-                background: linear-gradient(to right, rgba(170, 170, 170, 0.5) 0%, rgba(0, 0, 0, 0) 100%);
+                background: linear-gradient(to right, rgba(170, 170, 170, 0.5) 0%, rgba(170, 170, 170, 0) 100%);
               }
             }
 
@@ -244,7 +253,7 @@ perfect-scrollbar {
                   opacity: 1;
                 }
 
-                background: linear-gradient(to left, rgba(170, 170, 170, 0.5) 0%, rgba(0, 0, 0, 0) 100%);
+                background: linear-gradient(to left, rgba(170, 170, 170, 0.5) 0%, rgba(170, 170, 170, 0) 100%);
               }
             }
           }

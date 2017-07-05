@@ -1,3 +1,15 @@
+4.5.2 Bug fix release
+
+  - Fixed component styles when using flex
+
+  - Fixed component styles to work for Firefox
+
+  - Fixed example app to work on supported browsers
+
+4.5.1 Bug fix release
+
+  - Fixed component styles when not using flex
+
 4.5.0 Feature release
 
   * BREAKING CHANGES for the component

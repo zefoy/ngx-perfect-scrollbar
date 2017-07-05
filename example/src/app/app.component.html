@@ -1,4 +1,4 @@
-<div class="box-container" fxLayout="column">
+<div class="box-container" fxLayout="column" [ngStyle.lt-sm]="'min-height: 800px;'">
   <div class="app-title">Simple example app for the ngx-perfect-scrollbar</div>
 
   <div class="info-container">
@@ -21,12 +21,12 @@
     <button class="action-button" (click)="onScrollToXY(10, 10)">Scroll To 10,10</button>
   </div>
 
-  <div class="horizontal-container" fxLayout="row" fxLayoutAlign="stretch" fxFlex>
+  <div class="horizontal-container" fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign="stretch" fxFlex>
     <div class="vertical-container" fxLayout="column" fxLayoutAlign="stretch" fxFlex="50%">
       <div class="box-title">Component</div>
 
       <div class="list-container" fxLayout="column" style="position: relative" fxLayoutAlign="stretch" fxFlex>
-        <perfect-scrollbar class="ps-spacing-md" fxFlex [config]="config" [scrollIndicators]="true">
+        <perfect-scrollbar class="ps-spacing-sm" fxFlex [config]="config" [scrollIndicators]="true">
           <div>
             Scroll<br>
             me!<br>
