@@ -24,7 +24,7 @@ See a live example application <a href="https://zefoy.github.io/ngx-perfect-scro
     npm install
     npm start
 
-    (or 'npm run start:sjs' for using systemjs)
+    (or 'npm run start:sjs' for using SystemJS)
 
 ### Installing and usage
 
@@ -49,7 +49,7 @@ const PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 })
 ```
 
-##### Use it in your html template (with custom configuration):
+##### Use it in your HTML template (with custom configuration):
 
 This library provides two ways to create a Perfect Scrollbar element, a component and a directive.
 
