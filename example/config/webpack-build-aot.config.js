@@ -69,7 +69,7 @@ module.exports = {
 
     new webpack.ContextReplacementPlugin(
       /angular(\\|\/)core(\\|\/)@angular/,
-      path.join(__dirname, '../')
+      path.join(__dirname, '../src')
     )
   ]
 };
