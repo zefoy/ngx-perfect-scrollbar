@@ -97,6 +97,7 @@ export class PerfectScrollbarComponent implements OnInit, OnDestroy, DoCheck {
             this.notify = false;
 
             this.cdRef.markForCheck();
+
             if (this.autoPropagation && this.userInteraction &&
                ((!this.usePropagationX && (this.states.left || this.states.right)) ||
                (!this.usePropagationY && (this.states.top || this.states.bottom))))
@@ -166,7 +167,6 @@ export class PerfectScrollbarComponent implements OnInit, OnDestroy, DoCheck {
       const element = this.directiveRef.elementRef.nativeElement;
 
       this.usePropagationX = !element.classList.contains('ps--active-x');
-
       this.usePropagationY = !element.classList.contains('ps--active-y');
 
       this.activeUpdate.next(this.usePropagationX && this.usePropagationY);
