@@ -42,7 +42,7 @@
   cursor: pointer;
 }
 
-.list-container {
+.scroll-container {
   position: relative;
 
   min-height: 0;
