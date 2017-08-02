@@ -273,13 +273,12 @@ export class PerfectScrollbarComponent implements OnInit, OnDestroy, DoCheck {
   }
 
   onScrollEvent(event: Event = null, state: string) {
-    if(event.currentTarget !== event.target) {
-      return;
-    }
-    this.scrollUpdate.next(state);
+    if(event.currentTarget === event.target) {
+      this.scrollUpdate.next(state);
 
-    if (!this.disabled && (this.autoPropagation || this.scrollIndicators)) {
-      this.statesUpdate.next(state);
+      if (!this.disabled && (this.autoPropagation || this.scrollIndicators)) {
+        this.statesUpdate.next(state);
+      }
     }
   }
 }
