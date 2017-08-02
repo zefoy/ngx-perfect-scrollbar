@@ -8,27 +8,34 @@ See a live example application <a href="https://zefoy.github.io/ngx-perfect-scro
 
 ### Library building
 
-    npm install
-    npm run build
-    npm run inline
+```bash
+npm install
+npm run build
+npm run inline
+```
 
 ### Library development
 
-    npm link
-    cd example
-    npm link ngx-perfect-scrollbar
+```bash
+npm link
+cd example
+npm link ngx-perfect-scrollbar
+```
 
 ### Running the example
 
-    cd example
-    npm install
-    npm start
+```bash
+cd example
+npm install
+npm start
 
-    (or 'npm run start:sjs' for using SystemJS)
-
+(or 'npm run start:sjs' for using SystemJS)
+```
 ### Installing and usage
 
-    npm install ngx-perfect-scrollbar --save-dev
+```bash
+npm install ngx-perfect-scrollbar --save-dev
+```
 
 ##### Load the module for your app (with global configuration):
 
