@@ -123,15 +123,17 @@ export class PerfectScrollbarDirective implements DoCheck, OnDestroy, OnChanges,
   }
 
   update() {
-    if (!this.disabled) {
-      if (this.runInsideAngular) {
-        Ps.update(this.elementRef.nativeElement);
-      } else {
-        this.zone.runOutsideAngular(() => {
+    setTimeout(() => {
+      if (!this.disabled) {
+        if (this.runInsideAngular) {
           Ps.update(this.elementRef.nativeElement);
-        });
+        } else {
+          this.zone.runOutsideAngular(() => {
+            Ps.update(this.elementRef.nativeElement);
+          });
+        }
       }
-    }
+    }, 0);
   }
 
   geometry(property: string = 'scroll'): Geometry {
