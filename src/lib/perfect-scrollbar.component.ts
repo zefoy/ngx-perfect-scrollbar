@@ -1,7 +1,8 @@
+import 'rxjs/add/operator/throttleTime';
+import 'rxjs/add/operator/distinctUntilChanged';
+
 import { Subject } from 'rxjs/Subject';
 import { Subscription } from 'rxjs/Subscription';
-import 'rxjs/add/operator/distinctUntilChanged';
-import 'rxjs/add/operator/throttleTime';
 
 import { Component, OnInit, OnDestroy, DoCheck, Input, HostBinding, HostListener, ViewChild, ElementRef, ChangeDetectorRef, ViewEncapsulation } from '@angular/core';
 
