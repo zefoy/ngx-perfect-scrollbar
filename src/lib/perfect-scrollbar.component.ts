@@ -4,7 +4,9 @@ import 'rxjs/add/operator/distinctUntilChanged';
 import { Subject } from 'rxjs/Subject';
 import { Subscription } from 'rxjs/Subscription';
 
-import { Component, OnInit, OnDestroy, DoCheck, Input, HostBinding, HostListener, ViewChild, ElementRef, ChangeDetectorRef, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, OnDestroy, DoCheck } from '@angular/core';
+import { Input, HostBinding, HostListener, ViewChild } from '@angular/core';
+import { ElementRef, ChangeDetectorRef, ViewEncapsulation } from '@angular/core';
 
 import { PerfectScrollbarDirective } from './perfect-scrollbar.directive';
 import { PerfectScrollbarConfigInterface } from './perfect-scrollbar.interfaces';
@@ -16,8 +18,11 @@ import { PerfectScrollbarConfigInterface } from './perfect-scrollbar.interfaces'
   encapsulation: ViewEncapsulation.None
 })
 export class PerfectScrollbarComponent implements OnInit, OnDestroy, DoCheck {
-  private states: any = {};
-  private notify: boolean = null;
+  public states: any = {};
+  public notify: boolean = null;
+
+  public userInteraction: boolean = false;
+  public allowPropagation: boolean = false;
 
   private cancelEvent: Event = null;
 
@@ -26,9 +31,6 @@ export class PerfectScrollbarComponent implements OnInit, OnDestroy, DoCheck {
 
   private usePropagationX: boolean = false;
   private usePropagationY: boolean = false;
-
-  private userInteraction: boolean = false;
-  private allowPropagation: boolean = false;
 
   private scrollSub: Subscription = null;
   private scrollUpdate: Subject<string> = new Subject();
@@ -95,12 +97,8 @@ export class PerfectScrollbarComponent implements OnInit, OnDestroy, DoCheck {
           this.notify = true;
           this.states[state] = true;
 
-          this.cdRef.markForCheck();
-
           this.timeoutState = window.setTimeout(() => {
             this.notify = false;
-
-            this.cdRef.markForCheck();
 
             if (this.autoPropagation && this.userInteraction &&
                ((!this.usePropagationX && (this.states.left || this.states.right)) ||
@@ -108,6 +106,8 @@ export class PerfectScrollbarComponent implements OnInit, OnDestroy, DoCheck {
             {
               this.allowPropagation = true;
             }
+
+            this.cdRef.markForCheck();
           }, 300);
         } else {
           this.notify = false;
@@ -119,8 +119,6 @@ export class PerfectScrollbarComponent implements OnInit, OnDestroy, DoCheck {
             this.states.top = false;
             this.states.bottom = false;
           }
-
-          this.cdRef.markForCheck();
 
           this.userInteraction = true;
 
@@ -137,8 +135,6 @@ export class PerfectScrollbarComponent implements OnInit, OnDestroy, DoCheck {
           } else if (this.scrollIndicators) {
             this.notify = true;
 
-            this.cdRef.markForCheck();
-
             this.timeoutState = window.setTimeout(() => {
               this.notify = false;
 
@@ -146,6 +142,8 @@ export class PerfectScrollbarComponent implements OnInit, OnDestroy, DoCheck {
             }, 300);
           }
         }
+
+        this.cdRef.markForCheck();
       });
   }
 
@@ -250,7 +248,7 @@ export class PerfectScrollbarComponent implements OnInit, OnDestroy, DoCheck {
       if (this.allowPropagation) {
         // PS stops the touchmove event so lets re-emit it here
         if (this.elementRef.nativeElement) {
-          let newEvent = new MouseEvent('touchstart', event);
+          const newEvent = new MouseEvent('touchstart', event);
           this.cancelEvent = new MouseEvent('touchmove', event);
 
           newEvent['psGenerated'] = this.cancelEvent['psGenerated'] = true;
@@ -260,6 +258,8 @@ export class PerfectScrollbarComponent implements OnInit, OnDestroy, DoCheck {
           this.elementRef.nativeElement.dispatchEvent(newEvent);
         }
       }
+
+      this.cdRef.detectChanges();
     }
   }
 
@@ -273,16 +273,20 @@ export class PerfectScrollbarComponent implements OnInit, OnDestroy, DoCheck {
       } else if (!this.usePropagationX || !this.usePropagationY) {
         this.allowPropagation = false;
       }
+
+      this.cdRef.detectChanges();
     }
   }
 
   onScrollEvent(event: Event = null, state: string) {
-    if(event.currentTarget === event.target) {
+    if (event.currentTarget === event.target) {
       this.scrollUpdate.next(state);
 
       if (!this.disabled && (this.autoPropagation || this.scrollIndicators)) {
         this.statesUpdate.next(state);
       }
+
+      this.cdRef.detectChanges();
     }
   }
 }

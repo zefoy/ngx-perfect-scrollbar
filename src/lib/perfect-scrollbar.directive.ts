@@ -1,6 +1,9 @@
 import * as Ps from 'perfect-scrollbar';
 
-import { Directive, DoCheck, OnDestroy, OnChanges, AfterViewInit, Input, Optional, HostBinding, HostListener, ElementRef, SimpleChanges, KeyValueDiffers, NgZone } from '@angular/core';
+import { NgZone, Directive, Optional } from '@angular/core';
+import { SimpleChanges, KeyValueDiffers } from '@angular/core';
+import { DoCheck, OnChanges, OnDestroy, AfterViewInit } from '@angular/core';
+import { Input, HostBinding, HostListener, ElementRef } from '@angular/core';
 
 import { PerfectScrollbarConfig, PerfectScrollbarConfigInterface } from './perfect-scrollbar.interfaces';
 
@@ -38,11 +41,12 @@ export class PerfectScrollbarDirective implements DoCheck, OnDestroy, OnChanges,
     this.update();
   }
 
-  constructor(public elementRef: ElementRef, @Optional() private defaults: PerfectScrollbarConfig, private differs: KeyValueDiffers, private zone: NgZone) {}
+  constructor(@Optional() private defaults: PerfectScrollbarConfig, private zone: NgZone,
+    public elementRef: ElementRef, private differs: KeyValueDiffers) {}
 
   ngDoCheck() {
     if (!this.disabled && this.configDiff) {
-      let changes = this.configDiff.diff(this.config || {});
+      const changes = this.configDiff.diff(this.config || {});
 
       if (changes) {
         this.ngOnDestroy();
@@ -55,8 +59,8 @@ export class PerfectScrollbarDirective implements DoCheck, OnDestroy, OnChanges,
         let contentWidth = this.contentWidth;
         let contentHeight = this.contentHeight;
 
-        let width = this.elementRef.nativeElement.offsetWidth;
-        let height = this.elementRef.nativeElement.offsetHeight;
+        const width = this.elementRef.nativeElement.offsetWidth;
+        const height = this.elementRef.nativeElement.offsetHeight;
 
         if (this.elementRef.nativeElement.children &&
             this.elementRef.nativeElement.children.length)
@@ -104,7 +108,7 @@ export class PerfectScrollbarDirective implements DoCheck, OnDestroy, OnChanges,
 
   ngAfterViewInit() {
     if (!this.disabled) {
-      let config = new PerfectScrollbarConfig(this.defaults);
+      const config = new PerfectScrollbarConfig(this.defaults);
 
       config.assign(this.config);
 
@@ -206,9 +210,9 @@ export class PerfectScrollbarDirective implements DoCheck, OnDestroy, OnChanges,
       let oldTimestamp = performance.now();
       let oldValue = this.elementRef.nativeElement[target];
 
-      let cosParameter = (oldValue - value) / 2;
+      const cosParameter = (oldValue - value) / 2;
 
-      let step = (newTimestamp) => {
+      const step = (newTimestamp) => {
         scrollCount += Math.PI / (speed / (newTimestamp - oldTimestamp));
 
         newValue = Math.round(value + cosParameter + cosParameter * Math.cos(scrollCount));
