@@ -30,7 +30,7 @@ export class PerfectScrollbarConfig implements PerfectScrollbarConfigInterface {
   }
 
   public assign(config: PerfectScrollbarConfigInterface = {}) {
-    for (var key in config) {
+    for (const key in config) {
       this[key] = config[key];
     }
   }
