@@ -47,7 +47,7 @@
     "@types/perfect-scrollbar": "~0.6.0",
     "angular2-inline-template-style": "~1.1.0",
     "angular2-template-loader": "~0.6.0",
-    "awesome-typescript-loader": "~3.1.0",
+    "awesome-typescript-loader": "~3.2.0",
     "codelyzer": "~3.1.0",
     "core-js": "~2.4.0",
     "cpx": "~1.5.0",
