@@ -60,7 +60,7 @@ export class PerfectScrollbarComponent implements OnInit, OnDestroy, DoCheck {
 
   @ViewChild(PerfectScrollbarDirective) directiveRef: PerfectScrollbarDirective;
 
-  @HostListener('document:touchstart', ['$event']) onTestOne(event: any) {
+  @HostListener('document:touchstart', ['$event']) onGeneratedEvent(event: any) {
     // Stop the generated event from reaching window for PS to work correctly
     if (event['psGenerated']) {
       event.stopPropagation();
@@ -285,8 +285,6 @@ export class PerfectScrollbarComponent implements OnInit, OnDestroy, DoCheck {
       if (!this.disabled && (this.autoPropagation || this.scrollIndicators)) {
         this.statesUpdate.next(state);
       }
-
-      this.cdRef.detectChanges();
     }
   }
 }

@@ -1,19 +1,23 @@
+declare var require: any;
+
 import * as Ps from 'perfect-scrollbar';
 
 import { NgZone, Directive, Optional } from '@angular/core';
 import { SimpleChanges, KeyValueDiffers } from '@angular/core';
-import { DoCheck, OnChanges, OnDestroy, AfterViewInit } from '@angular/core';
 import { Input, HostBinding, HostListener, ElementRef } from '@angular/core';
+import { OnInit, OnDestroy, DoCheck, OnChanges, AfterViewInit } from '@angular/core';
 
 import { PerfectScrollbarConfig, PerfectScrollbarConfigInterface } from './perfect-scrollbar.interfaces';
 
 import { Geometry } from './perfect-scrollbar.classes';
 
+const elementResizeDetector = require('element-resize-detector');
+
 @Directive({
   selector: '[perfect-scrollbar]',
   exportAs: 'ngxPerfectScrollbar'
 })
-export class PerfectScrollbarDirective implements DoCheck, OnDestroy, OnChanges, AfterViewInit {
+export class PerfectScrollbarDirective implements OnInit, OnDestroy, DoCheck, OnChanges, AfterViewInit {
   private width: number;
   private height: number;
 
@@ -44,6 +48,26 @@ export class PerfectScrollbarDirective implements DoCheck, OnDestroy, OnChanges,
   constructor(@Optional() private defaults: PerfectScrollbarConfig, private zone: NgZone,
     public elementRef: ElementRef, private differs: KeyValueDiffers) {}
 
+  ngOnInit() {
+    const observer = elementResizeDetector({ strategy: 'scroll' });
+
+    if (this.elementRef.nativeElement.children.length) {
+      observer.listenTo(this.elementRef.nativeElement.children[0], (element) => {
+        this.update();
+      });
+    }
+  }
+
+  ngOnDestroy() {
+    if (this.runInsideAngular) {
+      Ps.destroy(this.elementRef.nativeElement);
+    } else {
+      this.zone.runOutsideAngular(() => {
+        Ps.destroy(this.elementRef.nativeElement);
+      });
+    }
+  }
+
   ngDoCheck() {
     if (!this.disabled && this.configDiff) {
       const changes = this.configDiff.diff(this.config || {});
@@ -55,42 +79,7 @@ export class PerfectScrollbarDirective implements DoCheck, OnDestroy, OnChanges,
         setTimeout(() => {
           this.ngAfterViewInit();
         }, 0);
-      } else if (this.elementRef.nativeElement) {
-        let contentWidth = this.contentWidth;
-        let contentHeight = this.contentHeight;
-
-        const width = this.elementRef.nativeElement.offsetWidth;
-        const height = this.elementRef.nativeElement.offsetHeight;
-
-        if (this.elementRef.nativeElement.children &&
-            this.elementRef.nativeElement.children.length)
-        {
-          contentWidth = this.elementRef.nativeElement.children[0].offsetWidth;
-          contentHeight = this.elementRef.nativeElement.children[0].offsetHeight;
-        }
-
-        if (width !== this.width || height !== this.height ||
-            contentWidth !== this.contentWidth || contentHeight !== this.contentHeight)
-        {
-          this.width = width;
-          this.height = height;
-
-          this.contentWidth = contentWidth;
-          this.contentHeight = contentHeight;
-
-          this.update();
-        }
       }
-    }
-  }
-
-  ngOnDestroy() {
-    if (this.runInsideAngular) {
-      Ps.destroy(this.elementRef.nativeElement);
-    } else {
-      this.zone.runOutsideAngular(() => {
-        Ps.destroy(this.elementRef.nativeElement);
-      });
     }
   }
 
