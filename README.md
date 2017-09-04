@@ -90,7 +90,11 @@ Simply replace the element that would ordinarily be passed to `Ps.initialize` wi
 When using only the directive you need to provide your own theming or import the default theme:
 
 ```css
+/* from a CDN */
 @import 'https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.7.0/css/perfect-scrollbar.min.css';
+
+/* or from the perfect-scrollbar npm package */
+@import '~perfect-scrollbar/dist/css/perfect-scrollbar.min.css';
 ```
 
 Perfect scrollbar directive should be used with div elements and can take optional custom configuration:
