@@ -14,7 +14,7 @@ import { Geometry } from './perfect-scrollbar.classes';
 const elementResizeDetector = require('element-resize-detector');
 
 @Directive({
-  selector: '[perfect-scrollbar]',
+  selector: '[perfect-scrollbar], [perfectScrollbar]',
   exportAs: 'ngxPerfectScrollbar'
 })
 export class PerfectScrollbarDirective implements OnInit, OnDestroy, DoCheck, OnChanges, AfterViewInit {
