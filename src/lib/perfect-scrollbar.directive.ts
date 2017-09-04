@@ -39,7 +39,14 @@ export class PerfectScrollbarDirective implements OnInit, OnDestroy, DoCheck, On
 
   @Input() runInsideAngular: boolean = false;
 
-  @Input('perfect-scrollbar') config: PerfectScrollbarConfigInterface;
+  @Input('perfectScrollbar') config: PerfectScrollbarConfigInterface;
+
+  @Input('perfect-scrollbar')
+  set oldConfig(config: PerfectScrollbarConfigInterface) {
+    console.warn('Deprecated use of perfect-scrollbar selector, use perfectScrollbar instead!');
+    
+    this.config = config;
+  }
 
   @HostListener('window:resize', ['$event']) onResize($event: Event): void {
     this.update();
