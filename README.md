@@ -80,8 +80,6 @@ Simply replace the element that would ordinarily be passed to `Ps.initialize` wi
 [autoPropagation]       // Automatic swipe and wheel propagation control.
 [scrollIndicators]      // Enable fading edges scroll indicators showing.
 
-[runInsideAngular]      // Run perfect scrollbar inside the Angular zone.
-
 (<ps-event-name>)       // All perfect scrollbar events work as bindings.
 ```
 
@@ -110,8 +108,6 @@ Perfect scrollbar directive should be used with div elements and can take option
 
 [usePSClass]            // Use ps class (needed by the ps theme styles).
 [psPosStyle]            // Position style (controls scrollbar placement).
-
-[runInsideAngular]      // Run perfect scrollbar inside the Angular zone.
 
 (<ps-event-name>)       // All perfect scrollbar events work as bindings.
 ```

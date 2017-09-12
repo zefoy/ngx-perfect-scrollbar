@@ -4,9 +4,8 @@ import 'rxjs/add/operator/distinctUntilChanged';
 import { Subject } from 'rxjs/Subject';
 import { Subscription } from 'rxjs/Subscription';
 
-import { Component, OnInit, OnDestroy, DoCheck } from '@angular/core';
-import { Input, HostBinding, HostListener, ViewChild } from '@angular/core';
-import { ElementRef, ChangeDetectorRef, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, OnDestroy, DoCheck, Input, HostBinding, HostListener,
+  ViewChild, ElementRef, ChangeDetectorRef, ViewEncapsulation } from '@angular/core';
 
 import { PerfectScrollbarDirective } from './perfect-scrollbar.directive';
 import { PerfectScrollbarConfigInterface } from './perfect-scrollbar.interfaces';
@@ -53,8 +52,6 @@ export class PerfectScrollbarComponent implements OnInit, OnDestroy, DoCheck {
 
   @HostBinding('class.ps-show-active')
   @Input() scrollIndicators: boolean = false;
-
-  @Input() runInsideAngular: boolean = false;
 
   @Input() config: PerfectScrollbarConfigInterface;
 
@@ -184,42 +181,6 @@ export class PerfectScrollbarComponent implements OnInit, OnDestroy, DoCheck {
     }
 
     return config;
-  }
-
-  update() {
-    console.warn('Deprecated function, update needs to be called through directiveRef!');
-
-    this.directiveRef.update();
-  }
-
-  scrollTo(x: number, y?: number) {
-    console.warn('Deprecated function, scrollTo needs to be called through directiveRef!');
-
-    this.directiveRef.scrollTo(x, y);
-  }
-
-  scrollToTop(offset: number = 0) {
-    console.warn('Deprecated function, scrollToTop needs to be called through directiveRef!');
-
-    this.directiveRef.scrollToTop(offset);
-  }
-
-  scrollToLeft(offset: number = 0) {
-    console.warn('Deprecated function, scrollToLeft needs to be called through directiveRef!');
-
-    this.directiveRef.scrollToLeft(offset);
-  }
-
-  scrollToRight(offset: number = 0) {
-    console.warn('Deprecated function, scrollToRight needs to be called through directiveRef!');
-
-    this.directiveRef.scrollToRight(offset);
-  }
-
-  scrollToBottom(offset: number = 0) {
-    console.warn('Deprecated function, scrollToBottom needs to be called through directiveRef!');
-
-    this.directiveRef.scrollToBottom(offset);
   }
 
   onTouchEnd(event: Event = null) {

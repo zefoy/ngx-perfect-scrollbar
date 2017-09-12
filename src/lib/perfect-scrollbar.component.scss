@@ -10,6 +10,7 @@ perfect-scrollbar {
     display: none;
   }
 
+  /* stylelint-disable */
   &[fxflex],
   &[fxlayout],
   &[fxflexfill] {
@@ -36,6 +37,7 @@ perfect-scrollbar {
       min-height: 0;
     }
   }
+  /* stylelint-enable */
 
   & > .ps {
     position: static;
@@ -137,34 +139,6 @@ perfect-scrollbar {
         & > .ps__scrollbar-x-rail {
           opacity: 0.9;
         }
-      }
-    }
-  }
-
-  &.ps-spacing-tn,
-  &.ps-spacing-xs,
-  &.ps-spacing-sm {
-    padding: 0 12px 12px 0;
-    margin: 0 -12px -12px 0;
-
-    & > .ps {
-      & > .ps-overlay {
-        right: 12px;
-        bottom: 12px;
-      }
-    }
-  }
-
-  &.ps-spacing-md,
-  &.ps-spacing-lg,
-  &.ps-spacing-xl {
-    padding: 0 24px 24px 0;
-    margin: 0 -24px -24px 0;
-
-    & > .ps {
-      & > .ps-overlay {
-        right: 24px;
-        bottom: 24px;
       }
     }
   }

@@ -2,19 +2,15 @@ declare var require: any;
 
 import * as Ps from 'perfect-scrollbar';
 
-import { NgZone, Directive, Optional } from '@angular/core';
-import { SimpleChanges, KeyValueDiffers } from '@angular/core';
-import { Input, HostBinding, HostListener, ElementRef } from '@angular/core';
-import { OnInit, OnDestroy, DoCheck, OnChanges, AfterViewInit } from '@angular/core';
+import { NgZone, Directive, Optional, OnInit, OnDestroy, DoCheck, OnChanges, AfterViewInit,
+  SimpleChanges, KeyValueDiffers, Input, HostBinding, HostListener, ElementRef } from '@angular/core';
 
 import { PerfectScrollbarConfig, PerfectScrollbarConfigInterface } from './perfect-scrollbar.interfaces';
-
-import { Geometry } from './perfect-scrollbar.classes';
 
 const elementResizeDetector = require('element-resize-detector');
 
 @Directive({
-  selector: '[perfect-scrollbar], [perfectScrollbar]',
+  selector: '[perfectScrollbar]',
   exportAs: 'ngxPerfectScrollbar'
 })
 export class PerfectScrollbarDirective implements OnInit, OnDestroy, DoCheck, OnChanges, AfterViewInit {
@@ -37,16 +33,7 @@ export class PerfectScrollbarDirective implements OnInit, OnDestroy, DoCheck, On
   @HostBinding('style.position')
   @Input() psPosStyle: string = 'relative';
 
-  @Input() runInsideAngular: boolean = false;
-
   @Input('perfectScrollbar') config: PerfectScrollbarConfigInterface;
-
-  @Input('perfect-scrollbar')
-  set oldConfig(config: PerfectScrollbarConfigInterface) {
-    console.warn('Deprecated use of perfect-scrollbar selector, use perfectScrollbar instead!');
-    
-    this.config = config;
-  }
 
   @HostListener('window:resize', ['$event']) onResize($event: Event): void {
     this.update();
@@ -66,13 +53,9 @@ export class PerfectScrollbarDirective implements OnInit, OnDestroy, DoCheck, On
   }
 
   ngOnDestroy() {
-    if (this.runInsideAngular) {
+    this.zone.runOutsideAngular(() => {
       Ps.destroy(this.elementRef.nativeElement);
-    } else {
-      this.zone.runOutsideAngular(() => {
-        Ps.destroy(this.elementRef.nativeElement);
-      });
-    }
+    });
   }
 
   ngDoCheck() {
@@ -108,13 +91,9 @@ export class PerfectScrollbarDirective implements OnInit, OnDestroy, DoCheck, On
 
       config.assign(this.config);
 
-      if (this.runInsideAngular) {
+      this.zone.runOutsideAngular(() => {
         Ps.initialize(this.elementRef.nativeElement, config);
-      } else {
-        this.zone.runOutsideAngular(() => {
-          Ps.initialize(this.elementRef.nativeElement, config);
-        });
-      }
+      });
 
       if (!this.configDiff) {
         this.configDiff = this.differs.find(this.config || {}).create(null);
@@ -125,13 +104,9 @@ export class PerfectScrollbarDirective implements OnInit, OnDestroy, DoCheck, On
   update() {
     setTimeout(() => {
       if (!this.disabled) {
-        if (this.runInsideAngular) {
+        this.zone.runOutsideAngular(() => {
           Ps.update(this.elementRef.nativeElement);
-        } else {
-          this.zone.runOutsideAngular(() => {
-            Ps.update(this.elementRef.nativeElement);
-          });
-        }
+        });
       }
     }, 0);
   }

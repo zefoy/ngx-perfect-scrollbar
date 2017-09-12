@@ -79,7 +79,8 @@
     "radix": true,
     "semicolon": [
       true,
-      "always"
+      "always",
+      "ignore-interfaces"
     ],
     "triple-equals": [
       true,
@@ -107,13 +108,13 @@
       "check-type"
     ],
     "directive-selector": [
-      true,
+      false,
       "attribute",
       false,
       "camelCase"
     ],
     "component-selector": [
-      true,
+      false,
       "element",
       false,
       "kebab-case"
