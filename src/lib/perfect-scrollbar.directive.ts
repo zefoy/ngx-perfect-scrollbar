@@ -7,6 +7,8 @@ import { NgZone, Directive, Optional, OnInit, OnDestroy, DoCheck, OnChanges, Aft
 
 import { PerfectScrollbarConfig, PerfectScrollbarConfigInterface } from './perfect-scrollbar.interfaces';
 
+import { Geometry } from './perfect-scrollbar.classes';
+
 const elementResizeDetector = require('element-resize-detector');
 
 @Directive({
