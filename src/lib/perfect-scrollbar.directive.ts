@@ -91,13 +91,21 @@ export class PerfectScrollbarDirective implements OnInit, OnDestroy, DoCheck, On
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (!this.disabled && this.configDiff) {
-      if (changes['hidden'] && !this.hidden) {
-        this.update();
+    if (changes['hidden'] && this.configDiff) {
+      if (changes['hidden'].currentValue !== changes['hidden'].previousValue) {
+        if (changes['hidden'].currentValue === false) {
+          this.update();
+        }
       }
+    }
 
-      if (changes['disabled'] && !this.disabled) {
-        this.ngOnDestroy();
+    if (changes['disabled'] && this.configDiff) {
+      if (changes['disabled'].currentValue !== changes['disabled'].previousValue) {
+        if (changes['disabled'].currentValue === true) {
+         this.ngOnDestroy();
+        } else if (changes['disabled'].currentValue === false) {
+          this.ngAfterViewInit();
+        }
       }
     }
   }
