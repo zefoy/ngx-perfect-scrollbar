@@ -40,6 +40,9 @@ export class PerfectScrollbarComponent implements OnInit, OnDestroy, DoCheck {
   private activeSub: Subscription = null;
   private activeUpdate: Subject<boolean> = new Subject();
 
+  @Input() fxShow: boolean = true;
+  @Input() fxHide: boolean = false;
+
   @HostBinding('hidden')
   @Input() hidden: boolean = false;
 
