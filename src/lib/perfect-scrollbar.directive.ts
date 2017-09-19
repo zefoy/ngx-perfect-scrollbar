@@ -26,7 +26,9 @@ export class PerfectScrollbarDirective implements OnInit, OnDestroy, DoCheck, On
   private contentWidth: number;
   private contentHeight: number;
 
-  @HostBinding('hidden')
+  @Input() fxShow: boolean = true;
+  @Input() fxHide: boolean = false;
+
   @Input() hidden: boolean = false;
 
   @Input() disabled: boolean = false;
@@ -44,7 +46,7 @@ export class PerfectScrollbarDirective implements OnInit, OnDestroy, DoCheck, On
   @Input('perfect-scrollbar')
   set oldConfig(config: PerfectScrollbarConfigInterface) {
     console.warn('Deprecated use of perfect-scrollbar selector, use perfectScrollbar instead!');
-    
+
     this.config = config;
   }
 
@@ -91,20 +93,27 @@ export class PerfectScrollbarDirective implements OnInit, OnDestroy, DoCheck, On
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes['hidden'] && this.configDiff) {
-      if (changes['hidden'].currentValue !== changes['hidden'].previousValue) {
-        if (changes['hidden'].currentValue === false) {
-          this.update();
-        }
-      }
+    if (changes['fxHide']) {
+      changes['hidden'] = changes['fxHide'];
+    } else if (changes['fxShow']) {
+      changes['hidden'] = changes['fxShow'];
+
+      changes['hidden'].currentValue = !changes['fxShow'].currentValue;
+      changes['hidden'].previousValue = !changes['fxShow'].previousValue;
     }
 
-    if (changes['disabled'] && this.configDiff) {
+    if (changes['disabled']) {
       if (changes['disabled'].currentValue !== changes['disabled'].previousValue) {
         if (changes['disabled'].currentValue === true) {
          this.ngOnDestroy();
         } else if (changes['disabled'].currentValue === false) {
           this.ngAfterViewInit();
+        }
+      }
+    } else if (changes['hidden']) {
+      if (changes['hidden'].currentValue !== changes['hidden'].previousValue) {
+        if (changes['hidden'].currentValue === false) {
+          this.update();
         }
       }
     }
@@ -132,7 +141,7 @@ export class PerfectScrollbarDirective implements OnInit, OnDestroy, DoCheck, On
 
   update() {
     setTimeout(() => {
-      if (!this.disabled) {
+      if (!this.disabled && this.configDiff) {
         if (this.runInsideAngular) {
           Ps.update(this.elementRef.nativeElement);
         } else {
