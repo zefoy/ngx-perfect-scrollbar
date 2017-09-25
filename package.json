@@ -21,7 +21,7 @@
     "lint": "npm run lint:js && npm run lint:scss",
     "build": "npm run build:umd && npm run build:aot",
     "deploy": "npm run build && npm run inline && npm publish",
-    "inline": "ng2-inline --compress -b dist/lib/ -o ./ 'dist/lib/*.js'",
+    "inline": "ng2-inline --compress -b dist/lib/ -o ./ \"dist/lib/*.js\"",
     "lint:ts": "tslint 'src/**/*.ts'",
     "lint:scss": "stylelint 'src/**/*.scss' --syntax scss",
     "build:js": "ngc -p src/tsconfig.json",
