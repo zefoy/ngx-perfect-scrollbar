@@ -87,7 +87,7 @@ export class PerfectScrollbarDirective implements OnInit, OnDestroy, DoCheck, On
       changes['hidden'].previousValue = !changes['fxShow'].previousValue;
     }
 
-    if (changes['disabled']) {
+    if (changes['disabled'] && !changes['disabled'].isFirstChange()) {
       if (changes['disabled'].currentValue !== changes['disabled'].previousValue) {
         if (changes['disabled'].currentValue === true) {
          this.ngOnDestroy();
@@ -95,7 +95,7 @@ export class PerfectScrollbarDirective implements OnInit, OnDestroy, DoCheck, On
           this.ngAfterViewInit();
         }
       }
-    } else if (changes['hidden']) {
+    } else if (changes['hidden'] && !changes['hidden'].isFirstChange()) {
       if (changes['hidden'].currentValue !== changes['hidden'].previousValue) {
         if (changes['hidden'].currentValue === false) {
           this.update();
