@@ -55,7 +55,6 @@ export class PerfectScrollbarDirective implements OnInit, OnDestroy, DoCheck, On
 
   ngOnInit() {
     const ro = new ResizeObserver((entries, observer) => {
-console.log("MUTATE");
       this.update();
     });
 
@@ -135,7 +134,6 @@ console.log("MUTATE");
   }
 
   update() {
-console.log("UPDATE");  
   setTimeout(() => {
       if (!this.disabled && this.configDiff) {
         if (this.runInsideAngular) {
