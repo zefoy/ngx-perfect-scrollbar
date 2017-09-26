@@ -35,8 +35,8 @@
     "url": "https://github.com/zefoy/ngx-perfect-scrollbar.git"
   },
   "dependencies": {
-    "element-resize-detector": "^1.1.12",
-    "perfect-scrollbar": "^0.8.0"
+    "perfect-scrollbar": "^0.8.0",
+    "resize-observer-polyfill": "^1.4.0"
   },
   "devDependencies": {
     "@angular/common": "^4.0.0",

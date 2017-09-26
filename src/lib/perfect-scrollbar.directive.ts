@@ -2,6 +2,8 @@ declare var require: any;
 
 import * as Ps from 'perfect-scrollbar';
 
+import ResizeObserver from 'resize-observer-polyfill';
+
 import { NgZone, Directive, Optional } from '@angular/core';
 import { SimpleChanges, KeyValueDiffers } from '@angular/core';
 import { Input, HostBinding, HostListener, ElementRef } from '@angular/core';
@@ -10,8 +12,6 @@ import { OnInit, OnDestroy, DoCheck, OnChanges, AfterViewInit } from '@angular/c
 import { PerfectScrollbarConfig, PerfectScrollbarConfigInterface } from './perfect-scrollbar.interfaces';
 
 import { Geometry } from './perfect-scrollbar.classes';
-
-const elementResizeDetector = require('element-resize-detector');
 
 @Directive({
   selector: '[perfect-scrollbar], [perfectScrollbar]',
@@ -50,21 +50,16 @@ export class PerfectScrollbarDirective implements OnInit, OnDestroy, DoCheck, On
     this.config = config;
   }
 
-  @HostListener('window:resize', ['$event']) onResize($event: Event): void {
-    this.update();
-  }
-
   constructor(@Optional() private defaults: PerfectScrollbarConfig, private zone: NgZone,
     public elementRef: ElementRef, private differs: KeyValueDiffers) {}
 
   ngOnInit() {
-    const observer = elementResizeDetector({ strategy: 'scroll' });
+    const ro = new ResizeObserver((entries, observer) => {
+console.log("MUTATE");
+      this.update();
+    });
 
-    if (this.elementRef.nativeElement.children.length) {
-      observer.listenTo(this.elementRef.nativeElement.children[0], (element) => {
-        this.update();
-      });
-    }
+    ro.observe(this.elementRef.nativeElement);
   }
 
   ngOnDestroy() {
@@ -140,7 +135,8 @@ export class PerfectScrollbarDirective implements OnInit, OnDestroy, DoCheck, On
   }
 
   update() {
-    setTimeout(() => {
+console.log("UPDATE");  
+  setTimeout(() => {
       if (!this.disabled && this.configDiff) {
         if (this.runInsideAngular) {
           Ps.update(this.elementRef.nativeElement);
