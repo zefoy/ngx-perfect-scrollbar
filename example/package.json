@@ -45,7 +45,7 @@
     "@angular/router": "^4.0.0",
     "chokidar-cli": "^1.2.0",
     "core-js": "~2.4.0",
-    "element-resize-detector": "^1.1.0",
+    "resize-observer-polyfill": "^1.4.0",
     "ngx-perfect-scrollbar": "^4.0.0",
     "perfect-scrollbar": "^0.8.0",
     "rxjs": "~5.4.0",
