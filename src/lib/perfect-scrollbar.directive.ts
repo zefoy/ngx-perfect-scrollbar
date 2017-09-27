@@ -54,8 +54,19 @@ export class PerfectScrollbarDirective implements OnInit, OnDestroy, DoCheck, On
     public elementRef: ElementRef, private differs: KeyValueDiffers) {}
 
   ngOnInit() {
+    let previousWidth, previousHeight;
+
     const ro = new ResizeObserver((entries, observer) => {
-      this.update();
+      for (const entry of entries) {
+        const {left, top, width, height} = entry.contentRect;
+
+        if (width !== previousWidth || height !== previousHeight) {
+          this.update();
+
+          previousWidth = width;
+          previousHeight = height;
+        }
+      }
     });
 
     ro.observe(this.elementRef.nativeElement);
