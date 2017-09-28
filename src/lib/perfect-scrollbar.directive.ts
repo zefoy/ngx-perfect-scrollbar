@@ -7,7 +7,7 @@ import ResizeObserver from 'resize-observer-polyfill';
 import { NgZone, Directive, Optional } from '@angular/core';
 import { SimpleChanges, KeyValueDiffers } from '@angular/core';
 import { Input, HostBinding, HostListener, ElementRef } from '@angular/core';
-import { OnInit, OnDestroy, DoCheck, OnChanges, AfterViewInit } from '@angular/core';
+import { OnDestroy, DoCheck, OnChanges, AfterViewInit } from '@angular/core';
 
 import { PerfectScrollbarConfig, PerfectScrollbarConfigInterface } from './perfect-scrollbar.interfaces';
 
@@ -17,7 +17,9 @@ import { Geometry } from './perfect-scrollbar.classes';
   selector: '[perfect-scrollbar], [perfectScrollbar]',
   exportAs: 'ngxPerfectScrollbar'
 })
-export class PerfectScrollbarDirective implements OnInit, OnDestroy, DoCheck, OnChanges, AfterViewInit {
+export class PerfectScrollbarDirective implements OnDestroy, DoCheck, OnChanges, AfterViewInit {
+  private ro: any;
+
   private width: number;
   private height: number;
 
@@ -53,26 +55,11 @@ export class PerfectScrollbarDirective implements OnInit, OnDestroy, DoCheck, On
   constructor(@Optional() private defaults: PerfectScrollbarConfig, private zone: NgZone,
     public elementRef: ElementRef, private differs: KeyValueDiffers) {}
 
-  ngOnInit() {
-    let previousWidth, previousHeight;
-
-    const ro = new ResizeObserver((entries, observer) => {
-      for (const entry of entries) {
-        const {left, top, width, height} = entry.contentRect;
-
-        if (width !== previousWidth || height !== previousHeight) {
-          this.update();
-
-          previousWidth = width;
-          previousHeight = height;
-        }
-      }
-    });
-
-    ro.observe(this.elementRef.nativeElement);
-  }
-
   ngOnDestroy() {
+    if (this.ro) {
+      this.ro.disconnect();
+    }
+
     if (this.runInsideAngular) {
       Ps.destroy(this.elementRef.nativeElement);
     } else {
@@ -125,6 +112,14 @@ export class PerfectScrollbarDirective implements OnInit, OnDestroy, DoCheck, On
   }
 
   ngAfterViewInit() {
+    this.zone.runOutsideAngular(() => {
+      this.ro = new ResizeObserver((entries, observer) => {
+        this.update();
+      });
+
+      this.ro.observe(this.elementRef.nativeElement);
+    });
+
     if (!this.disabled) {
       const config = new PerfectScrollbarConfig(this.defaults);
 
@@ -145,7 +140,7 @@ export class PerfectScrollbarDirective implements OnInit, OnDestroy, DoCheck, On
   }
 
   update() {
-  setTimeout(() => {
+    setTimeout(() => {
       if (!this.disabled && this.configDiff) {
         if (this.runInsideAngular) {
           Ps.update(this.elementRef.nativeElement);
