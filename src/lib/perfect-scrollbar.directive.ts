@@ -1,10 +1,8 @@
-declare var require: any;
-
 import * as Ps from 'perfect-scrollbar';
 
 import ResizeObserver from 'resize-observer-polyfill';
 
-import { NgZone, Directive, Optional, OnInit, OnDestroy, DoCheck, OnChanges, AfterViewInit,
+import { NgZone, Directive, Optional, OnDestroy, DoCheck, OnChanges, AfterViewInit,
   SimpleChanges, KeyValueDiffers, Input, HostBinding, HostListener, ElementRef } from '@angular/core';
 
 import { PerfectScrollbarConfig, PerfectScrollbarConfigInterface } from './perfect-scrollbar.interfaces';
@@ -15,7 +13,9 @@ import { Geometry } from './perfect-scrollbar.classes';
   selector: '[perfectScrollbar]',
   exportAs: 'ngxPerfectScrollbar'
 })
-export class PerfectScrollbarDirective implements OnInit, OnDestroy, DoCheck, OnChanges, AfterViewInit {
+export class PerfectScrollbarDirective implements OnDestroy, DoCheck, OnChanges, AfterViewInit {
+  private ro: any;
+
   private width: number;
   private height: number;
 
@@ -42,15 +42,11 @@ export class PerfectScrollbarDirective implements OnInit, OnDestroy, DoCheck, On
   constructor(@Optional() private defaults: PerfectScrollbarConfig, private zone: NgZone,
     public elementRef: ElementRef, private differs: KeyValueDiffers) {}
 
-  ngOnInit() {
-    const ro = new ResizeObserver((entries, observer) => {
-      this.update();
-    });
-
-    ro.observe(this.elementRef.nativeElement);
-  }
-
   ngOnDestroy() {
+    if (this.ro) {
+      this.ro.disconnect();
+    }
+
     this.zone.runOutsideAngular(() => {
       Ps.destroy(this.elementRef.nativeElement);
     });
@@ -99,6 +95,14 @@ export class PerfectScrollbarDirective implements OnInit, OnDestroy, DoCheck, On
   }
 
   ngAfterViewInit() {
+    this.zone.runOutsideAngular(() => {
+      this.ro = new ResizeObserver((entries, observer) => {
+        this.update();
+      });
+
+      this.ro.observe(this.elementRef.nativeElement);
+    });
+
     if (!this.disabled) {
       const config = new PerfectScrollbarConfig(this.defaults);
 
@@ -115,7 +119,7 @@ export class PerfectScrollbarDirective implements OnInit, OnDestroy, DoCheck, On
   }
 
   update() {
-  setTimeout(() => {
+    setTimeout(() => {
       if (!this.disabled && this.configDiff) {
         this.zone.runOutsideAngular(() => {
           Ps.update(this.elementRef.nativeElement);
@@ -133,11 +137,23 @@ export class PerfectScrollbarDirective implements OnInit, OnDestroy, DoCheck, On
     };
   }
 
+  scrollable(direction: string = 'any'): boolean {
+    const element = this.elementRef.nativeElement;
+
+    if (direction === 'any') {
+      return element.classList.contains('ps--active-x') ||
+        element.classList.contains('ps--active-y');
+    } else if (direction === 'both') {
+      return element.classList.contains('ps--active-x') &&
+        element.classList.contains('ps--active-y');
+    } else {
+      return element.classList.contains('ps--active-' + direction);
+    }
+  }
+
   scrollTo(x: number, y?: number, speed?: number) {
     if (!this.disabled) {
       if (y == null && speed == null) {
-        console.warn('Deprecated use of scrollTo, use the scrollToY function instead!');
-
         this.animateScrolling('scrollTop', x, speed);
       } else {
         if (x != null) {
