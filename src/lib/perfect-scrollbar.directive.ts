@@ -162,6 +162,20 @@ export class PerfectScrollbarDirective implements OnDestroy, DoCheck, OnChanges,
     };
   }
 
+  scrollable(direction: string = 'any'): boolean {
+    const element = this.elementRef.nativeElement;
+
+    if (direction === 'any') {
+      return element.classList.contains('ps--active-x') ||
+        element.classList.contains('ps--active-y');
+    } else if (direction === 'both') {
+      return element.classList.contains('ps--active-x') &&
+        element.classList.contains('ps--active-y');
+    } else {
+      return element.classList.contains('ps--active-' + direction);
+    }
+  }
+
   scrollTo(x: number, y?: number, speed?: number) {
     if (!this.disabled) {
       if (y == null && speed == null) {

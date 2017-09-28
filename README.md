@@ -139,6 +139,8 @@ For more detailed documentation with all the supported events / options see the 
 ```javascript
 update()                        // Updates the scrollbar size and position.
 geometry(property)              // Returns the geometry for specified property.
+scrollable(direction)           // Checks if the given direction is scrollable.
+                                // Direction can be: 'any','both','x','y'
 
 scrollTo(x, y, speed)           // Animate scroll to given x,y coordinates.
 scrollToY(position, speed)      // Animate scroll to given vertical position.
