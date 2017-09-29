@@ -23,6 +23,8 @@ export class PerfectScrollbarDirective implements OnDestroy, DoCheck, OnChanges,
   private width: number;
   private height: number;
 
+  private timeout: number;
+
   private configDiff: any;
 
   private contentWidth: number;
@@ -60,6 +62,10 @@ export class PerfectScrollbarDirective implements OnDestroy, DoCheck, OnChanges,
       this.ro.disconnect();
     }
 
+    if (this.timeout) {
+      window.clearTimeout(this.timeout);
+    }
+
     if (this.runInsideAngular) {
       Ps.destroy(this.elementRef.nativeElement);
     } else {
@@ -77,7 +83,7 @@ export class PerfectScrollbarDirective implements OnDestroy, DoCheck, OnChanges,
         this.ngOnDestroy();
 
         // Timeout is needed for the styles to update properly
-        setTimeout(() => {
+        window.setTimeout(() => {
           this.ngAfterViewInit();
         }, 0);
       }
@@ -112,14 +118,6 @@ export class PerfectScrollbarDirective implements OnDestroy, DoCheck, OnChanges,
   }
 
   ngAfterViewInit() {
-    this.zone.runOutsideAngular(() => {
-      this.ro = new ResizeObserver((entries, observer) => {
-        this.update();
-      });
-
-      this.ro.observe(this.elementRef.nativeElement);
-    });
-
     if (!this.disabled) {
       const config = new PerfectScrollbarConfig(this.defaults);
 
@@ -136,11 +134,23 @@ export class PerfectScrollbarDirective implements OnDestroy, DoCheck, OnChanges,
       if (!this.configDiff) {
         this.configDiff = this.differs.find(this.config || {}).create(null);
       }
+
+      this.zone.runOutsideAngular(() => {
+        this.ro = new ResizeObserver((entries, observer) => {
+          this.update();
+        });
+
+        this.ro.observe(this.elementRef.nativeElement);
+      });
     }
   }
 
   update() {
-    setTimeout(() => {
+    if (this.timeout) {
+      window.clearTimeout(this.timeout);
+    }
+
+    this.timeout = window.setTimeout(() => {
       if (!this.disabled && this.configDiff) {
         if (this.runInsideAngular) {
           Ps.update(this.elementRef.nativeElement);
