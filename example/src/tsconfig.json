@@ -22,7 +22,6 @@
       "./node_modules/@types"
     ],
     "types": [
-      "core-js",
       "node"
     ]
   },

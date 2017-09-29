@@ -114,30 +114,48 @@ perfect-scrollbar {
         bottom: 0 !important;
         left: 0 !important;
       }
+
+      &.ps--active-y {
+        & > .ps__scrollbar-y-rail {
+          margin: 0 0 10px;
+        }
+
+        & > .ps__scrollbar-x-rail {
+          margin: 0 10px 0 0;
+        }
+      }
     }
 
-    &.ps--active-y.ps--active-x {
-      & > .ps__scrollbar-y-rail {
-        margin: 0 0 8px;
+    &.ps--in-scrolling {
+      &.ps--y {
+        & > .ps__scrollbar-y-rail {
+          opacity: 0.9;
+
+          background-color: #eee;
+        }
       }
 
-      & > .ps__scrollbar-x-rail {
-        margin: 0 8px 0 0;
+      &.ps--x {
+        & > .ps__scrollbar-x-rail {
+          opacity: 0.9;
+
+          background-color: #eee;
+        }
       }
     }
   }
 
-  &.ps-scrolling {
+  &.ps-show-always {
     & > .ps {
       &.ps--active-y {
         & > .ps__scrollbar-y-rail {
-          opacity: 0.9;
+          opacity: 0.6;
         }
       }
 
       &.ps--active-x {
         & > .ps__scrollbar-x-rail {
-          opacity: 0.9;
+          opacity: 0.6;
         }
       }
     }

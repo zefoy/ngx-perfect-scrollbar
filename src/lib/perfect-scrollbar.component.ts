@@ -31,9 +31,6 @@ export class PerfectScrollbarComponent implements OnInit, OnDestroy, DoCheck {
   private usePropagationX: boolean = false;
   private usePropagationY: boolean = false;
 
-  private scrollSub: Subscription = null;
-  private scrollUpdate: Subject<string> = new Subject();
-
   private statesSub: Subscription = null;
   private statesUpdate: Subject<string> = new Subject();
 
@@ -74,18 +71,6 @@ export class PerfectScrollbarComponent implements OnInit, OnDestroy, DoCheck {
       .distinctUntilChanged()
       .subscribe((active: boolean) => {
         this.allowPropagation = active;
-      });
-
-    this.scrollSub = this.scrollUpdate
-      .throttleTime(100)
-      .subscribe((state: string) => {
-        window.clearTimeout(this.timeoutScroll);
-
-        this.elementRef.nativeElement.classList.add('ps-scrolling');
-
-        this.timeoutScroll = window.setTimeout(() => {
-          this.elementRef.nativeElement.classList.remove('ps-scrolling');
-        }, 500);
       });
 
     this.statesSub = this.statesUpdate
@@ -152,10 +137,6 @@ export class PerfectScrollbarComponent implements OnInit, OnDestroy, DoCheck {
       this.activeSub.unsubscribe();
     }
 
-    if (this.scrollSub) {
-      this.scrollSub.unsubscribe();
-    }
-
     if (this.statesSub) {
       this.statesSub.unsubscribe();
     }
@@ -187,21 +168,19 @@ export class PerfectScrollbarComponent implements OnInit, OnDestroy, DoCheck {
   }
 
   onTouchEnd(event: Event = null) {
-    if (!this.disabled && this.autoPropagation) {
-      if (!this.usePropagationX || !this.usePropagationY) {
-        this.cancelEvent = null;
+    if (!this.disabled && this.autoPropagation &&
+       (!this.usePropagationX || !this.usePropagationY))
+    {
+      this.cancelEvent = null;
 
-        this.allowPropagation = false;
-      }
+      this.allowPropagation = false;
     }
   }
 
   onTouchMove(event: Event = null) {
-    if (!this.disabled && this.autoPropagation) {
-      if (!this.allowPropagation) {
-        event.preventDefault();
-        event.stopPropagation();
-      }
+    if (!this.disabled && this.autoPropagation && !this.allowPropagation) {
+      event.preventDefault();
+      event.stopPropagation();
     }
   }
 
@@ -243,12 +222,10 @@ export class PerfectScrollbarComponent implements OnInit, OnDestroy, DoCheck {
   }
 
   onScrollEvent(event: Event = null, state: string) {
-    if (event.currentTarget === event.target) {
-      this.scrollUpdate.next(state);
-
-      if (!this.disabled && (this.autoPropagation || this.scrollIndicators)) {
-        this.statesUpdate.next(state);
-      }
+    if (!this.disabled && event.currentTarget === event.target &&
+       (this.autoPropagation || this.scrollIndicators))
+    {
+      this.statesUpdate.next(state);
     }
   }
 }
