@@ -152,12 +152,16 @@ export class PerfectScrollbarDirective implements OnDestroy, DoCheck, OnChanges,
 
     this.timeout = window.setTimeout(() => {
       if (!this.disabled && this.configDiff) {
-        if (this.runInsideAngular) {
-          Ps.update(this.elementRef.nativeElement);
-        } else {
-          this.zone.runOutsideAngular(() => {
+        try {
+          if (this.runInsideAngular) {
             Ps.update(this.elementRef.nativeElement);
-          });
+          } else {
+            this.zone.runOutsideAngular(() => {
+              Ps.update(this.elementRef.nativeElement);
+            });
+          }
+        } catch (error) {
+          // Update can be finished after destroy so catch errors
         }
       }
     }, 0);
