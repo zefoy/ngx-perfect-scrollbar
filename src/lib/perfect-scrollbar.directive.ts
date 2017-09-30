@@ -16,15 +16,9 @@ import { Geometry } from './perfect-scrollbar.classes';
 export class PerfectScrollbarDirective implements OnDestroy, DoCheck, OnChanges, AfterViewInit {
   private ro: any;
 
-  private width: number;
-  private height: number;
-
   private timeout: number;
 
   private configDiff: any;
-
-  private contentWidth: number;
-  private contentHeight: number;
 
   @Input() fxShow: boolean = true;
   @Input() fxHide: boolean = false;
@@ -131,9 +125,13 @@ export class PerfectScrollbarDirective implements OnDestroy, DoCheck, OnChanges,
 
     this.timeout = window.setTimeout(() => {
       if (!this.disabled && this.configDiff) {
-        this.zone.runOutsideAngular(() => {
-          Ps.update(this.elementRef.nativeElement);
-        });
+        try {
+          this.zone.runOutsideAngular(() => {
+            Ps.update(this.elementRef.nativeElement);
+          });
+        } catch (error) {
+          // Update can be finished after destroy so catch errors
+        }
       }
     }, 0);
   }
@@ -209,10 +207,10 @@ export class PerfectScrollbarDirective implements OnDestroy, DoCheck, OnChanges,
     if (!speed) {
       this.elementRef.nativeElement[target] = value;
 
-      // PS has weird event sending order, this is a workaround for that
       this.update();
 
-      this.update();
+      // PS has weird event sending order, this is a workaround for that
+      this.timeout = null; this.update();
     } else if (value !== this.elementRef.nativeElement[target]) {
       let newValue = 0;
       let scrollCount = 0;
@@ -232,10 +230,10 @@ export class PerfectScrollbarDirective implements OnDestroy, DoCheck, OnChanges,
           if (scrollCount >= Math.PI) {
             this.elementRef.nativeElement[target] = value;
 
-            // PS has weird event sending order, this is a workaround for that
             this.update();
 
-            this.update();
+            // PS has weird event sending order, this is a workaround for that
+            this.timeout = null; this.update();
           } else {
             this.elementRef.nativeElement[target] = oldValue = newValue;
 
