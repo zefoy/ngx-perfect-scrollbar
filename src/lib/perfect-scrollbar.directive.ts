@@ -188,8 +188,7 @@ export class PerfectScrollbarDirective implements OnDestroy, DoCheck, OnChanges,
   scrollTo(x: number, y?: number, speed?: number) {
     if (!this.disabled) {
       if (y == null && speed == null) {
-
-        le.warn('Deprecated use of scrollTo, use the scrollToY function instead!');
+        console.warn('Deprecated use of scrollTo, use the scrollToY function instead!');
 
         this.animateScrolling('scrollTop', x, speed);
       } else {
