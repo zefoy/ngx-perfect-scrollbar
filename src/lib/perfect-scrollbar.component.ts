@@ -13,7 +13,7 @@ import { PerfectScrollbarConfigInterface } from './perfect-scrollbar.interfaces'
 @Component({
   selector: 'perfect-scrollbar',
   templateUrl: './perfect-scrollbar.component.html',
-  styleUrls: ['./perfect-scrollbar.component.css'],
+  styleUrls: [ './perfect-scrollbar.component.scss' ],
   encapsulation: ViewEncapsulation.None
 })
 export class PerfectScrollbarComponent implements OnInit, OnDestroy, DoCheck {

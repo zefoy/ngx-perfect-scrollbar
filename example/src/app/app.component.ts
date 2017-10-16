@@ -7,7 +7,7 @@ import { PerfectScrollbarComponent, PerfectScrollbarDirective } from 'ngx-perfec
   moduleId: module.id + '',
   selector: 'my-app',
   templateUrl: 'app.component.html',
-  styleUrls: ['app.component.css']
+  styleUrls: [ 'app.component.css' ]
 })
 export class AppComponent implements AfterViewInit {
   public config: PerfectScrollbarConfigInterface = {};

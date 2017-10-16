@@ -11,7 +11,6 @@ See a live example application <a href="https://zefoy.github.io/ngx-perfect-scro
 ```bash
 npm install
 npm run build
-npm run inline
 ```
 
 ### Library development
