@@ -2,7 +2,7 @@
 
 <a href="https://badge.fury.io/js/ngx-perfect-scrollbar"><img src="https://badge.fury.io/js/ngx-perfect-scrollbar.svg" align="right" alt="npm version" height="18"></a>
 
-This is an Angular wrapper library for the [Perfect Scrollbar](https://noraesae.github.io/perfect-scrollbar/).
+This is an Angular wrapper library for the [Perfect Scrollbar](https://utatti.github.io/perfect-scrollbar/).
 
 See a live example application <a href="https://zefoy.github.io/ngx-perfect-scrollbar/">here</a>.
 
@@ -128,7 +128,7 @@ scrollYMarginOffset     // Offset before enabling the Y scroller (Default: 0).
 stopPropagationOnClick  // Stop the propagation of click event (Default: true).
 ```
 
-For more detailed documentation with all the supported events / options see the [Perfect Scrollbar documentation](https://github.com/noraesae/perfect-scrollbar/).
+For more detailed documentation with all the supported events / options see the [Perfect Scrollbar documentation](https://github.com/utatti/perfect-scrollbar/).
 
 ##### Available control / helper functions (provided by the directive):
 
