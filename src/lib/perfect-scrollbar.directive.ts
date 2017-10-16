@@ -1,4 +1,4 @@
-import * as Ps from 'perfect-scrollbar';
+import PerfectScrollbar from 'perfect-scrollbar';
 
 import ResizeObserver from 'resize-observer-polyfill';
 
@@ -16,6 +16,7 @@ import { Geometry } from './perfect-scrollbar.classes';
   exportAs: 'ngxPerfectScrollbar'
 })
 export class PerfectScrollbarDirective implements OnDestroy, DoCheck, OnChanges, AfterViewInit {
+  private ps: any;
   private ro: any;
 
   private timeout: number;
@@ -59,12 +60,14 @@ export class PerfectScrollbarDirective implements OnDestroy, DoCheck, OnChanges,
     }
 
     if (this.runInsideAngular) {
-      Ps.destroy(this.elementRef.nativeElement);
+      this.ps.destroy();
     } else {
       this.zone.runOutsideAngular(() => {
-        Ps.destroy(this.elementRef.nativeElement);
+        this.ps.destroy();
       });
     }
+
+    this.ps = null;
   }
 
   ngDoCheck() {
@@ -116,10 +119,10 @@ export class PerfectScrollbarDirective implements OnDestroy, DoCheck, OnChanges,
       config.assign(this.config);
 
       if (this.runInsideAngular) {
-        Ps.initialize(this.elementRef.nativeElement, config);
+        this.ps = new PerfectScrollbar(this.elementRef.nativeElement, config);
       } else {
         this.zone.runOutsideAngular(() => {
-          Ps.initialize(this.elementRef.nativeElement, config);
+          this.ps = new PerfectScrollbar(this.elementRef.nativeElement, config);
         });
       }
 
@@ -146,10 +149,10 @@ export class PerfectScrollbarDirective implements OnDestroy, DoCheck, OnChanges,
       if (!this.disabled && this.configDiff) {
         try {
           if (this.runInsideAngular) {
-            Ps.update(this.elementRef.nativeElement);
+            this.ps.update();
           } else {
             this.zone.runOutsideAngular(() => {
-              Ps.update(this.elementRef.nativeElement);
+              this.ps.update();
             });
           }
         } catch (error) {
@@ -185,7 +188,8 @@ export class PerfectScrollbarDirective implements OnDestroy, DoCheck, OnChanges,
   scrollTo(x: number, y?: number, speed?: number) {
     if (!this.disabled) {
       if (y == null && speed == null) {
-        console.warn('Deprecated use of scrollTo, use the scrollToY function instead!');
+
+        le.warn('Deprecated use of scrollTo, use the scrollToY function instead!');
 
         this.animateScrolling('scrollTop', x, speed);
       } else {
@@ -233,9 +237,6 @@ export class PerfectScrollbarDirective implements OnDestroy, DoCheck, OnChanges,
       this.elementRef.nativeElement[target] = value;
 
       this.update();
-
-      // PS has weird event sending order, this is a workaround for that
-      this.timeout = null; this.update();
     } else if (value !== this.elementRef.nativeElement[target]) {
       let newValue = 0;
       let scrollCount = 0;
@@ -256,9 +257,6 @@ export class PerfectScrollbarDirective implements OnDestroy, DoCheck, OnChanges,
             this.elementRef.nativeElement[target] = value;
 
             this.update();
-
-            // PS has weird event sending order, this is a workaround for that
-            this.timeout = null; this.update();
           } else {
             this.elementRef.nativeElement[target] = oldValue = newValue;
 

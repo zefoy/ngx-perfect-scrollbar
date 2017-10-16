@@ -1,4 +1,4 @@
-@import '~perfect-scrollbar/css/perfect-scrollbar.css';
+@import '../../node_modules/perfect-scrollbar/css/perfect-scrollbar';
 
 /*
   TODO: Remove important flags after this bug if fixed:
@@ -116,44 +116,62 @@ perfect-scrollbar {
     }
 
     &.ps--active-y {
-      & > .ps__scrollbar-y-rail {
+      & > .ps__rail-y {
+        width: 10px;
         top: 0 !important;
         right: 0 !important;
+
+        transition:
+          width 200ms linear,
+          opacity 200ms linear,
+          background-color 200ms linear;
+
+        &:hover {
+          width: 15px;
+        }
       }
     }
 
     &.ps--active-x {
-      & > .ps__scrollbar-x-rail {
+      & > .ps__rail-x {
+        height: 10px;
         bottom: 0 !important;
         left: 0 !important;
+
+        transition:
+          height 200ms linear,
+          opacity 200ms linear,
+          background-color 200ms linear;
+
+        &:hover {
+          height: 15px;
+        }
       }
 
       &.ps--active-y {
-        & > .ps__scrollbar-y-rail {
+        & > .ps__rail-y {
           margin: 0 0 10px;
         }
 
-        & > .ps__scrollbar-x-rail {
+        & > .ps__rail-x {
           margin: 0 10px 0 0;
         }
       }
     }
 
-    &.ps--in-scrolling {
-      &.ps--y {
-        & > .ps__scrollbar-y-rail {
-          opacity: 0.9;
+    &.ps--scrolling-y {
+      & > .ps__rail-y {
+        opacity: 0.9;
 
-          background-color: #eee;
-        }
+        background-color: #eee;
       }
+    }
 
-      &.ps--x {
-        & > .ps__scrollbar-x-rail {
-          opacity: 0.9;
+    &.ps--scrolling-x {
+      & > .ps__rail-x {
+        opacity: 0.9;
 
-          background-color: #eee;
-        }
+        background-color: #eee;
       }
     }
   }
@@ -189,13 +207,13 @@ perfect-scrollbar {
   &.ps-show-always {
     & > .ps {
       &.ps--active-y {
-        & > .ps__scrollbar-y-rail {
+        & > .ps__rail-y {
           opacity: 0.6;
         }
       }
 
       &.ps--active-x {
-        & > .ps__scrollbar-x-rail {
+        & > .ps__rail-x {
           opacity: 0.6;
         }
       }
