@@ -1,4 +1,9 @@
-@import '../../node_modules/perfect-scrollbar/dist/css/perfect-scrollbar.min';
+@import '~perfect-scrollbar/css/perfect-scrollbar.css';
+
+/*
+  TODO: Remove important flags after this bug if fixed:
+  https://github.com/angular/flex-layout/issues/381
+*/
 
 perfect-scrollbar {
   position: relative;
@@ -11,26 +16,36 @@ perfect-scrollbar {
   }
 
   /* stylelint-disable */
-  &[fxflex],
-  &[fxlayout],
-  &[fxflexfill] {
+  &[fxflex] {
     display: flex;
-    flex-direction: inherit;
-    -webkit-box-orient: inherit;
-    -webkit-box-direction: inherit;
+    flex-direction: column;
+    -webkit-box-orient: column;
+    -webkit-box-direction: column;
     height: auto;
     min-width: 0;
     min-height: 0;
 
+    & > .ps {
+      flex: 1 1 auto;
+      -ms-flex: 1 1 auto;
+      -webkit-box-flex: 1;
+      width: auto;
+      height: auto;
+      min-width: 0;
+      min-height: 0;
+    }
+  }
+
+  &[fxlayout] {
     & > .ps,
     & > .ps > .ps-content {
       display: flex;
       flex: 1 1 auto;
-      -webkit-box-flex: 1;
       -ms-flex: 1 1 auto;
-      flex-direction: inherit;
-      -webkit-box-orient: inherit;
-      -webkit-box-direction: inherit;
+      -webkit-box-flex: 1;
+      flex-direction: inherit !important;
+      -webkit-box-orient: inherit !important;
+      -webkit-box-direction: inherit !important;
       width: auto;
       height: auto;
       min-width: 0;
@@ -257,3 +272,4 @@ perfect-scrollbar {
     }
   }
 }
+

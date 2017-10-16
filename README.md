@@ -2,7 +2,7 @@
 
 <a href="https://badge.fury.io/js/ngx-perfect-scrollbar"><img src="https://badge.fury.io/js/ngx-perfect-scrollbar.svg" align="right" alt="npm version" height="18"></a>
 
-This is an Angular wrapper library for the [Perfect Scrollbar](https://noraesae.github.io/perfect-scrollbar/).
+This is an Angular wrapper library for the [Perfect Scrollbar](https://utatti.github.io/perfect-scrollbar/).
 
 See a live example application <a href="https://zefoy.github.io/ngx-perfect-scrollbar/">here</a>.
 
@@ -88,11 +88,7 @@ Simply replace the element that would ordinarily be passed to `Ps.initialize` wi
 When using only the directive you need to provide your own theming or import the default theme:
 
 ```css
-/* From the perfect-scrollbar npm package */
-@import '~perfect-scrollbar/dist/css/perfect-scrollbar.min.css';
-
-/* OR from the CDN if you are not bundling the styles */
-@import 'https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.7.0/css/perfect-scrollbar.min.css';
+@import '~perfect-scrollbar/css/perfect-scrollbar.css';
 ```
 
 Perfect scrollbar directive should be used with div elements and can take optional custom configuration:
@@ -128,7 +124,7 @@ scrollYMarginOffset     // Offset before enabling the Y scroller (Default: 0).
 stopPropagationOnClick  // Stop the propagation of click event (Default: true).
 ```
 
-For more detailed documentation with all the supported events / options see the [Perfect Scrollbar documentation](https://github.com/noraesae/perfect-scrollbar/).
+For more detailed documentation with all the supported events / options see the [Perfect Scrollbar documentation](https://github.com/utatti/perfect-scrollbar/).
 
 ##### Available control / helper functions (provided by the directive):
 

@@ -129,6 +129,7 @@ export class PerfectScrollbarComponent implements OnInit, OnDestroy, DoCheck {
         }
 
         this.cdRef.markForCheck();
+        this.cdRef.detectChanges();
       });
   }
 
