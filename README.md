@@ -2,7 +2,7 @@
 
 <a href="https://badge.fury.io/js/ngx-perfect-scrollbar"><img src="https://badge.fury.io/js/ngx-perfect-scrollbar.svg" align="right" alt="npm version" height="18"></a>
 
-This is an Angular wrapper library for the [Perfect Scrollbar](https://utatti.github.io/perfect-scrollbar/).
+This is an Angular wrapper library for the [Perfect Scrollbar](https://utatti.github.io/perfect-scrollbar/). To use this library you should get familiar with the [Perfect Scrollbar documentation](https://github.com/utatti/perfect-scrollbar/) as well, this documentation only explains details specific to this wrapper.
 
 See a live example application <a href="https://zefoy.github.io/ngx-perfect-scrollbar/">here</a>.
 
@@ -11,6 +11,7 @@ See a live example application <a href="https://zefoy.github.io/ngx-perfect-scro
 ```bash
 npm install
 npm run build
+npm run inline
 ```
 
 ### Library development
