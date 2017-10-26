@@ -58,7 +58,7 @@ const PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 
 ##### Use it in your HTML template (with custom configuration):
 
-This library provides two ways to create a Perfect Scrollbar element, a component and a directive.
+This library provides two ways to create a Perfect Scrollbar element, a component and a directive. Component tries to make the usage as simple as possible and the directive is meant for more custom / advanced usages. The scroll area always needs some fixed height to work. The default styles uses 100% as the height value so the parent needs to have fixed height or you need to set it via CSS styles. Otherwise the height keeps growing and you won't get the scrollbars.
 
 **COMPONENT USAGE**
 
