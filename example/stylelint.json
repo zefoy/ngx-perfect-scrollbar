@@ -37,7 +37,9 @@
     "at-rule-empty-line-before": [
       "always",
       {
-        "ignore": ["blockless-after-blockless"]
+        "ignore": [
+          "blockless-after-blockless"
+        ]
       }
     ],
 

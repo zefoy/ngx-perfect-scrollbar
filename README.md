@@ -4,22 +4,16 @@
 
 This is an Angular wrapper library for the [Perfect Scrollbar](https://utatti.github.io/perfect-scrollbar/). To use this library you should get familiar with the [Perfect Scrollbar documentation](https://github.com/utatti/perfect-scrollbar/) as well, this documentation only explains details specific to this wrapper.
 
+This documentation is for the latest 5.x.x version which requires Angular 5. For Angular 4 you need to use the latest 4.x.x version. Documentation for the 4.x.x can be found from <a href="https://github.com/zefoy/ngx-perfect-scrollbar/tree/4.x.x/">here</a>.
+
 See a live example application <a href="https://zefoy.github.io/ngx-perfect-scrollbar/">here</a>.
 
-### Library building
+### Building the library
 
 ```bash
 npm install
 npm run build
-npm run inline
-```
-
-### Library development
-
-```bash
-npm link
-cd example
-npm link ngx-perfect-scrollbar
+npm run bundle
 ```
 
 ### Running the example
@@ -28,9 +22,17 @@ npm link ngx-perfect-scrollbar
 cd example
 npm install
 npm start
-
-(or 'npm run start:sjs' for using SystemJS)
 ```
+
+### Library development
+
+
+```bash
+npm link
+cd example
+npm ling ngx-perfect-scrollbar
+```
+
 ### Installing and usage
 
 ```bash
@@ -41,9 +43,10 @@ npm install ngx-perfect-scrollbar --save
 
 ```javascript
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
+import { PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
 import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
 
-const PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
+const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true
 };
 
@@ -51,31 +54,38 @@ const PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   ...
   imports: [
     ...
-    PerfectScrollbarModule.forRoot(PERFECT_SCROLLBAR_CONFIG)
+    PerfectScrollbarModule
+  ],
+  providers: [
+    {
+      provide: PERFECT_SCROLLBAR_CONFIG,
+      useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG
+    }
   ]
 })
 ```
 
 ##### Use it in your HTML template (with custom configuration):
 
-This library provides two ways to create a Perfect Scrollbar element, a component and a directive. Component tries to make the usage as simple as possible and the directive is meant for more custom / advanced usages. The scroll area always needs some fixed height to work. The default styles uses 100% as the height value so the parent needs to have fixed height or you need to set it via CSS styles. Otherwise the height keeps growing and you won't get the scrollbars.
+This library provides two ways to create a Perfect Scrollbar element, a component and a directive. Component tries to make the usage as simple as possible and the directive is meant for more custom / advanced use cases.
+
+The scroll area always needs some fixed height to work. The default styles uses 100% as the height value so the parent needs to have fixed height or you need to set it via CSS styles. Otherwise the height keeps growing and you won't get the scrollbars.
 
 **COMPONENT USAGE**
 
-Simply replace the element that would ordinarily be passed to `Ps.initialize` with the perfect-scollbar component.
+Simply replace the element that would ordinarily be passed to `PerfectScrollbar` with the perfect-scollbar component.
 
 ```html
-<perfect-scrollbar class="container" [config]="config">
-  <div class="content">Scrollable content</div>
+<perfect-scrollbar [config]="config">
+  <div>Scrollable content</div>
 </perfect-scrollbar>
 ```
 
 ```javascript
 [config]                // Custom config to override the global defaults.
-
 [disabled]              // Disables the perfect scrollbar initialization.
 
-[usePSClass]            // Use ps class (needed by the ps theme styles).
+[usePSClass]            // Use 'ps' class (needed by the ps theme styles).
 
 [autoPropagation]       // Automatic swipe and wheel propagation control.
 [scrollIndicators]      // Enable fading edges scroll indicators showing.
@@ -94,15 +104,16 @@ When using only the directive you need to provide your own theming or import the
 Perfect scrollbar directive should be used with div elements and can take optional custom configuration:
 
 ```html
-<div [perfect-scrollbar]="config"></div>
+<div class="ps" [perfectScrollbar]="config">
+  <div>Scrollable content</dib>
+</div>
 ```
 
 ```javascript
-[perfect-scrollbar]     // Can be used to provide optional custom config.
+[perfectScrollbar]      // Can be used to provide optional custom config.
 
 [disabled]              // Disables the perfect scrollbar initialization.
 
-[usePSClass]            // Use ps class (needed by the ps theme styles).
 [psPosStyle]            // Position style (controls scrollbar placement).
 
 (<ps-event-name>)       // All perfect scrollbar events work as bindings.
@@ -130,7 +141,10 @@ For more detailed documentation with all the supported events / options see the 
 ##### Available control / helper functions (provided by the directive):
 
 ```javascript
+ps()                              // Returns reference to the PS instance.
+
 update()                          // Updates the scrollbar size and position.
+
 geometry(prefix)                  // Returns the geometry with specified prefix.
 position(absolute)                // Returns the reach or absolute scroll position,
 scrollable(direction)             // Checks if the given direction is scrollable.

@@ -5,10 +5,10 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "lib": [
-      "dom",
-      "es6"
+      "es2015",
+      "dom"
     ],
-    "module": "commonjs",
+    "module": "es2015",
     "moduleResolution": "node",
     "outDir": "./dist",
     "paths": {
@@ -22,10 +22,9 @@
       "./node_modules/@types"
     ],
     "types": [
-      "node"
+      "node",
+      "core-js"
+      // Add this when 1.x types available: "perfect-scrollbar"
     ]
-  },
-  "awesomeTypescriptLoaderOptions": {
-    "useWebpackText": true
   }
 }
