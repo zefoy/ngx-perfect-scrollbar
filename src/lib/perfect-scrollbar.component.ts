@@ -4,8 +4,8 @@ import 'rxjs/add/operator/distinctUntilChanged';
 import { Subject } from 'rxjs/Subject';
 import { Subscription } from 'rxjs/Subscription';
 
-import { Component, OnInit, OnDestroy, DoCheck, Input, HostBinding, HostListener,
-  ViewChild, ElementRef, ChangeDetectorRef, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, OnDestroy, DoCheck, AfterViewInit, Input, HostBinding,
+  HostListener, ViewChild, ElementRef, ChangeDetectorRef, ViewEncapsulation } from '@angular/core';
 
 import { PerfectScrollbarDirective } from './perfect-scrollbar.directive';
 import { Position, PerfectScrollbarConfigInterface } from './perfect-scrollbar.interfaces';
@@ -169,7 +169,7 @@ export class PerfectScrollbarComponent implements OnInit, OnDestroy, DoCheck, Af
   }
 
   ngAfterViewInit() {
-    const position: Position = this.directiveRef.position();
+  /*  const position: Position = this.directiveRef.position();
 
     this.states.top = (position.y === 'start');
     this.states.right = (position.x === 'end');
@@ -179,7 +179,7 @@ export class PerfectScrollbarComponent implements OnInit, OnDestroy, DoCheck, Af
     if (this.states.top || this.states.left || this.states.right || this.states.bottom) {
       this.cdRef.markForCheck();
       this.cdRef.detectChanges();
-    }
+    }*/
   }
 
   getConfig(): PerfectScrollbarConfigInterface {

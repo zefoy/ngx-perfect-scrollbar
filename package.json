@@ -20,7 +20,8 @@
     "clean": "rm -rf dist bundles node_modules",
     "lint": "npm run lint:js && npm run lint:scss",
     "build": "npm run build:umd && npm run build:aot",
-    "deploy": "npm run build && npm publish",
+    "inline": "ng2-inline --compress -b dist/lib/ -o ./ 'dist/lib/*.js'",
+    "deploy": "npm run build && npm run inline && npm publish",
     "lint:ts": "tslint 'src/**/*.ts'",
     "lint:scss": "stylelint 'src/**/*.scss' --syntax scss",
     "build:js": "ngc -p src/tsconfig.json",
@@ -45,6 +46,7 @@
     "@angular/platform-browser": "^5.0.0",
     "@types/node": "^8.0.0",
     "@types/perfect-scrollbar": "^0.7.0",
+    "angular2-inline-template-style": "^1.2.0",
     "angular2-template-loader": "^0.6.0",
     "awesome-typescript-loader": "^3.2.0",
     "codelyzer": "^4.0.0",
@@ -66,7 +68,7 @@
     "zone.js": "^0.8.0"
   },
   "peerDependencies": {
-    "@angular/common": ">=4.0.0",
-    "@angular/core": ">=4.0.0"
+    "@angular/common": ">=5.0.0",
+    "@angular/core": ">=5.0.0"
   }
 }
