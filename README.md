@@ -134,19 +134,19 @@ For more detailed documentation with all the supported events / options see the 
 ##### Available control / helper functions (provided by the directive):
 
 ```javascript
-update()                             // Updates the scrollbar size and position.
-geometry(prefix)                     // Returns the geometry with specified prefix.
-position(absolute)                   // Returns the reach or absolute scroll position,
-scrollable(direction)                // Checks if the given direction is scrollable.
-                                     // Direction can be: 'any', 'both', 'x', 'y'
+update()                          // Updates the scrollbar size and position.
+geometry(prefix)                  // Returns the geometry with specified prefix.
+position(absolute)                // Returns the reach or absolute scroll position,
+scrollable(direction)             // Checks if the given direction is scrollable.
+                                  // Direction can be: 'any', 'both', 'x', 'y'
 
-scrollTo(x, y, speed, emit)          // Animate scroll to given x,y coordinates.
-scrollToY(position, speed, emit)     // Animate scroll to given vertical position.
-scrollToX(position, speed, emit)     // Animate scroll to given horizontal position.
-scrollToTop(offset, speed, emit)     // Animate scroll to given offset from the top.
-scrollToLeft(offset, speed, emit)    // Animate scroll to given offset from the left.
-scrollToRight(offset, speed, emit)   // Animate scroll to given offset from the right.
-scrollToBottom(offset, speed, emit)  // Animate scroll to given offset from the bottom.
+scrollTo(x, y, speed?)            // Animate scroll to given x,y coordinates.
+scrollToY(position, speed?)       // Animate scroll to given vertical position.
+scrollToX(position, speed?)       // Animate scroll to given horizontal position.
+scrollToTop(offset, speed?)       // Animate scroll to given offset from the top.
+scrollToLeft(offset, speed?)      // Animate scroll to given offset from the left.
+scrollToRight(offset, speed?)     // Animate scroll to given offset from the right.
+scrollToBottom(offset, speed?)    // Animate scroll to given offset from the bottom.
 ```
 
 Above functions can be accessed through the directive reference (available as directiveRef in the component).

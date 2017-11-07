@@ -199,63 +199,61 @@ export class PerfectScrollbarDirective implements OnDestroy, DoCheck, OnChanges,
     }
   }
 
-  scrollTo(x: number, y?: number, speed?: number, emit?: boolean) {
+  scrollTo(x: number, y?: number, speed?: number) {
     if (!this.disabled) {
       if (y == null && speed == null) {
         console.warn('Deprecated use of scrollTo, use the scrollToY function instead!');
 
-        this.animateScrolling('scrollTop', x, speed, emit);
+        this.animateScrolling('scrollTop', x, speed);
       } else {
         if (x != null) {
-          this.animateScrolling('scrollLeft', x, speed, emit);
+          this.animateScrolling('scrollLeft', x, speed);
         }
 
         if (y != null) {
-          this.animateScrolling('scrollTop', y, speed, emit);
+          this.animateScrolling('scrollTop', y, speed);
         }
       }
     }
   }
 
-  scrollToX(x: number, speed?: number, emit?: boolean) {
-    this.animateScrolling('scrollLeft', x, speed, emit);
+  scrollToX(x: number, speed?: number) {
+    this.animateScrolling('scrollLeft', x, speed);
   }
 
-  scrollToY(y: number, speed?: number, emit?: boolean) {
-    this.animateScrolling('scrollTop', y, speed, emit);
+  scrollToY(y: number, speed?: number) {
+    this.animateScrolling('scrollTop', y, speed);
   }
 
-  scrollToTop(offset?: number, speed?: number, emit?: boolean) {
-    this.animateScrolling('scrollTop', (offset || 0), speed, emit);
+  scrollToTop(offset?: number, speed?: number) {
+    this.animateScrolling('scrollTop', (offset || 0), speed);
   }
 
-  scrollToLeft(offset?: number, speed?: number, emit?: boolean) {
-    this.animateScrolling('scrollLeft', (offset || 0), speed, emit);
+  scrollToLeft(offset?: number, speed?: number) {
+    this.animateScrolling('scrollLeft', (offset || 0), speed);
   }
 
-  scrollToRight(offset?: number, speed?: number, emit?: boolean) {
+  scrollToRight(offset?: number, speed?: number) {
     const left = this.elementRef.nativeElement.scrollWidth -
       this.elementRef.nativeElement.clientWidth;
 
-    this.animateScrolling('scrollLeft', left - (offset || 0), speed, emit);
+    this.animateScrolling('scrollLeft', left - (offset || 0), speed);
   }
 
-  scrollToBottom(offset?: number, speed?: number, emit?: boolean) {
+  scrollToBottom(offset?: number, speed?: number) {
     const top = this.elementRef.nativeElement.scrollHeight -
       this.elementRef.nativeElement.clientHeight;
 
-    this.animateScrolling('scrollTop', top - (offset || 0), speed, emit);
+    this.animateScrolling('scrollTop', top - (offset || 0), speed);
   }
 
-  animateScrolling(target: string, value: number, speed?: number, emit?: boolean) {
-    emit = (emit == null) ? true : emit;
-
+  animateScrolling(target: string, value: number, speed?: number) {
     if (!speed) {
       const oldValue = this.elementRef.nativeElement[target];
 
       this.elementRef.nativeElement[target] = value;
 
-      if (emit && value !== oldValue) {
+      if (value !== oldValue) {
         this.ps.update();
       }
     } else if (value !== this.elementRef.nativeElement[target]) {
@@ -275,7 +273,7 @@ export class PerfectScrollbarDirective implements OnDestroy, DoCheck, OnChanges,
         // Only continue animation if scroll position has not changed
         if (this.elementRef.nativeElement[target] === oldValue) {
           if (scrollCount >= Math.PI) {
-            this.animateScrolling(target, value, 0, emit);
+            this.animateScrolling(target, value, 0);
           } else {
             this.elementRef.nativeElement[target] = oldValue = newValue;
 
