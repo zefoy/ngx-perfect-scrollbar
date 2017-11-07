@@ -20,12 +20,6 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.js$/,
-        loaders: [
-          'strip-sourcemap-loader'
-        ]
-      },
-      {
         test: /\.ts$/,
         loaders: [
           'string-replace-loader?search=component\.css&replace=component\.scss',
@@ -38,7 +32,7 @@ module.exports = {
         loaders: ['raw-loader', 'sass-loader']
       },
       {
-        test: /\.(html|css)$/,
+        test: /\.(js|css|html)$/,
         loader: 'raw-loader'
       }
     ]

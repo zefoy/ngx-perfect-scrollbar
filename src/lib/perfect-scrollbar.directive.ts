@@ -1,19 +1,20 @@
-import * as Ps from 'perfect-scrollbar';
+import PerfectScrollbar from 'perfect-scrollbar';
 
 import ResizeObserver from 'resize-observer-polyfill';
 
 import { NgZone, Directive, Optional, OnDestroy, DoCheck, OnChanges, AfterViewInit,
   SimpleChanges, KeyValueDiffers, Input, HostBinding, HostListener, ElementRef } from '@angular/core';
 
-import { PerfectScrollbarConfig, PerfectScrollbarConfigInterface } from './perfect-scrollbar.interfaces';
+import { Geometry, Position } from './perfect-scrollbar.interfaces';
 
-import { Geometry } from './perfect-scrollbar.classes';
+import { PerfectScrollbarConfig, PerfectScrollbarConfigInterface } from './perfect-scrollbar.interfaces';
 
 @Directive({
   selector: '[perfectScrollbar]',
   exportAs: 'ngxPerfectScrollbar'
 })
 export class PerfectScrollbarDirective implements OnDestroy, DoCheck, OnChanges, AfterViewInit {
+  private ps: any;
   private ro: any;
 
   private timeout: number;
@@ -47,9 +48,13 @@ export class PerfectScrollbarDirective implements OnDestroy, DoCheck, OnChanges,
       window.clearTimeout(this.timeout);
     }
 
-    this.zone.runOutsideAngular(() => {
-      Ps.destroy(this.elementRef.nativeElement);
-    });
+    if (this.ps) {
+      this.zone.runOutsideAngular(() => {
+        this.ps.destroy();
+      });
+
+      this.ps = null;
+    }
   }
 
   ngDoCheck() {
@@ -101,7 +106,7 @@ export class PerfectScrollbarDirective implements OnDestroy, DoCheck, OnChanges,
       config.assign(this.config);
 
       this.zone.runOutsideAngular(() => {
-        Ps.initialize(this.elementRef.nativeElement, config);
+        this.ps = new PerfectScrollbar(this.elementRef.nativeElement, config);
       });
 
       if (!this.configDiff) {
@@ -127,7 +132,7 @@ export class PerfectScrollbarDirective implements OnDestroy, DoCheck, OnChanges,
       if (!this.disabled && this.configDiff) {
         try {
           this.zone.runOutsideAngular(() => {
-            Ps.update(this.elementRef.nativeElement);
+            this.ps.update();
           });
         } catch (error) {
           // Update can be finished after destroy so catch errors
@@ -136,13 +141,27 @@ export class PerfectScrollbarDirective implements OnDestroy, DoCheck, OnChanges,
     }, 0);
   }
 
-  geometry(property: string = 'scroll'): Geometry {
-    return {
-      x: this.elementRef.nativeElement[property + 'Left'],
-      y: this.elementRef.nativeElement[property + 'Top'],
-      w: this.elementRef.nativeElement[property + 'Width'],
-      h: this.elementRef.nativeElement[property + 'Height']
-    };
+  geometry(prefix: string = 'scroll'): Geometry {
+    return new Geometry(
+      this.elementRef.nativeElement[prefix + 'Left'],
+      this.elementRef.nativeElement[prefix + 'Top'],
+      this.elementRef.nativeElement[prefix + 'Width'],
+      this.elementRef.nativeElement[prefix + 'Height']
+    );
+  }
+
+  position(absolute: boolean = false): Position {
+    if (!absolute) {
+      return new Position(
+        this.ps.reach.x,
+        this.ps.reach.y
+      );
+    } else {
+      return new Position(
+        this.elementRef.nativeElement.scrollLeft,
+        this.elementRef.nativeElement.scrollTop
+      );
+    }
   }
 
   scrollable(direction: string = 'any'): boolean {
@@ -192,25 +211,28 @@ export class PerfectScrollbarDirective implements OnDestroy, DoCheck, OnChanges,
   }
 
   scrollToRight(offset?: number, speed?: number) {
-    const width = this.elementRef.nativeElement.scrollWidth;
+    const left = this.elementRef.nativeElement.scrollWidth -
+      this.elementRef.nativeElement.clientWidth;
 
-    this.animateScrolling('scrollLeft', width - (offset || 0), speed);
+    this.animateScrolling('scrollLeft', left - (offset || 0), speed);
   }
 
   scrollToBottom(offset?: number, speed?: number) {
-    const height = this.elementRef.nativeElement.scrollHeight;
+    const top = this.elementRef.nativeElement.scrollHeight -
+      this.elementRef.nativeElement.clientHeight;
 
-    this.animateScrolling('scrollTop', height - (offset || 0), speed);
+    this.animateScrolling('scrollTop', top - (offset || 0), speed);
   }
 
   animateScrolling(target: string, value: number, speed?: number) {
     if (!speed) {
+      const oldValue = this.elementRef.nativeElement[target];
+
       this.elementRef.nativeElement[target] = value;
 
-      this.update();
-
-      // PS has weird event sending order, this is a workaround for that
-      this.timeout = null; this.update();
+      if (value !== oldValue) {
+        this.ps.update();
+      }
     } else if (value !== this.elementRef.nativeElement[target]) {
       let newValue = 0;
       let scrollCount = 0;
@@ -228,14 +250,11 @@ export class PerfectScrollbarDirective implements OnDestroy, DoCheck, OnChanges,
         // Only continue animation if scroll position has not changed
         if (this.elementRef.nativeElement[target] === oldValue) {
           if (scrollCount >= Math.PI) {
-            this.elementRef.nativeElement[target] = value;
-
-            this.update();
-
-            // PS has weird event sending order, this is a workaround for that
-            this.timeout = null; this.update();
+            this.animateScrolling(target, value, 0);
           } else {
             this.elementRef.nativeElement[target] = oldValue = newValue;
+
+            this.ps.update();
 
             oldTimestamp = newTimestamp;
 

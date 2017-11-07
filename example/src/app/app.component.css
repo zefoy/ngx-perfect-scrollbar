@@ -46,9 +46,14 @@
   position: relative;
 
   min-height: 0;
-  padding: 24px;
+  padding: 8px;
   margin: 12px 16px;
   border: 1px solid #ccc;
 
   background-color: #fff;
+}
+
+.scrollable-content {
+  padding: 16px;
+  margin: 0;
 }

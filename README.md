@@ -111,17 +111,18 @@ Perfect scrollbar directive should be used with div elements and can take option
 ##### Available configuration options (custom / global configuration):
 
 ```javascript
+handlers                // List of event handlers to scroll the element.
 wheelSpeed              // Scroll speed for the mousewheel event (Default: 1).
+swipeEasing             // Use easing for the swipe scrolling (Default: true).
 wheelPropagation        // Propagate wheel events at the end (Default: false).
 swipePropagation        // Propagate swipe events at the end (Default: true).
-minScrollbarLength      // Minimum size for the scrollbar (Default: null).
-maxScrollbarLength      // Maximum size for the scrollbar (Default: null).
-useBothWheelAxes        // Always use the both wheel axes (Default: false).
 suppressScrollX         // Disable X axis in all situations (Default: false).
 suppressScrollY         // Disable Y axis ni all situations (Default: false).
+useBothWheelAxes        // Always use both of the wheel axes (Default: false).
+minScrollbarLength      // Minimum size (px) for the scrollbar (Default: null).
+maxScrollbarLength      // Maximum size (px) for the scrollbar (Default: null).
 scrollXMarginOffset     // Offset before enabling the X scroller (Default: 0).
 scrollYMarginOffset     // Offset before enabling the Y scroller (Default: 0).
-stopPropagationOnClick  // Stop the propagation of click event (Default: true).
 ```
 
 For more detailed documentation with all the supported events / options see the [Perfect Scrollbar documentation](https://github.com/utatti/perfect-scrollbar/).
@@ -129,18 +130,19 @@ For more detailed documentation with all the supported events / options see the 
 ##### Available control / helper functions (provided by the directive):
 
 ```javascript
-update()                        // Updates the scrollbar size and position.
-geometry(property)              // Returns the geometry for specified property.
-scrollable(direction)           // Checks if the given direction is scrollable.
-                                // Direction can be: 'any','both','x','y'
+update()                          // Updates the scrollbar size and position.
+geometry(prefix)                  // Returns the geometry with specified prefix.
+position(absolute)                // Returns the reach or absolute scroll position,
+scrollable(direction)             // Checks if the given direction is scrollable.
+                                  // Direction can be: 'any', 'both', 'x', 'y'
 
-scrollTo(x, y, speed)           // Animate scroll to given x,y coordinates.
-scrollToY(position, speed)      // Animate scroll to given vertical position.
-scrollToX(position, speed)      // Animate scroll to given horizontal position.
-scrollToTop(offset, speed)      // Animate scroll to given offset from the top.
-scrollToLeft(offset, speed)     // Animate scroll to given offset from the left.
-scrollToRight(offset, speed)    // Animate scroll to given offset from the right.
-scrollToBottom(offset, speed)   // Animate scroll to given offset from the bottom.
+scrollTo(x, y, speed?)            // Animate scroll to given x,y coordinates.
+scrollToY(position, speed?)       // Animate scroll to given vertical position.
+scrollToX(position, speed?)       // Animate scroll to given horizontal position.
+scrollToTop(offset, speed?)       // Animate scroll to given offset from the top.
+scrollToLeft(offset, speed?)      // Animate scroll to given offset from the left.
+scrollToRight(offset, speed?)     // Animate scroll to given offset from the right.
+scrollToBottom(offset, speed?)    // Animate scroll to given offset from the bottom.
 ```
 
 Above functions can be accessed through the directive reference (available as directiveRef in the component).

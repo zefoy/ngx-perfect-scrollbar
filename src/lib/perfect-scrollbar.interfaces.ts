@@ -1,29 +1,72 @@
+export class Geometry {
+  public x: number;
+  public y: number;
+
+  public w: number;
+  public h: number;
+
+  constructor(x: number, y: number, w: number, h: number) {
+    this.x = x;
+    this.y = y;
+    this.w = w;
+    this.h = h;
+  }
+}
+
+export class Position {
+  public x: number | 'start' | 'end';
+  public y: number | 'start' | 'end';
+
+  constructor(x: number | 'start' | 'end', y: number | 'start' | 'end') {
+    this.x = x;
+    this.y = y;
+  }
+}
+
 export interface PerfectScrollbarConfigInterface {
+  handlers?: string[];
+
   wheelSpeed?: number;
-  wheelPropagation?: boolean;
-  swipePropagation?: boolean;
-  minScrollbarLength?: number;
-  maxScrollbarLength?: number;
-  useBothWheelAxes?: boolean;
+  swipeEasing?: boolean;
+
   suppressScrollX?: boolean;
   suppressScrollY?: boolean;
+
+  useBothWheelAxes?: boolean;
+
+  wheelPropagation?: boolean;
+  swipePropagation?: boolean;
+
+  scrollingThreshold?: number;
+
+  minScrollbarLength?: number;
+  maxScrollbarLength?: number;
+
   scrollXMarginOffset?: number;
   scrollYMarginOffset?: number;
-  stopPropagationOnClick?: boolean;
 }
 
 export class PerfectScrollbarConfig implements PerfectScrollbarConfigInterface {
+  public handlers: string[];
+
   public wheelSpeed: number;
-  public wheelPropagation: boolean;
-  public swipePropagation: boolean;
-  public minScrollbarLength: number;
-  public maxScrollbarLength: number;
-  public useBothWheelAxes: boolean;
+  public swipeEasing: boolean;
+
   public suppressScrollX: boolean;
   public suppressScrollY: boolean;
+
+  public useBothWheelAxes: boolean;
+
+  public wheelPropagation: boolean;
+  public swipePropagation: boolean;
+
+  public scrollingThreshold: number;
+
+  public minScrollbarLength: number;
+  public maxScrollbarLength: number;
+
   public scrollXMarginOffset: number;
   public scrollYMarginOffset: number;
-  public stopPropagationOnClick: boolean;
 
   constructor(config: PerfectScrollbarConfigInterface = {}) {
     this.assign(config);
