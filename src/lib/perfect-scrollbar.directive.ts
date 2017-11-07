@@ -47,12 +47,6 @@ export class PerfectScrollbarDirective implements OnDestroy, DoCheck, OnChanges,
     this.config = config;
   }
 
-  @Output('ps-x-reach-end') reachEndX = new EventEmitter<any>();
-  @Output('ps-y-reach-end') reachEndY = new EventEmitter<any>();
-
-  @Output('ps-x-reach-start') reachStartX = new EventEmitter<any>();
-  @Output('ps-y-reach-start') reachStartY = new EventEmitter<any>();
-
   constructor(@Optional() private defaults: PerfectScrollbarConfig, private zone: NgZone,
     public elementRef: ElementRef, private differs: KeyValueDiffers) {}
 
@@ -262,19 +256,7 @@ export class PerfectScrollbarDirective implements OnDestroy, DoCheck, OnChanges,
       this.elementRef.nativeElement[target] = value;
 
       if (emit && value !== oldValue) {
-        this.ps.update(true, true);
-
-        /*const position = this.position();
-console.log(position);
-        if (target === 'scrollTop' && position.y === 'end') {
-          this.reachEndY.emit();
-        } else if (target === 'scrollTop' && position.y === 'start') {
-        this.reachStartY.emit();
-        } else if (target === 'scrollLeft' && position.x === 'end') {
-          this.reachEndX.emit();
-        } else if (target === 'scrollLeft' &&  position.x === 'start') {
-          this.reachStartX.emit();
-        }*/
+        this.ps.update();
       }
     } else if (value !== this.elementRef.nativeElement[target]) {
       let newValue = 0;
