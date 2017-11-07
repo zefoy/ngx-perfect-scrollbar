@@ -76,7 +76,7 @@ The scroll area always needs some fixed height to work. The default styles uses 
 Simply replace the element that would ordinarily be passed to `PerfectScrollbar` with the perfect-scollbar component.
 
 ```html
-<perfect-scrollbar [config]="config">
+<perfect-scrollbar style="max-width: 600px; max-height: 400px;" [config]="config">
   <div>Scrollable content</div>
 </perfect-scrollbar>
 ```
@@ -104,7 +104,7 @@ When using only the directive you need to provide your own theming or import the
 Perfect scrollbar directive should be used with div elements and can take optional custom configuration:
 
 ```html
-<div class="ps" [perfectScrollbar]="config">
+<div class="ps" style="position: relative; max-width: 600px; max-height: 400px;" [perfectScrollbar]="config">
   <div>Scrollable content</dib>
 </div>
 ```
@@ -113,8 +113,6 @@ Perfect scrollbar directive should be used with div elements and can take option
 [perfectScrollbar]      // Can be used to provide optional custom config.
 
 [disabled]              // Disables the perfect scrollbar initialization.
-
-[psPosStyle]            // Position style (controls scrollbar placement).
 
 (<ps-event-name>)       // All perfect scrollbar events work as bindings.
 ```

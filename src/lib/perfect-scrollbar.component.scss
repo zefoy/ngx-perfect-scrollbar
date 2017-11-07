@@ -130,9 +130,10 @@ perfect-scrollbar {
 
     &.ps--active-y {
       & > .ps__rail-y {
-        width: 10px;
         top: 0 !important;
         right: 0 !important;
+
+        width: 10px;
 
         transition:
           width 200ms linear,
@@ -147,9 +148,10 @@ perfect-scrollbar {
 
     &.ps--active-x {
       & > .ps__rail-x {
-        height: 10px;
         bottom: 0 !important;
         left: 0 !important;
+
+        height: 10px;
 
         transition:
           height 200ms linear,
@@ -301,4 +303,3 @@ perfect-scrollbar {
     }
   }
 }
-

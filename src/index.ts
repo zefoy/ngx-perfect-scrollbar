@@ -3,11 +3,12 @@ export { PerfectScrollbarDirective } from './lib/perfect-scrollbar.directive';
 
 export {
   Geometry,
+  Position,
+
+  PERFECT_SCROLLBAR_CONFIG,
+
   PerfectScrollbarConfig,
   PerfectScrollbarConfigInterface
 } from './lib/perfect-scrollbar.interfaces';
 
-export {
-  PerfectScrollbarModule,
-  PERFECT_SCROLLBAR_CONFIG
-} from './lib/perfect-scrollbar.module';
+export { PerfectScrollbarModule } from './lib/perfect-scrollbar.module';

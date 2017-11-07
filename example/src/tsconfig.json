@@ -4,6 +4,7 @@
     "declaration": false,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
+    "inlineSources": false,
     "lib": [
       "es2015",
       "dom"
@@ -22,8 +23,7 @@
       "./node_modules/@types"
     ],
     "types": [
-      "node",
-      "core-js"
+      "node"
       // Add this when 1.x types available: "perfect-scrollbar"
     ]
   }

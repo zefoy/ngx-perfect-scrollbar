@@ -1,3 +1,7 @@
+import { InjectionToken } from '@angular/core';
+
+export const PERFECT_SCROLLBAR_CONFIG = new InjectionToken('PERFECT_SCROLLBAR_CONFIG');
+
 export class Geometry {
   public x: number;
   public y: number;

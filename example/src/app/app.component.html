@@ -2,31 +2,33 @@
   <div class="app-title">Simple example app for the ngx-perfect-scrollbar</div>
 
   <div class="info-container">
-    This example has only vertical scrolling (the horizontal scrolling is disabled by the global configuration).
+    You can change the type and control the Perfect Scrollbar element by clicking the buttons on the controls pane.
   </div>
 
-  <div class="box-title">Controls</div>
-
-  <div class="action-container">
-    <button class="action-button" (click)="onScrollToTop()">Scroll To Top</button>
-
-    <button class="action-button" (click)="onScrollToLeft()">Scroll To Left</button>
-
-    <button class="action-button" (click)="onScrollToRight()">Scroll To Right</button>
-
-    <button class="action-button" (click)="onScrollToBottom()">Scroll To Bottom</button>
-
-    <button class="action-button" (click)="onScrollToXY(0, 100)">Scroll To 0,100</button>
-
-    <button class="action-button" (click)="onScrollToXY(10, 10)">Scroll To 10,10</button>
-  </div>
-
-  <div class="horizontal-container" fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign="stretch" fxFlex>
+  <div class="horizontal-container" fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign="stretch" fxFlex="auto">
     <div class="vertical-container" fxLayout="column" fxLayoutAlign="stretch" fxFlex="50%">
-      <div class="box-title">Component</div>
+      <div class="box-title">Controls</div>
 
-      <div class="scroll-container" fxLayout="column" style="position: relative" fxLayoutAlign="stretch" fxFlex>
-        <perfect-scrollbar fxFlex [config]="config" [scrollIndicators]="true">
+      <div class="action-container" fxLayout="column" fxLayoutAlign="stretch" fxFlex="auto">
+        <div class="action-button" fxLayout="column" fxLayoutAlign="center" fxFlex="auto" (click)='toggleType()'>{{(type == "component") ? "Switch to directive" : "Switch to component"}}</div>
+
+        <div class="action-button" fxLayout="column" fxLayoutAlign="center" fxFlex="auto" (click)='scrollToTop()'>Scroll to top</div>
+
+        <div class="action-button" fxLayout="column" fxLayoutAlign="center" fxFlex="auto" (click)='scrollToLeft()'>Scroll to left</div>
+
+        <div class="action-button" fxLayout="column" fxLayoutAlign="center" fxFlex="auto" (click)='scrollToRight()'>Scroll to right</div>
+
+        <div class="action-button" fxLayout="column" fxLayoutAlign="center" fxFlex="auto" (click)='scrollToBottom()'>Scroll to bottom</div>
+
+        <div class="action-button" fxLayout="column" fxLayoutAlign="center" fxFlex="auto" (click)='scrollToXY(25, 50)'>Animate to 25,50</div>
+      </div>
+    </div>
+
+    <div class="vertical-container" fxLayout="column" fxLayoutAlign="stretch" fxFlex="50%">
+      <div class="box-title">Perfect Scrollbar</div>
+
+      <div class="content-container" fxLayout="column" fxLayoutAlign="stretch" fxFlex="auto">
+        <perfect-scrollbar *ngIf="type === 'component'" class="scroll-container" fxFlex="auto" [config]="config" [scrollIndicators]="true">
           <div class="scrollable-content">
             Scroll<br>
             me!<br>
@@ -57,14 +59,8 @@
             library<br>
           </div>
         </perfect-scrollbar>
-      </div>
-    </div>
 
-    <div class="vertical-container" fxLayout="column" fxLayoutAlign="stretch" fxFlex="50%">
-      <div class="box-title">Directive</div>
-
-      <div class="scroll-container" fxLayout="column" fxLayoutAlign="stretch" fxFlex>
-        <div fxFlex [perfectScrollbar]="config">
+        <div *ngIf="type === 'directive'" class="scroll-container ps" fxFlex [perfectScrollbar]="config">
           <div class="scrollable-content">
             Scroll<br>
             me!<br>

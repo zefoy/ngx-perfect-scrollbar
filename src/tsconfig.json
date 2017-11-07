@@ -30,8 +30,8 @@
   ],
   "angularCompilerOptions": {
     "annotateForClosureCompiler": true,
-    "flatModuleId": "ngx-swiper-wrapper",
-    "flatModuleOutFile": "ngx-swiper-wrapper.js",
+    "flatModuleId": "ngx-perfect-scrollbar",
+    "flatModuleOutFile": "ngx-perfect-scrollbar.js",
     "skipTemplateCodegen": true,
     "strictMetadataEmit": true
   }

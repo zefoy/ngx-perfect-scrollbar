@@ -1,15 +1,19 @@
-import { Component, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 
-import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
-import { PerfectScrollbarComponent, PerfectScrollbarDirective } from 'ngx-perfect-scrollbar';
+import { PerfectScrollbarConfigInterface,
+  PerfectScrollbarComponent, PerfectScrollbarDirective } from 'ngx-perfect-scrollbar';
 
 @Component({
-  moduleId: module.id + '',
   selector: 'my-app',
+  moduleId: 'src/app/app.component',
   templateUrl: 'app.component.html',
   styleUrls: [ 'app.component.css' ]
 })
-export class AppComponent implements AfterViewInit {
+export class AppComponent {
+  public type: string = 'component';
+
+  public disabled: boolean = false;
+
   public config: PerfectScrollbarConfigInterface = {};
 
   @ViewChild(PerfectScrollbarComponent) componentScroll: PerfectScrollbarComponent;
@@ -17,39 +21,51 @@ export class AppComponent implements AfterViewInit {
 
   constructor() {}
 
-  ngAfterViewInit() {
-    console.log('Directive geometry', this.directiveScroll.geometry());
-
-    console.log('Component geometry', this.componentScroll.directiveRef.geometry());
+  public toggleType() {
+    this.type = (this.type === 'component') ? 'directive' : 'component';
   }
 
-  onScrollToXY(x: number, y: number) {
-    this.directiveScroll.scrollTo(x, y, 500);
-
-    this.componentScroll.directiveRef.scrollTo(x, y, 500);
+  public toggleDisabled() {
+    this.disabled = !this.disabled;
   }
 
-  onScrollToTop() {
-    this.directiveScroll.scrollToTop();
-
-    this.componentScroll.directiveRef.scrollToTop();
+  public scrollToXY(x: number, y: number) {
+    if (this.type === 'directive') {
+      this.directiveScroll.scrollTo(x, y, 500);
+    } else {
+      this.componentScroll.directiveRef.scrollTo(x, y, 500);
+    }
   }
 
-  onScrollToLeft() {
-    this.directiveScroll.scrollToLeft();
-
-    this.componentScroll.directiveRef.scrollToLeft();
+  public scrollToTop() {
+    if (this.type === 'directive') {
+      this.directiveScroll.scrollToTop();
+    } else {
+      this.componentScroll.directiveRef.scrollToTop();
+    }
   }
 
-  onScrollToRight() {
-    this.directiveScroll.scrollToRight();
-
-    this.componentScroll.directiveRef.scrollToRight();
+  public scrollToLeft() {
+    if (this.type === 'directive') {
+      this.directiveScroll.scrollToLeft();
+    } else {
+      this.componentScroll.directiveRef.scrollToLeft();
+    }
   }
 
-  onScrollToBottom() {
-    this.directiveScroll.scrollToBottom();
+  public scrollToRight() {
+    if (this.type === 'directive') {
+      this.directiveScroll.scrollToRight();
+    } else {
+      this.componentScroll.directiveRef.scrollToRight();
+    }
+  }
 
-    this.componentScroll.directiveRef.scrollToBottom();
+  public scrollToBottom() {
+    if (this.type === 'directive') {
+      this.directiveScroll.scrollToBottom();
+    } else {
+      this.componentScroll.directiveRef.scrollToBottom();
+    }
   }
 }

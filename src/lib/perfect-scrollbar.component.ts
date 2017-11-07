@@ -4,16 +4,18 @@ import 'rxjs/add/operator/distinctUntilChanged';
 import { Subject } from 'rxjs/Subject';
 import { Subscription } from 'rxjs/Subscription';
 
-import { Component, OnInit, OnDestroy, DoCheck, Input, HostBinding, HostListener,
-  ViewChild, ElementRef, ChangeDetectorRef, ViewEncapsulation } from '@angular/core';
+import { Component, ViewEncapsulation,
+  OnInit, OnDestroy, DoCheck, Input, Output,
+  ViewChild, EventEmitter, HostBinding, HostListener,
+  ElementRef, ChangeDetectorRef } from '@angular/core';
 
 import { PerfectScrollbarDirective } from './perfect-scrollbar.directive';
-import { Position, PerfectScrollbarConfigInterface } from './perfect-scrollbar.interfaces';
+import { PerfectScrollbarConfigInterface } from './perfect-scrollbar.interfaces';
 
 @Component({
   selector: 'perfect-scrollbar',
-  templateUrl: './perfect-scrollbar.component.html',
-  styleUrls: [ './perfect-scrollbar.component.css' ],
+  templateUrl: './lib/perfect-scrollbar.component.html',
+  styleUrls: [ './lib/perfect-scrollbar.component.css' ],
   encapsulation: ViewEncapsulation.None
 })
 export class PerfectScrollbarComponent implements OnInit, OnDestroy, DoCheck {
@@ -37,12 +39,6 @@ export class PerfectScrollbarComponent implements OnInit, OnDestroy, DoCheck {
   private activeSub: Subscription = null;
   private activeUpdate: Subject<boolean> = new Subject();
 
-  @Input() fxShow: boolean = true;
-  @Input() fxHide: boolean = false;
-
-  @HostBinding('hidden')
-  @Input() hidden: boolean = false;
-
   @Input() disabled: boolean = false;
 
   @Input() usePSClass: boolean = true;
@@ -64,7 +60,7 @@ export class PerfectScrollbarComponent implements OnInit, OnDestroy, DoCheck {
     }
   }
 
-  constructor(private elementRef: ElementRef, private cdRef: ChangeDetectorRef) {}
+  constructor(private cdRef: ChangeDetectorRef, private elementRef: ElementRef) {}
 
   ngOnInit() {
     this.activeSub = this.activeUpdate
@@ -153,8 +149,13 @@ export class PerfectScrollbarComponent implements OnInit, OnDestroy, DoCheck {
       this.statesSub.unsubscribe();
     }
 
-    window.clearTimeout(this.timeoutState);
-    window.clearTimeout(this.timeoutScroll);
+    if (this.timeoutState) {
+      window.clearTimeout(this.timeoutState);
+    }
+
+    if (this.timeoutScroll) {
+      window.clearTimeout(this.timeoutScroll);
+    }
   }
 
   ngDoCheck() {
@@ -168,7 +169,7 @@ export class PerfectScrollbarComponent implements OnInit, OnDestroy, DoCheck {
     }
   }
 
-  getConfig(): PerfectScrollbarConfigInterface {
+  public getConfig(): PerfectScrollbarConfigInterface {
     const config = this.config || {};
 
     if (this.autoPropagation) {
@@ -179,7 +180,7 @@ export class PerfectScrollbarComponent implements OnInit, OnDestroy, DoCheck {
     return config;
   }
 
-  onTouchEnd(event: Event = null) {
+  public onTouchEnd(event: Event = null) {
     if (!this.disabled && this.autoPropagation &&
        (!this.usePropagationX || !this.usePropagationY))
     {
@@ -189,14 +190,14 @@ export class PerfectScrollbarComponent implements OnInit, OnDestroy, DoCheck {
     }
   }
 
-  onTouchMove(event: Event = null) {
+  public onTouchMove(event: Event = null) {
     if (!this.disabled && this.autoPropagation && !this.allowPropagation) {
       event.preventDefault();
       event.stopPropagation();
     }
   }
 
-  onTouchStart(event: Event = null) {
+  public onTouchStart(event: Event = null) {
     if (!this.disabled && this.autoPropagation) {
       this.userInteraction = true;
 
@@ -218,7 +219,7 @@ export class PerfectScrollbarComponent implements OnInit, OnDestroy, DoCheck {
     }
   }
 
-  onWheelEvent(event: Event = null) {
+  public onWheelEvent(event: Event = null) {
     if (!this.disabled && this.autoPropagation) {
       this.userInteraction = true;
 
@@ -233,7 +234,7 @@ export class PerfectScrollbarComponent implements OnInit, OnDestroy, DoCheck {
     }
   }
 
-  onScrollEvent(event: Event = null, state: string) {
+  public onScrollEvent(event: Event = null, state: string) {
     if (!this.disabled && (this.autoPropagation || this.scrollIndicators) &&
        (!event || event.currentTarget === event.target))
     {
