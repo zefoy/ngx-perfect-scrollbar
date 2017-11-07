@@ -4,9 +4,9 @@ import 'rxjs/add/operator/distinctUntilChanged';
 import { Subject } from 'rxjs/Subject';
 import { Subscription } from 'rxjs/Subscription';
 
+import { Component, OnInit, OnDestroy, DoCheck } from '@angular/core';
 import { Input, HostBinding, HostListener, ViewChild } from '@angular/core';
 import { ElementRef, ChangeDetectorRef, ViewEncapsulation } from '@angular/core';
-import { Component, OnInit, OnDestroy, DoCheck, AfterViewInit } from '@angular/core';
 
 import { PerfectScrollbarDirective } from './perfect-scrollbar.directive';
 import { Position, PerfectScrollbarConfigInterface } from './perfect-scrollbar.interfaces';
@@ -17,7 +17,7 @@ import { Position, PerfectScrollbarConfigInterface } from './perfect-scrollbar.i
   styleUrls: [ './perfect-scrollbar.component.css' ],
   encapsulation: ViewEncapsulation.None
 })
-export class PerfectScrollbarComponent implements OnInit, OnDestroy, DoCheck, AfterViewInit {
+export class PerfectScrollbarComponent implements OnInit, OnDestroy, DoCheck {
   public states: any = {};
   public notify: boolean = null;
 
@@ -168,20 +168,6 @@ export class PerfectScrollbarComponent implements OnInit, OnDestroy, DoCheck, Af
       this.usePropagationY = !element.classList.contains('ps--active-y');
 
       this.activeUpdate.next(this.usePropagationX && this.usePropagationY);
-    }
-  }
-
-  ngAfterViewInit() {
-    const position: Position = this.directiveRef.position();
-
-    this.states.top = (position.y === 'start');
-    this.states.right = (position.x === 'end');
-    this.states.bottom = (position.y === 'end');
-    this.states.left = (position.x === 'start');
-
-    if (this.states.top || this.states.left || this.states.right || this.states.bottom) {
-      this.cdRef.markForCheck();
-      this.cdRef.detectChanges();
     }
   }
 
