@@ -5,8 +5,8 @@ import { Subject } from 'rxjs/Subject';
 import { Subscription } from 'rxjs/Subscription';
 
 import { Component, OnInit, OnDestroy, DoCheck } from '@angular/core';
-import { Input, HostBinding, HostListener, ViewChild } from '@angular/core';
 import { ElementRef, ChangeDetectorRef, ViewEncapsulation } from '@angular/core';
+import { Input, Output, EventEmitter, HostBinding, HostListener, ViewChild } from '@angular/core';
 
 import { PerfectScrollbarDirective } from './perfect-scrollbar.directive';
 import { Position, PerfectScrollbarConfigInterface } from './perfect-scrollbar.interfaces';
@@ -59,6 +59,19 @@ export class PerfectScrollbarComponent implements OnInit, OnDestroy, DoCheck {
   @Input() config: PerfectScrollbarConfigInterface;
 
   @ViewChild(PerfectScrollbarDirective) directiveRef: PerfectScrollbarDirective;
+
+  @Output('psScrollY'        ) PS_SCROLL_Y            = new EventEmitter<any>();
+  @Output('psScrollX'        ) PS_SCROLL_X            = new EventEmitter<any>();
+
+  @Output('psScrollUp'       ) PS_SCROLL_UP           = new EventEmitter<any>();
+  @Output('psScrollDown'     ) PS_SCROLL_DOWN         = new EventEmitter<any>();
+  @Output('psScrollLeft'     ) PS_SCROLL_LEFT         = new EventEmitter<any>();
+  @Output('psScrollRight'    ) PS_SCROLL_RIGHT        = new EventEmitter<any>();
+
+  @Output('psYReachEnd'      ) PS_Y_REACH_END         = new EventEmitter<any>();
+  @Output('psYReachStart'    ) PS_Y_REACH_START       = new EventEmitter<any>();
+  @Output('psXReachEnd'      ) PS_X_REACH_END         = new EventEmitter<any>();
+  @Output('psXReachStart'    ) PS_X_REACH_START       = new EventEmitter<any>();
 
   @HostListener('document:touchstart', ['$event']) onGeneratedEvent(event: any) {
     // Stop the generated event from reaching window for PS to work correctly

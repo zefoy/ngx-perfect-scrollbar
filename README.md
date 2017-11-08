@@ -82,7 +82,9 @@ Simply replace the element that would ordinarily be passed to `Ps.initialize` wi
 
 [runInsideAngular]      // Run perfect scrollbar inside the Angular zone.
 
-(<ps-event-name>)       // All perfect scrollbar events work as bindings.
+(<psEventName>)         // All perfect scrollbar events work as bindings.
+                        // Event namea are in camel case (not kebab case).
+                        // Example: ps-y-reach-start -> psYReachStart
 ```
 
 **DIRECTIVE USAGE**
@@ -109,7 +111,9 @@ Perfect scrollbar directive should be used with div elements and can take option
 
 [runInsideAngular]      // Run perfect scrollbar inside the Angular zone.
 
-(<ps-event-name>)       // All perfect scrollbar events work as bindings.
+(<psEventName>)         // All perfect scrollbar events work as bindings.
+                        // Event namea are in camel case (not kebab case).
+                        // Example: ps-y-reach-start -> psYReachStart
 ```
 
 ##### Available configuration options (custom / global configuration):

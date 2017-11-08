@@ -47,6 +47,34 @@ export class PerfectScrollbarDirective implements OnDestroy, DoCheck, OnChanges,
     this.config = config;
   }
 
+  @Output('psScrollY'        ) PS_SCROLL_Y            = new EventEmitter<any>();
+  @Output('psScrollX'        ) PS_SCROLL_X            = new EventEmitter<any>();
+
+  @Output('psScrollUp'       ) PS_SCROLL_UP           = new EventEmitter<any>();
+  @Output('psScrollDown'     ) PS_SCROLL_DOWN         = new EventEmitter<any>();
+  @Output('psScrollLeft'     ) PS_SCROLL_LEFT         = new EventEmitter<any>();
+  @Output('psScrollRight'    ) PS_SCROLL_RIGHT        = new EventEmitter<any>();
+
+  @Output('psYReachEnd'      ) PS_Y_REACH_END         = new EventEmitter<any>();
+  @Output('psYReachStart'    ) PS_Y_REACH_START       = new EventEmitter<any>();
+  @Output('psXReachEnd'      ) PS_X_REACH_END         = new EventEmitter<any>();
+  @Output('psXReachStart'    ) PS_X_REACH_START       = new EventEmitter<any>();
+
+  private emit(event: any) { this[event.type.replace(/-/g, '_').toUpperCase()].emit(event); }
+
+  @HostListener('ps-scroll-y', ['$event'])       psScrollY(event: any) { this.emit(event); }
+  @HostListener('ps-scroll-x', ['$event'])       psScrollX(event: any) { this.emit(event); }
+
+  @HostListener('ps-scroll-up', ['$event'])      psScrollUp(event: any) { this.emit(event); }
+  @HostListener('ps-scroll-down', ['$event'])    pscrollDown(event: any) { this.emit(event); }
+  @HostListener('ps-scroll-left', ['$event'])    psScrollLeft(event: any) { this.emit(event); }
+  @HostListener('ps-scroll-right', ['$event'])   psScrollRight(event): any { this.emit(event); }
+
+  @HostListener('ps-y-reach-end', ['$event'])    psReachEndY(event): any { this.emit(event); }
+  @HostListener('ps-y-reach-start', ['$event'])  psReachStartY(event): any { this.emit(event); }
+  @HostListener('ps-x-reach-end', ['$event'])    psReachEndX(event): any { this.emit(event); }
+  @HostListener('ps-x-reach-start', ['$event'])  psReachStartX(event): any { this.emit(event); }
+
   constructor(@Optional() private defaults: PerfectScrollbarConfig, private zone: NgZone,
     public elementRef: ElementRef, private differs: KeyValueDiffers) {}
 
