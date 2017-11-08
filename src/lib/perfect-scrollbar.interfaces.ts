@@ -28,18 +28,18 @@ export class Position {
 }
 
 export const PerfectScrollbarEvents = [
-  'ps-scroll-y',
-  'ps-scroll-x',
+  'psScrollY',
+  'psScrollX',
 
-  'ps-scroll-up',
-  'ps-scroll-down',
-  'ps-scroll-left',
-  'ps-scroll-right',
+  'psScrollUp',
+  'psScrollDown',
+  'psScrollLeft',
+  'psScrollRight',
 
-  'ps-y-reach-end',
-  'ps-y-reach-start',
-  'ps-x-reach-end',
-  'ps-x-reach-start'
+  'psYReachEnd',
+  'psYReachStart',
+  'psXReachEnd',
+  'psXReachStart'
 ];
 
 export interface PerfectScrollbarConfigInterface {
