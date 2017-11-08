@@ -105,10 +105,7 @@ export class PerfectScrollbarDirective implements OnDestroy, DoCheck, OnChanges,
       if (changes) {
         this.ngOnDestroy();
 
-        // Timeout is needed for the styles to update properly
-        window.setTimeout(() => {
-          this.ngAfterViewInit();
-        }, 0);
+        this.ngAfterViewInit();
       }
     }
   }
