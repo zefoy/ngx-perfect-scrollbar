@@ -25,7 +25,13 @@
 
     "unit-case": "lower",
     "unit-no-unknown": true,
-    "unit-whitelist": ["px", "%", "deg", "ms", "em"],
+    "unit-whitelist": [
+      "px",
+      "%",
+      "deg",
+      "ms",
+      "em"
+    ],
 
     "value-list-comma-space-after": "always-single-line",
     "value-list-comma-space-before": "never",
@@ -82,6 +88,7 @@
         }, {
           "emptyLineBefore": "always",
           "properties": [
+            "float",
             "position",
             "z-index",
             "top",
@@ -92,6 +99,7 @@
         }, {
           "emptyLineBefore": "always",
           "properties": [
+            "visibility",
             "opacity",
             "display",
             "overflow",
@@ -129,20 +137,49 @@
             "border-right",
             "border-bottom",
             "border-left",
-            "border-radius"
+            "border-width",
+            "border-top-width",
+            "border-right-width",
+            "border-bottom-width",
+            "border-left-width",
+            "border-style",
+            "border-top-style",
+            "border-right-style",
+            "border-bottom-style",
+            "border-left-style",
+            "border-color",
+            "border-top-color",
+            "border-right-color",
+            "border-bottom-color",
+            "border-left-color",
+            "border-radius",
+            "border-top-left-radius",
+            "border-top-right-radius",
+            "border-bottom-right-radius",
+            "border-bottom-left-radius",
+            "outline"
           ]
         }, {
           "emptyLineBefore": "always",
           "properties": [
             "cursor",
+            "resize",
+            "user-select",
             "pointer-events",
             "font-size",
             "font-style",
             "font-weight",
             "font-family",
             "line-height",
+            "white-space",
             "text-align",
             "text-shadow",
+            "text-transform",
+            "text-overflow",
+            "letter-spacing",
+            "list-style-type",
+            "object-fit",
+            "vertical-align",
             "color",
             "background",
             "background-size",

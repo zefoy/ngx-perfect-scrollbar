@@ -3,15 +3,16 @@ import PerfectScrollbar from 'perfect-scrollbar';
 import ResizeObserver from 'resize-observer-polyfill';
 
 import { Directive,
-  OnInit, DoCheck, OnChanges, OnDestroy,
-  Input, NgZone, ElementRef, Optional, Inject,
+  OnInit, DoCheck, OnChanges, OnDestroy, Input, Output,
+  EventEmitter, HostListener, NgZone, ElementRef, Optional, Inject,
   SimpleChanges, KeyValueDiffer, KeyValueDiffers } from '@angular/core';
 
 import { Geometry, Position } from './perfect-scrollbar.interfaces';
 
 import { PERFECT_SCROLLBAR_CONFIG } from './perfect-scrollbar.interfaces';
 
-import { PerfectScrollbarConfig, PerfectScrollbarConfigInterface } from './perfect-scrollbar.interfaces';
+import { PerfectScrollbarEvents, PerfectScrollbarConfig,
+  PerfectScrollbarConfigInterface } from './perfect-scrollbar.interfaces';
 
 @Directive({
   selector: '[perfectScrollbar]',
@@ -19,7 +20,6 @@ import { PerfectScrollbarConfig, PerfectScrollbarConfigInterface } from './perfe
 })
 export class PerfectScrollbarDirective implements OnInit, OnDestroy, DoCheck, OnChanges {
   private ro: any;
-
   private instance: any;
 
   private timeout: number;
@@ -29,6 +29,34 @@ export class PerfectScrollbarDirective implements OnInit, OnDestroy, DoCheck, On
   @Input() disabled: boolean = false;
 
   @Input('perfectScrollbar') config: PerfectScrollbarConfigInterface;
+
+  @Output('psScrollY'        ) PS_SCROLL_Y            = new EventEmitter<any>();
+  @Output('psScrollX'        ) PS_SCROLL_X            = new EventEmitter<any>();
+
+  @Output('psScrollUp'       ) PS_SCROLL_UP           = new EventEmitter<any>();
+  @Output('psScrollDown'     ) PS_SCROLL_DOWN         = new EventEmitter<any>();
+  @Output('psScrollLeft'     ) PS_SCROLL_LEFT         = new EventEmitter<any>();
+  @Output('psScrollRight'    ) PS_SCROLL_RIGHT        = new EventEmitter<any>();
+
+  @Output('psYReachEnd'      ) PS_Y_REACH_END         = new EventEmitter<any>();
+  @Output('psYReachStart'    ) PS_Y_REACH_START       = new EventEmitter<any>();
+  @Output('psXReachEnd'      ) PS_X_REACH_END         = new EventEmitter<any>();
+  @Output('psXReachStart'    ) PS_X_REACH_START       = new EventEmitter<any>();
+
+  private emit(event: any) { this[event.type.replace(/-/g, '_').toUpperCase()].emit(event); }
+
+  @HostListener('ps-scroll-y', ['$event'])       psScrollY(event: any) { this.emit(event); }
+  @HostListener('ps-scroll-x', ['$event'])       psScrollX(event: any) { this.emit(event); }
+
+  @HostListener('ps-scroll-up', ['$event'])      psScrollUp(event: any) { this.emit(event); }
+  @HostListener('ps-scroll-down', ['$event'])    pscrollDown(event: any) { this.emit(event); }
+  @HostListener('ps-scroll-left', ['$event'])    psScrollLeft(event: any) { this.emit(event); }
+  @HostListener('ps-scroll-right', ['$event'])   psScrollRight(event): any { this.emit(event); }
+
+  @HostListener('ps-y-reach-end', ['$event'])    psReachEndY(event): any { this.emit(event); }
+  @HostListener('ps-y-reach-start', ['$event'])  psReachStartY(event): any { this.emit(event); }
+  @HostListener('ps-x-reach-end', ['$event'])    psReachEndX(event): any { this.emit(event); }
+  @HostListener('ps-x-reach-start', ['$event'])  psReachStartX(event): any { this.emit(event); }
 
   constructor(private zone: NgZone, public elementRef: ElementRef, private differs: KeyValueDiffers,
     @Optional() @Inject(PERFECT_SCROLLBAR_CONFIG) private defaults: PerfectScrollbarConfigInterface) {}

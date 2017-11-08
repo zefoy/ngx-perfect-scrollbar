@@ -90,7 +90,9 @@ Simply replace the element that would ordinarily be passed to `PerfectScrollbar`
 [autoPropagation]       // Automatic swipe and wheel propagation control.
 [scrollIndicators]      // Enable fading edges scroll indicators showing.
 
-(<ps-event-name>)       // All perfect scrollbar events work as bindings.
+(<psEventName>)         // All perfect scrollbar events work as bindings.
+                        // Event names are in camel case (not kebab case).
+                        // Example: ps-y-reach-start -> psYReachStart
 ```
 
 **DIRECTIVE USAGE**
@@ -114,7 +116,9 @@ Perfect scrollbar directive should be used with div elements and can take option
 
 [disabled]              // Disables the perfect scrollbar initialization.
 
-(<ps-event-name>)       // All perfect scrollbar events work as bindings.
+(<psEventName>)         // All perfect scrollbar events work as bindings.
+                        // Event namea are in camel case (not kebab case).
+                        // Example: ps-y-reach-start -> psYReachStart
 ```
 
 ##### Available configuration options (custom / global configuration):

@@ -35,6 +35,11 @@ const globals = {
   'rxjs/observable/of': 'Rx.Observable',
   'rxjs/observable/throw': 'Rx.Observable',
 
+  'rxjs/operator/concatMap': 'Rx.Observable.prototype',
+  'rxjs/operator/filter': 'Rx.Observable.prototype',
+  'rxjs/operator/map': 'Rx.Observable.prototype',
+  'rxjs/operator/share': 'Rx.Observable.prototype',
+
   'rxjs/add/observable/fromEvent': 'Rx.Observable',
   'rxjs/add/observable/interval': 'Rx.Observable',
   'rxjs/add/observable/merge': 'Rx.Observable',
