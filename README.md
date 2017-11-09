@@ -83,14 +83,14 @@ Simply replace the element that would ordinarily be passed to `PerfectScrollbar`
 
 ```javascript
 [config]                // Custom config to override the global defaults.
-[disabled]              // Disables the perfect scrollbar initialization.
+[disabled]              // Disables the Perfect Scrollbar initialization.
 
 [usePSClass]            // Use 'ps' class (needed by the ps theme styles).
 
 [autoPropagation]       // Automatic swipe and wheel propagation control.
 [scrollIndicators]      // Enable fading edges scroll indicators showing.
 
-(<psEventName>)         // All perfect scrollbar events work as bindings.
+(<psEventName>)         // All Perfect Scrollbar events work as bindings.
                         // Event names are in camel case (not kebab case).
                         // Example: ps-y-reach-start -> psYReachStart
 ```
@@ -103,7 +103,7 @@ When using only the directive you need to provide your own theming or import the
 @import '~perfect-scrollbar/css/perfect-scrollbar.css';
 ```
 
-Perfect scrollbar directive should be used with div elements and can take optional custom configuration:
+Perfect Scrollbar directive should be used with div elements and can take optional custom configuration:
 
 ```html
 <div class="ps" style="position: relative; max-width: 600px; max-height: 400px;" [perfectScrollbar]="config">
@@ -114,9 +114,9 @@ Perfect scrollbar directive should be used with div elements and can take option
 ```javascript
 [perfectScrollbar]      // Can be used to provide optional custom config.
 
-[disabled]              // Disables the perfect scrollbar initialization.
+[disabled]              // Disables the Perfect Scrollbar initialization.
 
-(<psEventName>)         // All perfect scrollbar events work as bindings.
+(<psEventName>)         // All Perfect Scrollbar events work as bindings.
                         // Event namea are in camel case (not kebab case).
                         // Example: ps-y-reach-start -> psYReachStart
 ```
