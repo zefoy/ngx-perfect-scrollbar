@@ -2,7 +2,7 @@
   "name": "ngx-perfect-scrollbar-example",
   "description": "Example app for the ngx-perfect-scrollbar",
   "license": "MIT",
-  "version": "5.0.0-0",
+  "version": "5.0.0",
   "tslint": {
     "extends": "./tslint.json"
   },
@@ -43,7 +43,7 @@
     "@angular/platform-browser-dynamic": "^5.0.0",
     "@angular/router": "^5.0.0",
     "core-js": "^2.5.0",
-    "ngx-perfect-scrollbar": "5.0.0-8",
+    "ngx-perfect-scrollbar": "^5.0.0",
     "perfect-scrollbar": "^1.2.0",
     "resize-observer-polyfill": "^1.4.0",
     "rxjs": "^5.5.0",
