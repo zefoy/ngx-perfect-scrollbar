@@ -17,7 +17,7 @@
     "start": "npm run build && npm run bundle",
     "watch": "watch 'npm run start' src/",
     "clean": "rm -rf dist bundles node_modules",
-    "lint": "npm run lint:js && npm run lint:scss",
+    "lint": "npm run lint:ts && npm run lint:scss",
     "build": "npm run build:html && npm run build:css && npm run build:js",
     "bundle": "npm run bundle:es5 ; npm run bundle:umd ; npm run minify:umd",
     "deploy": "npm run build && npm run bundle && npm publish",
