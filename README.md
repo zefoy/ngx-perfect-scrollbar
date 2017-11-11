@@ -12,8 +12,7 @@ See a live example application <a href="https://zefoy.github.io/ngx-perfect-scro
 
 ```bash
 npm install
-npm run build
-npm run bundle
+npm start
 ```
 
 ### Running the example
@@ -153,8 +152,10 @@ scrollable(direction)             // Checks if the given direction is scrollable
                                   // Direction can be: 'any', 'both', 'x', 'y'
 
 scrollTo(x, y, speed?)            // Animate scroll to given x,y coordinates.
+
 scrollToY(position, speed?)       // Animate scroll to given vertical position.
 scrollToX(position, speed?)       // Animate scroll to given horizontal position.
+
 scrollToTop(offset, speed?)       // Animate scroll to given offset from the top.
 scrollToLeft(offset, speed?)      // Animate scroll to given offset from the left.
 scrollToRight(offset, speed?)     // Animate scroll to given offset from the right.
