@@ -1,8 +1,7 @@
-import 'rxjs/add/operator/throttleTime';
-import 'rxjs/add/operator/distinctUntilChanged';
-
 import { Subject } from 'rxjs/Subject';
 import { Subscription } from 'rxjs/Subscription';
+
+import { distinctUntilChanged } from 'rxjs/operators';
 
 import { Component, ViewEncapsulation,
   OnInit, OnDestroy, DoCheck, Input, Output,
@@ -77,13 +76,17 @@ export class PerfectScrollbarComponent implements OnInit, OnDestroy, DoCheck {
 
   ngOnInit() {
     this.activeSub = this.activeUpdate
-      .distinctUntilChanged()
+      .pipe(
+        distinctUntilChanged()
+      )
       .subscribe((active: boolean) => {
         this.allowPropagation = active;
       });
 
     this.statesSub = this.statesUpdate
-      .distinctUntilChanged()
+      .pipe(
+        distinctUntilChanged()
+      )
       .subscribe((state: string) => {
         window.clearTimeout(this.timeoutState);
 
