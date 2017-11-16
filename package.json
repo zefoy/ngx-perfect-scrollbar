@@ -20,7 +20,7 @@
     "lint": "npm run lint:ts && npm run lint:scss",
     "build": "npm run build:html && npm run build:css && npm run build:js",
     "bundle": "npm run bundle:es5 ; npm run bundle:umd ; npm run minify:umd",
-    "deploy": "npm run build && npm run bundle && npm publish",
+    "prepare": "npm run build && npm run bundle",
     "lint:ts": "tslint -p src/tsconfig.json \"src/**/*.ts\"",
     "lint:scss": "stylelint --syntax scss \"src/**/*.scss\"",
     "build:js": "ngc -p src/tsconfig.json && ngi -c -s dist/",
