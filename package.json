@@ -28,7 +28,7 @@
     "build:html": "cpx src/lib/*.html dist/lib/",
     "bundle:es5": "rollup -c config/rollup-es5.config.js --silent",
     "bundle:umd": "rollup -c config/rollup-umd.config.js --silent",
-    "minify:umd": "uglifyjs bundles/$npm_package_name.umd.js -o bundles/$npm_package_name.umd.min.js --source-map=\"filename=bundles/$npm_package_name.umd.min.js.map\""
+    "minify:umd": "uglifyjs bundles/ngx-perfect-scrollbar.umd.js -o bundles/ngx-perfect-scrollbar.umd.min.js --source-map=\"filename=bundles/ngx-perfect-scrollbar.umd.min.js.map\""
   },
   "repository": {
     "type": "git",
