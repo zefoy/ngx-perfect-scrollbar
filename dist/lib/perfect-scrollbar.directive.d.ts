@@ -1,0 +1,34 @@
+import { OnInit, DoCheck, OnChanges, OnDestroy, NgZone, ElementRef, SimpleChanges, KeyValueDiffers } from '@angular/core';
+import { Geometry, Position } from './perfect-scrollbar.interfaces';
+import { PerfectScrollbarConfigInterface } from './perfect-scrollbar.interfaces';
+export declare class PerfectScrollbarDirective implements OnInit, OnDestroy, DoCheck, OnChanges {
+    private zone;
+    elementRef: ElementRef;
+    private differs;
+    private defaults;
+    private ro;
+    private instance;
+    private timeout;
+    private configDiff;
+    disabled: boolean;
+    config: PerfectScrollbarConfigInterface;
+    constructor(zone: NgZone, elementRef: ElementRef, differs: KeyValueDiffers, defaults: PerfectScrollbarConfigInterface);
+    ngOnInit(): void;
+    ngOnDestroy(): void;
+    ngDoCheck(): void;
+    ngOnChanges(changes: SimpleChanges): void;
+    ps(): any;
+    update(): void;
+    geometry(prefix?: string): Geometry;
+    position(absolute?: boolean): Position;
+    scrollable(direction?: string): boolean;
+    scrollTo(x: number, y?: number, speed?: number): void;
+    scrollToX(x: number, speed?: number): void;
+    scrollToY(y: number, speed?: number): void;
+    scrollToTop(offset?: number, speed?: number): void;
+    scrollToLeft(offset?: number, speed?: number): void;
+    scrollToRight(offset?: number, speed?: number): void;
+    scrollToBottom(offset?: number, speed?: number): void;
+    scrollToId(id: string): void;
+    private animateScrolling(target, value, speed?);
+}

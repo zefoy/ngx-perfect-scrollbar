@@ -1,0 +1,1 @@
+{"version":3,"file":"ngx-perfect-scrollbar.js","sourceRoot":"","sources":["../src/ngx-perfect-scrollbar.ts"],"names":[],"mappings":";;;;;;;AAIA,6KAAwB","sourcesContent":["/**\n * Generated bundle index. Do not edit.\n */\n\nexport * from './index';\n"]}
