@@ -1,1 +1,1 @@
-# Example app for the angular2-perfect-scrollbar
+# Example app for the ngx-perfect-scrollbar
