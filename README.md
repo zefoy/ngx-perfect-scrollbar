@@ -29,7 +29,7 @@ npm start
 ```bash
 npm link
 cd example
-npm ling ngx-perfect-scrollbar
+npm link ngx-perfect-scrollbar
 ```
 
 ### Installing and usage
