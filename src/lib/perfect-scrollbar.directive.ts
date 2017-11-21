@@ -300,7 +300,9 @@ export class PerfectScrollbarDirective implements OnDestroy, DoCheck, OnChanges,
           if (scrollCount >= Math.PI) {
             this.animateScrolling(target, value, 0);
           } else {
-            this.elementRef.nativeElement[target] = oldValue = newValue;
+            this.elementRef.nativeElement[target] = newValue;
+            // On a zoomed out page in Chrome the resulting offset may differ from the specified value
+            oldValue = this.elementRef.nativeElement[target];
 
             this.ps.update();
 
