@@ -10,11 +10,11 @@
     "extends": "./stylelint.json"
   },
   "scripts": {
+    "clean": "rm -rf dist",
     "start": "webpack-dev-server --open --inline --config config/webpack-server-jit.config.js",
-    "clean": "rm -rf dist node_modules",
     "lint": "npm run lint:ts && npm run lint:css",
     "build": "rm -rf dist/* && npm run build:aot",
-    "deploy": "rm -rf dist && deploy-to-git",
+    "deploy": "npm run clean && deploy-to-git",
     "lint:ts": "tslint -p src/tsconfig.json \"src/**/*.ts\"",
     "lint:css": "stylelint --syntax css \"src/**/*.css\"",
     "start:sjs": "lite-server -c config/lite-server-bs-config.js",
