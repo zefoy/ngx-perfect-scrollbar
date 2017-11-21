@@ -14,18 +14,18 @@
     "extends": "./stylelint.json"
   },
   "scripts": {
+    "clean": "rm -rf dist bundles",
     "start": "npm run build && npm run bundle",
-    "watch": "watch 'npm run start' src/",
-    "clean": "rm -rf dist bundles node_modules",
+    "watch": "watch --wait=5 'npm run start' src/",
     "lint": "npm run lint:ts && npm run lint:scss",
     "build": "npm run build:html && npm run build:css && npm run build:js",
     "bundle": "npm run bundle:es5 ; npm run bundle:umd ; npm run minify:umd",
-    "prepare": "npm run build && npm run bundle",
+    "prepare": "npm run clean && npm run build && npm run bundle",
     "lint:ts": "tslint -p src/tsconfig.json \"src/**/*.ts\"",
     "lint:scss": "stylelint --syntax scss \"src/**/*.scss\"",
     "build:js": "ngc -p src/tsconfig.json && ngi -c -s dist/",
     "build:css": "node-sass src/ -o dist/ --source-map=true",
-    "build:html": "cpx src/lib/*.html dist/lib/",
+    "build:html": "cpx --dereference src/lib/*.html dist/lib/",
     "bundle:es5": "rollup -c config/rollup-es5.config.js --silent",
     "bundle:umd": "rollup -c config/rollup-umd.config.js --silent",
     "minify:umd": "uglifyjs bundles/$npm_package_name.umd.js -o bundles/$npm_package_name.umd.min.js --source-map=\"filename=bundles/$npm_package_name.umd.min.js.map\""
