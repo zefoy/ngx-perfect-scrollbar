@@ -40,25 +40,35 @@ perfect-scrollbar {
   }
 
   &[fxlayout] {
-    display: flex;
-    flex-direction: inherit;
-    -webkit-box-orient: inherit;
-    -webkit-box-direction: inherit;
-    align-item: inherit;
-    place-content: inherit;
-    -webkit-box-pack: inherit;
-    -webkit-box-align: inherit;
-
     & > .ps,
     & > .ps > .ps-content {
       display: flex;
-      flex-direction: inherit !important;
-      -webkit-box-orient: inherit !important;
-      -webkit-box-direction: inherit !important;
       align-item: inherit;
       place-content: inherit;
       -webkit-box-pack: inherit;
       -webkit-box-align: inherit;
+    }
+  }
+
+  &[fxlayout="row"] {
+    & > .ps,
+    & > .ps > .ps-content {
+      flex-direction: row !important;
+      -webkit-box-orient: row !important;
+      -webkit-box-direction: row !important;
+      width: auto;
+      height: 100%;
+    }
+  }
+
+  &[fxlayout="column"] {
+    & > .ps,
+    & > .ps > .ps-content {
+      flex-direction: column !important;
+      -webkit-box-orient: column !important;
+      -webkit-box-direction: column !important;
+      width: 100%;
+      height: auto;
     }
   }
   /* stylelint-enable */
