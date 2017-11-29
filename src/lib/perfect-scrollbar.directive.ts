@@ -2,10 +2,11 @@ import PerfectScrollbar from 'perfect-scrollbar';
 
 import ResizeObserver from 'resize-observer-polyfill';
 
+import { isPlatformBrowser } from '@angular/common';
 import { Directive,
   OnInit, DoCheck, OnChanges, OnDestroy, Input, Output,
   EventEmitter, HostListener, NgZone, ElementRef, Optional, Inject,
-  SimpleChanges, KeyValueDiffer, KeyValueDiffers } from '@angular/core';
+  SimpleChanges, KeyValueDiffer, KeyValueDiffers, PLATFORM_ID } from '@angular/core';
 
 import { Geometry, Position } from './perfect-scrollbar.interfaces';
 
@@ -59,10 +60,11 @@ export class PerfectScrollbarDirective implements OnInit, OnDestroy, DoCheck, On
   @HostListener('ps-x-reach-start', ['$event'])  psReachStartX(event): any { this.emit(event); }
 
   constructor(private zone: NgZone, public elementRef: ElementRef, private differs: KeyValueDiffers,
-    @Optional() @Inject(PERFECT_SCROLLBAR_CONFIG) private defaults: PerfectScrollbarConfigInterface) {}
+    @Optional() @Inject(PERFECT_SCROLLBAR_CONFIG) private defaults: PerfectScrollbarConfigInterface,
+    @Inject(PLATFORM_ID) private platformId: Object) {}
 
   ngOnInit() {
-    if (!this.disabled) {
+    if (!this.disabled && isPlatformBrowser(this.platformId)) {
       const config = new PerfectScrollbarConfig(this.defaults);
 
       config.assign(this.config); // Custom configuration
