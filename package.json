@@ -35,7 +35,7 @@
     "url": "https://github.com/zefoy/ngx-perfect-scrollbar.git"
   },
   "dependencies": {
-    "perfect-scrollbar": "git+https://github.com/laurentgoudet/perfect-scrollbar.git#e2773f419f27a41698d766a53221176935659acc",
+    "perfect-scrollbar": "^1.3.0",
     "resize-observer-polyfill": "^1.4.0"
   },
   "devDependencies": {
