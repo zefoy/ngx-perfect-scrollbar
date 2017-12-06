@@ -66,7 +66,7 @@ export class PerfectScrollbarDirective implements OnDestroy, DoCheck, OnChanges,
   @HostListener('ps-scroll-x', ['$event'])       psScrollX(event: any) { this.emit(event); }
 
   @HostListener('ps-scroll-up', ['$event'])      psScrollUp(event: any) { this.emit(event); }
-  @HostListener('ps-scroll-down', ['$event'])    pscrollDown(event: any) { this.emit(event); }
+  @HostListener('ps-scroll-down', ['$event'])    psScrollDown(event: any) { this.emit(event); }
   @HostListener('ps-scroll-left', ['$event'])    psScrollLeft(event: any) { this.emit(event); }
   @HostListener('ps-scroll-right', ['$event'])   psScrollRight(event): any { this.emit(event); }
 
