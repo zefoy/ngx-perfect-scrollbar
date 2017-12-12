@@ -51,10 +51,8 @@ export interface PerfectScrollbarConfigInterface {
   suppressScrollX?: boolean;
   suppressScrollY?: boolean;
 
-  useBothWheelAxes?: boolean;
-
   wheelPropagation?: boolean;
-  swipePropagation?: boolean;
+  useBothWheelAxes?: boolean;
 
   scrollingThreshold?: number;
 
@@ -74,10 +72,8 @@ export class PerfectScrollbarConfig implements PerfectScrollbarConfigInterface {
   public suppressScrollX: boolean;
   public suppressScrollY: boolean;
 
-  public useBothWheelAxes: boolean;
-
   public wheelPropagation: boolean;
-  public swipePropagation: boolean;
+  public useBothWheelAxes: boolean;
 
   public scrollingThreshold: number;
 

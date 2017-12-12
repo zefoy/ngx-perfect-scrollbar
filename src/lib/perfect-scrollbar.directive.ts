@@ -59,9 +59,9 @@ export class PerfectScrollbarDirective implements OnInit, OnDestroy, DoCheck, On
   @HostListener('ps-x-reach-end', ['$event'])    psReachEndX(event): any { this.emit(event); }
   @HostListener('ps-x-reach-start', ['$event'])  psReachStartX(event): any { this.emit(event); }
 
-  constructor(private zone: NgZone, public elementRef: ElementRef, private differs: KeyValueDiffers,
-    @Optional() @Inject(PERFECT_SCROLLBAR_CONFIG) private defaults: PerfectScrollbarConfigInterface,
-    @Inject(PLATFORM_ID) private platformId: Object) {}
+  constructor(private zone: NgZone, private differs: KeyValueDiffers,
+    public elementRef: ElementRef, @Inject(PLATFORM_ID) private platformId: Object,
+    @Optional() @Inject(PERFECT_SCROLLBAR_CONFIG) private defaults: PerfectScrollbarConfigInterface) {}
 
   ngOnInit() {
     if (!this.disabled && isPlatformBrowser(this.platformId)) {
@@ -108,7 +108,7 @@ export class PerfectScrollbarDirective implements OnInit, OnDestroy, DoCheck, On
   }
 
   ngDoCheck() {
-    if (!this.disabled && this.configDiff) {
+    if (!this.disabled && this.configDiff && isPlatformBrowser(this.platformId)) {
       const changes = this.configDiff.diff(this.config || {});
 
       if (changes) {
@@ -144,7 +144,9 @@ export class PerfectScrollbarDirective implements OnInit, OnDestroy, DoCheck, On
       if (!this.disabled && this.configDiff) {
         try {
           this.zone.runOutsideAngular(() => {
-            this.instance.update();
+            if (this.instance) {
+              this.instance.update();
+            }
           });
         } catch (error) {
           // Update can be finished after destroy so catch errors
@@ -242,7 +244,7 @@ export class PerfectScrollbarDirective implements OnInit, OnDestroy, DoCheck, On
 
       this.elementRef.nativeElement[target] = value;
 
-      if (value !== oldValue) {
+      if (this.instance && value !== oldValue) {
         this.instance.update();
       }
     } else if (value !== this.elementRef.nativeElement[target]) {
@@ -269,7 +271,9 @@ export class PerfectScrollbarDirective implements OnInit, OnDestroy, DoCheck, On
             // On a zoomed out page the resulting offset may differ
             oldValue = this.elementRef.nativeElement[target];
 
-            this.instance.update();
+            if (this.instance) {
+              this.instance.update();
+            }
 
             oldTimestamp = newTimestamp;
 

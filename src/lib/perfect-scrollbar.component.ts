@@ -13,30 +13,32 @@ import { PerfectScrollbarConfigInterface } from './perfect-scrollbar.interfaces'
 
 @Component({
   selector: 'perfect-scrollbar',
+  exportAs: 'ngxPerfectScrollbar',
   templateUrl: './lib/perfect-scrollbar.component.html',
   styleUrls: [ './lib/perfect-scrollbar.component.css' ],
   encapsulation: ViewEncapsulation.None
 })
 export class PerfectScrollbarComponent implements OnInit, OnDestroy, DoCheck {
   public states: any = {};
-  public notify: boolean = null;
 
-  public userInteraction: boolean = false;
-  public allowPropagation: boolean = false;
+  public indicator: boolean = false;
+  public interaction: boolean = false;
 
-  private cancelEvent: Event = null;
+  private stateTimeout: number = null;
 
-  private timeoutState: number = null;
-  private timeoutScroll: number = null;
+  private stateSub: Subscription = null;
 
-  private usePropagationX: boolean = false;
-  private usePropagationY: boolean = false;
+  private positionX: number = null;
+  private positionY: number = null;
+  private directionX: number = null;
+  private directionY: number = null;
+  private propagationX: boolean = false;
+  private propagationY: boolean = false;
 
-  private statesSub: Subscription = null;
-  private statesUpdate: Subject<string> = new Subject();
+  private usePropagation: boolean = false;
+  private allowPropagation: boolean = false;
 
-  private activeSub: Subscription = null;
-  private activeUpdate: Subject<boolean> = new Subject();
+  private stateUpdate: Subject<string> = new Subject();
 
   @Input() disabled: boolean = false;
 
@@ -65,60 +67,25 @@ export class PerfectScrollbarComponent implements OnInit, OnDestroy, DoCheck {
   @Output('psXReachEnd'      ) PS_X_REACH_END         = new EventEmitter<any>();
   @Output('psXReachStart'    ) PS_X_REACH_START       = new EventEmitter<any>();
 
-  @HostListener('document:touchstart', ['$event']) onGeneratedEvent(event: any) {
-    // Stop the generated event from reaching window for PS to work correctly
-    if (event['psGenerated']) {
-      event.stopPropagation();
-    }
-  }
-
   constructor(private cdRef: ChangeDetectorRef, private elementRef: ElementRef) {}
 
   ngOnInit() {
-    this.activeSub = this.activeUpdate
+    this.stateSub = this.stateUpdate
       .pipe(
-        distinctUntilChanged()
-      )
-      .subscribe((active: boolean) => {
-        this.allowPropagation = active;
-      });
-
-    this.statesSub = this.statesUpdate
-      .pipe(
-        distinctUntilChanged()
+        distinctUntilChanged((a, b) => {
+          return (a === b && !this.stateTimeout);
+        })
       )
       .subscribe((state: string) => {
-        window.clearTimeout(this.timeoutState);
+        if (this.stateTimeout) {
+          window.clearTimeout(this.stateTimeout);
 
-        if (state !== 'x' && state !== 'y') {
-          this.notify = true;
+          this.stateTimeout = null;
+        }
 
-          this.states[state] = true;
-
-          if (state === 'top') {
-            this.states.bottom = false;
-          } else if (state === 'bottom') {
-            this.states.top = false;
-          } else if (state === 'left') {
-            this.states.rights = false;
-          } else if (state === 'rights') {
-            this.states.left = false;
-          }
-
-          this.timeoutState = window.setTimeout(() => {
-            this.notify = false;
-
-            if (this.autoPropagation && this.userInteraction &&
-               ((!this.usePropagationX && (this.states.left || this.states.right)) ||
-               (!this.usePropagationY && (this.states.top || this.states.bottom))))
-            {
-              this.allowPropagation = true;
-            }
-
-            this.cdRef.markForCheck();
-          }, 300);
-        } else {
-          this.notify = false;
+        if (state === 'x' || state === 'y') {
+          this.indicator = false;
+          this.interaction = false;
 
           if (state === 'x') {
             this.states.left = false;
@@ -128,26 +95,41 @@ export class PerfectScrollbarComponent implements OnInit, OnDestroy, DoCheck {
             this.states.bottom = false;
           }
 
-          this.userInteraction = true;
-
-          if (this.autoPropagation &&
-            (!this.usePropagationX || !this.usePropagationY))
-          {
+          if (this.usePropagation && this.autoPropagation) {
             this.allowPropagation = false;
+          }
+        } else {
+          if (state === 'top') {
+            this.states.top = true;
+            this.states.bottom = false;
+          } else if (state === 'left') {
+            this.states.left = true;
+            this.states.right = false;
+          } else if (state === 'right') {
+            this.states.left = false;
+            this.states.right = true;
+          } else if (state === 'bottom') {
+            this.states.top = false;
+            this.states.bottom = true;
+          }
 
-            if (this.cancelEvent) {
-              this.elementRef.nativeElement.dispatchEvent(this.cancelEvent);
+          if (this.usePropagation && this.autoPropagation) {
+            this.indicator = true;
 
-              this.cancelEvent = null;
-            }
-          } else if (this.scrollIndicators) {
-            this.notify = true;
+            this.stateTimeout = window.setTimeout(() => {
+              this.indicator = false;
 
-            this.timeoutState = window.setTimeout(() => {
-              this.notify = false;
+              this.stateTimeout = null;
+
+              if (this.interaction &&
+                 (this.states.top || this.states.left ||
+                  this.states.right || this.states.bottom))
+              {
+                this.allowPropagation = true;
+              }
 
               this.cdRef.markForCheck();
-            }, 300);
+            }, 500);
           }
         }
 
@@ -157,20 +139,12 @@ export class PerfectScrollbarComponent implements OnInit, OnDestroy, DoCheck {
   }
 
   ngOnDestroy() {
-    if (this.activeSub) {
-      this.activeSub.unsubscribe();
+    if (this.stateSub) {
+      this.stateSub.unsubscribe();
     }
 
-    if (this.statesSub) {
-      this.statesSub.unsubscribe();
-    }
-
-    if (this.timeoutState) {
-      window.clearTimeout(this.timeoutState);
-    }
-
-    if (this.timeoutScroll) {
-      window.clearTimeout(this.timeoutScroll);
+    if (this.stateTimeout) {
+      window.clearTimeout(this.stateTimeout);
     }
   }
 
@@ -178,81 +152,73 @@ export class PerfectScrollbarComponent implements OnInit, OnDestroy, DoCheck {
     if (!this.disabled && this.autoPropagation && this.directiveRef) {
       const element = this.directiveRef.elementRef.nativeElement;
 
-      this.usePropagationX = !element.classList.contains('ps--active-x');
-      this.usePropagationY = !element.classList.contains('ps--active-y');
+      this.propagationX = element.classList.contains('ps--active-x');
+      this.propagationY = element.classList.contains('ps--active-y');
 
-      this.activeUpdate.next(this.usePropagationX && this.usePropagationY);
+      this.usePropagation = (this.propagationX || !this.propagationY) ||
+                            (!this.propagationX && this.propagationY);
     }
   }
 
-  public getConfig(): PerfectScrollbarConfigInterface {
-    const config = this.config || {};
-
-    if (this.autoPropagation) {
-      config.swipePropagation = true;
-      config.wheelPropagation = true;
-    }
-
-    return config;
-  }
-
-  public onTouchEnd(event: Event = null) {
-    if (!this.disabled && this.autoPropagation &&
-       (!this.usePropagationX || !this.usePropagationY))
-    {
-      this.cancelEvent = null;
-
-      this.allowPropagation = false;
-    }
-  }
-
-  public onTouchMove(event: Event = null) {
-    if (!this.disabled && this.autoPropagation && !this.allowPropagation) {
-      event.preventDefault();
-      event.stopPropagation();
-    }
-  }
-
-  public onTouchStart(event: Event = null) {
+  public onWheelEvent(event: WheelEvent) {
     if (!this.disabled && this.autoPropagation) {
-      this.userInteraction = true;
+      this.interaction = true;
 
-      if (this.allowPropagation) {
-        // PS stops the touchmove event so lets re-emit it here
-        if (this.elementRef.nativeElement) {
-          const newEvent = new MouseEvent('touchstart', event);
-          this.cancelEvent = new MouseEvent('touchmove', event);
+      const directionX = (event.deltaX < 0) ? -1 : 1;
+      const directionY = (event.deltaY < 0) ? -1 : 1;
 
-          newEvent['psGenerated'] = this.cancelEvent['psGenerated'] = true;
-          newEvent['touches'] = this.cancelEvent['touches'] = event['touches'];
-          newEvent['targetTouches'] = this.cancelEvent['targetTouches'] = event['targetTouches'];
-
-          this.elementRef.nativeElement.dispatchEvent(newEvent);
-        }
-      }
-
-      this.cdRef.detectChanges();
-    }
-  }
-
-  public onWheelEvent(event: Event = null) {
-    if (!this.disabled && this.autoPropagation) {
-      this.userInteraction = true;
-
-      if (!this.allowPropagation) {
+      if (this.usePropagation && (!this.allowPropagation ||
+         ((this.propagationX && this.directionX !== directionX) ||
+          (this.propagationY && this.directionY !== directionY))))
+      {
         event.preventDefault();
         event.stopPropagation();
-      } else if (!this.usePropagationX || !this.usePropagationY) {
-        this.allowPropagation = false;
       }
+
+      this.stateUpdate.next(event.type);
+
+      this.directionX = directionX;
+      this.directionY = directionY;
 
       this.cdRef.detectChanges();
     }
   }
 
-  public onScrollEvent(event: Event = null, state: string) {
+  public onTouchEvent(event: TouchEvent) {
+    if (!this.disabled && this.autoPropagation) {
+      if (event.type === 'touchmove') {
+        this.interaction = true;
+
+        const positionX = event.touches[0].clientX;
+        const positionY = event.touches[0].clientY;
+
+        const directionX = ((positionX - this.positionX) < 0) ? -1 : 1;
+        const directionY = ((positionY - this.positionY) < 0) ? -1 : 1;
+
+        if (this.usePropagation && (!this.allowPropagation ||
+           ((this.propagationX && this.directionX !== directionX) ||
+            (this.propagationY && this.directionY !== directionY))))
+        {
+          event.preventDefault();
+          event.stopPropagation();
+        }
+
+        this.stateUpdate.next(event.type);
+
+        this.directionX = directionX;
+        this.directionY = directionY;
+
+        this.positionX = positionX;
+        this.positionY = positionY;
+
+        this.cdRef.detectChanges();
+      }
+    }
+  }
+
+  public onScrollEvent(event: Event, state: string) {
     if (!this.disabled && (this.autoPropagation || this.scrollIndicators)) {
-      this.statesUpdate.next(state);
+      this.stateUpdate.next(state);
     }
   }
 }

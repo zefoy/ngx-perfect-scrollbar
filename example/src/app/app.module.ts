@@ -10,8 +10,7 @@ import { PerfectScrollbarModule, PerfectScrollbarConfigInterface,
 import { AppComponent } from './app.component';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
-  swipePropagation: false,
-  wheelPropagation: false
+  wheelPropagation: true
 };
 
 @NgModule({

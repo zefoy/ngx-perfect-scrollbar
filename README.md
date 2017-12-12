@@ -126,10 +126,9 @@ Perfect Scrollbar directive should be used with div elements and can take option
 handlers                // List of event handlers to scroll the element.
 wheelSpeed              // Scroll speed for the mousewheel event (Default: 1).
 swipeEasing             // Use easing for the swipe scrolling (Default: true).
-wheelPropagation        // Propagate wheel events at the end (Default: false).
-swipePropagation        // Propagate swipe events at the end (Default: true).
 suppressScrollX         // Disable X axis in all situations (Default: false).
 suppressScrollY         // Disable Y axis ni all situations (Default: false).
+wheelPropagation        // Propagate wheel events at the end (Default: false).
 useBothWheelAxes        // Always use both of the wheel axes (Default: false).
 minScrollbarLength      // Minimum size (px) for the scrollbar (Default: null).
 maxScrollbarLength      // Maximum size (px) for the scrollbar (Default: null).

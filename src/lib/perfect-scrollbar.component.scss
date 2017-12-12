@@ -270,7 +270,7 @@ perfect-scrollbar {
           & > .ps-overlay {
             &.ps-at-top {
               .ps-indicator-top {
-                &.ps-notify {
+                &.ps-indicator-show {
                   opacity: 1;
                 }
 
@@ -280,7 +280,7 @@ perfect-scrollbar {
 
             &.ps-at-bottom {
               .ps-indicator-bottom {
-                &.ps-notify {
+                &.ps-indicator-show {
                   opacity: 1;
                 }
 
@@ -294,7 +294,7 @@ perfect-scrollbar {
           & > .ps-overlay {
             &.ps-at-left {
               .ps-indicator-left {
-                &.ps-notify {
+                &.ps-indicator-show {
                   opacity: 1;
                 }
 
@@ -304,7 +304,7 @@ perfect-scrollbar {
 
             &.ps-at-right {
               .ps-indicator-right {
-                &.ps-notify {
+                &.ps-indicator-show {
                   opacity: 1;
                 }
 
