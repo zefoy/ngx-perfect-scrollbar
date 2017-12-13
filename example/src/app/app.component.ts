@@ -14,7 +14,7 @@ export class AppComponent {
 
   public disabled: boolean = false;
 
-  public config: PerfectScrollbarConfigInterface = {suppressScrollX: true};
+  public config: PerfectScrollbarConfigInterface = {};
 
   @ViewChild(PerfectScrollbarComponent) componentScroll: PerfectScrollbarComponent;
   @ViewChild(PerfectScrollbarDirective) directiveScroll: PerfectScrollbarDirective;
