@@ -4,9 +4,9 @@
   </div>
 
   <div *ngIf="scrollIndicators" class="ps-overlay" [class.ps-at-top]="states.top" [class.ps-at-left]="states.left" [class.ps-at-right]="states.right" [class.ps-at-bottom]="states.bottom">
-    <div class="ps-indicator-top" [class.ps-indicator-show]="indicator && interaction"></div>
-    <div class="ps-indicator-left" [class.ps-indicator-show]="indicator && interaction"></div>
-    <div class="ps-indicator-right" [class.ps-indicator-show]="indicator && interaction"></div>
-    <div class="ps-indicator-bottom" [class.ps-indicator-show]="indicator && interaction"></div>
+    <div class="ps-indicator-top" [class.ps-indicator-show]="indicatorY && interaction"></div>
+    <div class="ps-indicator-left" [class.ps-indicator-show]="indicatorX && interaction"></div>
+    <div class="ps-indicator-right" [class.ps-indicator-show]="indicatorX && interaction"></div>
+    <div class="ps-indicator-bottom" [class.ps-indicator-show]="indicatorY && interaction"></div>
   </div>
 </div>

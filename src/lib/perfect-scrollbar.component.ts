@@ -21,22 +21,26 @@ import { PerfectScrollbarConfigInterface } from './perfect-scrollbar.interfaces'
 export class PerfectScrollbarComponent implements OnInit, OnDestroy, DoCheck {
   public states: any = {};
 
-  public indicator: boolean = false;
+  public indicatorX: boolean = false;
+  public indicatorY: boolean = false;
+
   public interaction: boolean = false;
 
   private stateTimeout: number = null;
 
   private stateSub: Subscription = null;
 
-  private positionX: number = null;
-  private positionY: number = null;
-  private directionX: number = null;
-  private directionY: number = null;
-  private propagationX: boolean = false;
-  private propagationY: boolean = false;
+  private scrollPositionX: number = null;
+  private scrollPositionY: number = null;
 
-  private usePropagation: boolean = false;
-  private allowPropagation: boolean = false;
+  private scrollDirectionX: number = null;
+  private scrollDirectionY: number = null;
+
+  private usePropagationX: boolean = false;
+  private usePropagationY: boolean = false;
+
+  private allowPropagationX: boolean = false;
+  private allowPropagationY: boolean = false;
 
   private stateUpdate: Subject<string> = new Subject();
 
@@ -72,9 +76,7 @@ export class PerfectScrollbarComponent implements OnInit, OnDestroy, DoCheck {
   ngOnInit() {
     this.stateSub = this.stateUpdate
       .pipe(
-        distinctUntilChanged((a, b) => {
-          return (a === b && !this.stateTimeout);
-        })
+        distinctUntilChanged((a, b) => (a === b && !this.stateTimeout))
       )
       .subscribe((state: string) => {
         if (this.stateTimeout) {
@@ -84,48 +86,61 @@ export class PerfectScrollbarComponent implements OnInit, OnDestroy, DoCheck {
         }
 
         if (state === 'x' || state === 'y') {
-          this.indicator = false;
           this.interaction = false;
 
           if (state === 'x') {
+            this.indicatorX = false;
+
             this.states.left = false;
             this.states.right = false;
+
+            if (this.autoPropagation && this.usePropagationX) {
+              this.allowPropagationX = false;
+            }
           } else if (state === 'y') {
+            this.indicatorY = false;
+
             this.states.top = false;
             this.states.bottom = false;
-          }
 
-          if (this.usePropagation && this.autoPropagation) {
-            this.allowPropagation = false;
+            if (this.autoPropagation && this.usePropagationY) {
+              this.allowPropagationY = false;
+            }
           }
         } else {
-          if (state === 'top') {
-            this.states.top = true;
-            this.states.bottom = false;
-          } else if (state === 'left') {
-            this.states.left = true;
-            this.states.right = false;
-          } else if (state === 'right') {
+          if (state === 'left' || state === 'right') {
             this.states.left = false;
-            this.states.right = true;
-          } else if (state === 'bottom') {
+            this.states.right = false;
+
+            this.states[state] = true;
+
+            if (this.autoPropagation && this.usePropagationX) {
+              this.indicatorX = true;
+            }
+          } else if (state === 'top' || state === 'bottom') {
             this.states.top = false;
-            this.states.bottom = true;
+            this.states.bottom = false;
+
+            this.states[state] = true;
+
+            if (this.autoPropagation && this.usePropagationY) {
+              this.indicatorY = true;
+            }
           }
 
-          if (this.usePropagation && this.autoPropagation) {
-            this.indicator = true;
-
+          if (this.autoPropagation) {
             this.stateTimeout = window.setTimeout(() => {
-              this.indicator = false;
+              this.indicatorX = false;
+              this.indicatorY = false;
 
               this.stateTimeout = null;
 
-              if (this.interaction &&
-                 (this.states.top || this.states.left ||
-                  this.states.right || this.states.bottom))
-              {
-                this.allowPropagation = true;
+              if (this.interaction && (this.states.left || this.states.right)) {
+                this.allowPropagationX = true;
+              }
+
+              if (this.interaction && (this.states.top || this.states.bottom)) {
+                this.allowPropagationY = true;
               }
 
               this.cdRef.markForCheck();
@@ -152,67 +167,62 @@ export class PerfectScrollbarComponent implements OnInit, OnDestroy, DoCheck {
     if (!this.disabled && this.autoPropagation && this.directiveRef) {
       const element = this.directiveRef.elementRef.nativeElement;
 
-      this.propagationX = element.classList.contains('ps--active-x');
-      this.propagationY = element.classList.contains('ps--active-y');
+      this.usePropagationX = element.classList.contains('ps--active-x');
 
-      this.usePropagation = (this.propagationX || !this.propagationY) ||
-                            (!this.propagationX && this.propagationY);
+      this.usePropagationY = element.classList.contains('ps--active-y');
     }
+  }
+
+  private scrollEvent(deltaX, deltaY) {
+    this.interaction = true;
+
+    const scrollDirectionX = (deltaX < 0) ? -1 : 1;
+    const scrollDirectionY = (deltaY < 0) ? -1 : 1;
+
+    if ((this.usePropagationX && this.usePropagationY) ||
+        (this.usePropagationX && (!this.allowPropagationX ||
+        (this.scrollDirectionX !== scrollDirectionX))) ||
+        (this.usePropagationY && (!this.allowPropagationY ||
+        (this.scrollDirectionY !== scrollDirectionY))))
+    {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+
+    if (!!deltaX) {
+      this.scrollDirectionX = scrollDirectionX;
+    }
+
+    if (!!deltaY) {
+      this.scrollDirectionY = scrollDirectionY;
+    }
+
+    this.stateUpdate.next('interaction');
+
+    this.cdRef.detectChanges();
   }
 
   public onWheelEvent(event: WheelEvent) {
     if (!this.disabled && this.autoPropagation) {
-      this.interaction = true;
+      const scrollDeltaX = event.deltaX;
+      const scrollDeltaY = event.deltaY;
 
-      const directionX = (event.deltaX < 0) ? -1 : 1;
-      const directionY = (event.deltaY < 0) ? -1 : 1;
-
-      if (this.usePropagation && (!this.allowPropagation ||
-         ((this.propagationX && this.directionX !== directionX) ||
-          (this.propagationY && this.directionY !== directionY))))
-      {
-        event.preventDefault();
-        event.stopPropagation();
-      }
-
-      this.stateUpdate.next(event.type);
-
-      this.directionX = directionX;
-      this.directionY = directionY;
-
-      this.cdRef.detectChanges();
+      this.scrollEvent(scrollDeltaX, scrollDeltaY);
     }
   }
 
   public onTouchEvent(event: TouchEvent) {
     if (!this.disabled && this.autoPropagation) {
-      if (event.type === 'touchmove') {
-        this.interaction = true;
+      const scrollPositionX = event.touches[0].clientX;
+      const scrollPositionY = event.touches[0].clientY;
 
-        const positionX = event.touches[0].clientX;
-        const positionY = event.touches[0].clientY;
+      const scrollDeltaX = scrollPositionX - this.scrollPositionX;
+      const scrollDeltaY = scrollPositionY - this.scrollPositionY;
 
-        const directionX = ((positionX - this.positionX) < 0) ? -1 : 1;
-        const directionY = ((positionY - this.positionY) < 0) ? -1 : 1;
+      this.scrollEvent(scrollDeltaX, scrollDeltaY);
 
-        if (this.usePropagation && (!this.allowPropagation ||
-           ((this.propagationX && this.directionX !== directionX) ||
-            (this.propagationY && this.directionY !== directionY))))
-        {
-          event.preventDefault();
-          event.stopPropagation();
-        }
-
-        this.stateUpdate.next(event.type);
-
-        this.directionX = directionX;
-        this.directionY = directionY;
-
-        this.positionX = positionX;
-        this.positionY = positionY;
-
-        this.cdRef.detectChanges();
-      }
+      this.scrollPositionX = scrollPositionX;
+      this.scrollPositionY = scrollPositionY;
     }
   }
 
