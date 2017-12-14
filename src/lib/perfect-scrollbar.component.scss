@@ -150,6 +150,8 @@ perfect-scrollbar {
 
         width: 10px;
 
+        cursor: default;
+
         transition:
           width 200ms linear,
           opacity 200ms linear,
@@ -167,6 +169,8 @@ perfect-scrollbar {
         left: 0 !important;
 
         height: 10px;
+
+        cursor: default;
 
         transition:
           height 200ms linear,
