@@ -24,7 +24,6 @@
     ],
     "types": [
       "node"
-      // Add this when 1.x types available: "perfect-scrollbar"
     ]
   }
 }
