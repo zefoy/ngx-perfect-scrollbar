@@ -44,7 +44,7 @@
     "@angular/platform-browser": "^5.1.0",
     "@angular/platform-browser-dynamic": "^5.1.0",
     "core-js": "^2.5.0",
-    "ngx-perfect-scrollbar": "^5.1.0",
+    "ngx-perfect-scrollbar": "^5.2.0",
     "resize-observer-polyfill": "^1.4.0",
     "rxjs": "^5.5.0",
     "zone.js": "^0.8.0"
