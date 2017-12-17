@@ -21,7 +21,7 @@
     "build:aot": "webpack --config config/webpack-build-aot.config.js",
     "build:jit": "webpack --config config/webpack-build-jit.config.js"
     "serve:sjs": "lite-server -c config/lite-server-bs-config.js",
-    "serve:wds": "webpack-dev-server --open --inline --config config/webpack-server-jit.config.js",
+    "serve:wds": "webpack-dev-server --open --inline --config config/webpack-server-jit.config.js"
   },
   "config": {
     "deployToGit": {
