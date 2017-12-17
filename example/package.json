@@ -19,7 +19,7 @@
     "lint:ts": "tslint -p src/tsconfig.json \"src/**/*.ts\"",
     "lint:css": "stylelint --syntax css \"src/**/*.css\"",
     "build:aot": "webpack --config config/webpack-build-aot.config.js",
-    "build:jit": "webpack --config config/webpack-build-jit.config.js"
+    "build:jit": "webpack --config config/webpack-build-jit.config.js",
     "serve:sjs": "lite-server -c config/lite-server-bs-config.js",
     "serve:wds": "webpack-dev-server --open --inline --config config/webpack-server-jit.config.js"
   },
