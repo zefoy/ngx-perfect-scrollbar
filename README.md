@@ -2,11 +2,17 @@
 
 <a href="https://badge.fury.io/js/ngx-perfect-scrollbar"><img src="https://badge.fury.io/js/ngx-perfect-scrollbar.svg" align="right" alt="npm version" height="18"></a>
 
-This is an Angular wrapper library for the [Perfect Scrollbar](https://utatti.github.io/perfect-scrollbar/). To use this library you should get familiar with the [Perfect Scrollbar documentation](https://github.com/utatti/perfect-scrollbar/) as well, this documentation only explains details specific to this wrapper.
+This is an Angular wrapper library for the [Perfect Scrollbar](https://utatti.github.io/perfect-scrollbar/). To use this library you should get familiar with the Perfect Scrollbar documentation as well since this documentation only explains details specific to this wrapper.
 
 This documentation is for the latest 5.x.x version which requires Angular 5. For Angular 4 you need to use the latest 4.x.x version. Documentation for the 4.x.x can be found from <a href="https://github.com/zefoy/ngx-perfect-scrollbar/tree/4.x.x/">here</a>.
 
-See a live example application <a href="https://zefoy.github.io/ngx-perfect-scrollbar/">here</a>.
+### Quick links
+
+[Example application](https://zefoy.github.io/ngx-perfect-scrollbar/)
+ | 
+[Plunker template](http://plnkr.co/edit/dC7oQyXhvycn2cVLbZJF?p=preview)
+ | 
+[Perfect Scrollbar documentation](https://github.com/utatti/perfect-scrollbar/)
 
 ### Building the library
 
@@ -136,7 +142,7 @@ scrollXMarginOffset     // Offset before enabling the X scroller (Default: 0).
 scrollYMarginOffset     // Offset before enabling the Y scroller (Default: 0).
 ```
 
-For more detailed documentation with all the supported events / options see the [Perfect Scrollbar documentation](https://github.com/utatti/perfect-scrollbar/).
+For more detailed documentation with all the supported events / options see the the Perfect Scrollbar documentation.
 
 ##### Available control / helper functions (provided by the directive):
 
