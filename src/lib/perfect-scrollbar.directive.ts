@@ -212,7 +212,7 @@ export class PerfectScrollbarDirective implements OnInit, OnDestroy, DoCheck, On
       return;
     }
     const elementYPosition: number = element.offsetTop;
-    this.animateScrolling('scrollTop', elementYPosition - this.elementRef.nativeElement.scrollHeight / 2);
+    this.animateScrolling('scrollTop', elementYPosition);
   }
 
   private animateScrolling(target: string, value: number, speed?: number) {
