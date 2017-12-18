@@ -207,7 +207,7 @@ export class PerfectScrollbarDirective implements OnInit, OnDestroy, DoCheck, On
   }
 
   public scrollToId(id: string) {
-    const element: HTMLElement | null = document.getElementById(id.toString());
+    const element: HTMLElement | null = document.getElementById(id);
     if (!element) {
       return;
     }
