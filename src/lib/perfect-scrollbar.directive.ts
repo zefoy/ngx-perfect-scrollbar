@@ -238,6 +238,20 @@ export class PerfectScrollbarDirective implements OnInit, OnDestroy, DoCheck, On
     this.animateScrolling('scrollTop', top - (offset || 0), speed);
   }
 
+  public scrollToElement(qs: string, offset?: number, speed?: number) {
+    const element = this.elementRef.nativeElement.querySelector(qs);
+
+    if (element) {
+      if (this.elementRef.nativeElement.classList.contains('ps--active-y')) {
+        this.animateScrolling('scrollTop', element.offsetTop + (offset || 0), speed);
+      }
+
+      if (this.elementRef.nativeElement.classList.contains('ps--active-x')) {
+        this.animateScrolling('scrollLeft', element.offsetLeft + (offset || 0), speed);
+      }
+    }
+  }
+
   private animateScrolling(target: string, value: number, speed?: number) {
     if (!speed) {
       const oldValue = this.elementRef.nativeElement[target];

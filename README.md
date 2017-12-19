@@ -9,9 +9,9 @@ This documentation is for the latest 5.x.x version which requires Angular 5. For
 ### Quick links
 
 [Example application](https://zefoy.github.io/ngx-perfect-scrollbar/)
- | 
+ |
 [Plunker template](http://plnkr.co/edit/dC7oQyXhvycn2cVLbZJF?p=preview)
- | 
+ |
 [Perfect Scrollbar documentation](https://github.com/utatti/perfect-scrollbar/)
 
 ### Building the library
@@ -147,24 +147,24 @@ For more detailed documentation with all the supported events / options see the 
 ##### Available control / helper functions (provided by the directive):
 
 ```javascript
-ps()                              // Returns reference to the PS instance.
+ps()                                   // Returns reference to the PS instance.
 
-update()                          // Updates the scrollbar size and position.
+update()                               // Updates the scrollbar size and position.
 
-geometry(prefix)                  // Returns the geometry with specified prefix.
-position(absolute)                // Returns the reach or absolute scroll position,
-scrollable(direction)             // Checks if the given direction is scrollable.
-                                  // Direction can be: 'any', 'both', 'x', 'y'
+geometry(prefix)                       // Returns the geometry with specified prefix.
+position(absolute)                     // Returns the reach or absolute scroll position.
 
-scrollTo(x, y, speed?)            // Animate scroll to given x,y coordinates.
+scrollable(direction)                  // Checks if the given direction is scrollable.
+                                       // Direction can be: 'any', 'both', 'x', 'y'
 
-scrollToY(position, speed?)       // Animate scroll to given vertical position.
-scrollToX(position, speed?)       // Animate scroll to given horizontal position.
-
-scrollToTop(offset, speed?)       // Animate scroll to given offset from the top.
-scrollToLeft(offset, speed?)      // Animate scroll to given offset from the left.
-scrollToRight(offset, speed?)     // Animate scroll to given offset from the right.
-scrollToBottom(offset, speed?)    // Animate scroll to given offset from the bottom.
+scrollTo(x, y, speed?)                 // Animate scroll to given x,y coordinates.
+scrollToY(position, speed?)            // Animate scroll to given vertical position.
+scrollToX(position, speed?)            // Animate scroll to given horizontal position.
+scrollToTop(offset?, speed?)           // Animate scroll to given offset from the top.
+scrollToLeft(offset?, speed?)          // Animate scroll to given offset from the left.
+scrollToRight(offset?, speed?)         // Animate scroll to given offset from the right.
+scrollToBottom(offset?, speed?)        // Animate scroll to given offset from the bottom.
+scrollToElement(qs, offset?, speed?)   // Animate scroll to element matching query selectors.
 ```
 
 Above functions can be accessed through the directive reference (available as directiveRef in the component).
