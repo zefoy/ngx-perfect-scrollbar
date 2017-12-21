@@ -173,7 +173,7 @@ export class PerfectScrollbarComponent implements OnInit, OnDestroy, DoCheck {
     }
   }
 
-  private scrollEvent(deltaX, deltaY) {
+  private checkPropagation(event: any, deltaX: number, deltaY: number) {
     this.interaction = true;
 
     const scrollDirectionX = (deltaX < 0) ? -1 : 1;
@@ -207,7 +207,7 @@ export class PerfectScrollbarComponent implements OnInit, OnDestroy, DoCheck {
       const scrollDeltaX = event.deltaX;
       const scrollDeltaY = event.deltaY;
 
-      this.scrollEvent(scrollDeltaX, scrollDeltaY);
+      this.checkPropagation(event, scrollDeltaX, scrollDeltaY);
     }
   }
 
@@ -219,7 +219,7 @@ export class PerfectScrollbarComponent implements OnInit, OnDestroy, DoCheck {
       const scrollDeltaX = scrollPositionX - this.scrollPositionX;
       const scrollDeltaY = scrollPositionY - this.scrollPositionY;
 
-      this.scrollEvent(scrollDeltaX, scrollDeltaY);
+      this.checkPropagation(event, scrollDeltaX, scrollDeltaY);
 
       this.scrollPositionX = scrollPositionX;
       this.scrollPositionY = scrollPositionY;
