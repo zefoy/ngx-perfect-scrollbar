@@ -114,7 +114,7 @@ Perfect Scrollbar directive should be used with div elements and can take option
 
 ```html
 <div class="ps" style="position: relative; max-width: 600px; max-height: 400px;" [perfectScrollbar]="config">
-  <div>Scrollable content</dib>
+  <div>Scrollable content</div>
 </div>
 ```
 
