@@ -46,6 +46,8 @@ npm install ngx-perfect-scrollbar --save
 
 ##### Load the module for your app (with global configuration):
 
+Providing the global configuration is optional and when used you should only provide the configuration in your root module.
+
 ```javascript
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
