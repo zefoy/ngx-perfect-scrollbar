@@ -84,6 +84,10 @@ export class PerfectScrollbarDirective implements OnInit, OnDestroy, DoCheck, On
           this.update();
         });
 
+        if (this.elementRef.nativeElement.children[0]) {
+          this.ro.observe(this.elementRef.nativeElement.children[0]);
+        }
+
         this.ro.observe(this.elementRef.nativeElement);
       });
     }
