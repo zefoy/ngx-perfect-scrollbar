@@ -147,6 +147,7 @@ perfect-scrollbar {
       & > .ps__rail-y {
         top: 0 !important;
         right: 0 !important;
+        left: auto !important;
 
         width: 10px;
 
