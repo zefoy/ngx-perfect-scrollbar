@@ -166,6 +166,7 @@ perfect-scrollbar {
 
     &.ps--active-x {
       & > .ps__rail-x {
+        top: auto !important;
         bottom: 0 !important;
         left: 0 !important;
 
