@@ -3,6 +3,10 @@
     "node_modules/codelyzer"
   ],
   "rules": {
+    "array-type": [
+      true,
+      "array"
+    ],
     "arrow-return-shorthand": true,
     "callable-types": true,
     "class-name": true,
@@ -17,6 +21,14 @@
       true,
       "rxjs"
     ],
+    "ordered-imports": [
+      true,
+      {
+        "grouped-imports": true,
+        "import-sources-order": "any",
+        "named-imports-order": "any"
+      }
+    ],
     "import-spacing": true,
     "indent": [
       true,
@@ -25,7 +37,8 @@
     "label-position": true,
     "max-line-length": [
       true,
-      120
+      120,
+      "^import "
     ],
     "member-access": false,
     "member-ordering": [
@@ -62,6 +75,10 @@
     "no-switch-case-fall-through": true,
     "no-trailing-whitespace": true,
     "no-unused-expression": true,
+    "no-unused-variable": [
+      true,
+      {"ignore-pattern": "^_"}
+    ],
     "no-use-before-declare": true,
     "no-var-keyword": true,
     "object-literal-sort-keys": false,
@@ -80,7 +97,8 @@
     "semicolon": [
       true,
       "always",
-      "ignore-interfaces"
+      "ignore-interfaces",
+      "strict-bound-class-methods"
     ],
     "triple-equals": [
       true,
@@ -96,28 +114,25 @@
         "variable-declaration": "nospace"
       }
     ],
-    "typeof-compare": true,
     "unified-signatures": true,
     "variable-name": false,
     "whitespace": [
       true,
       "check-branch",
       "check-decl",
+      "check-module",
       "check-operator",
       "check-separator",
       "check-type"
     ],
     "directive-selector": [
-      false,
+      true,
       "attribute",
       false,
       "camelCase"
     ],
     "component-selector": [
-      false,
-      "element",
-      false,
-      "kebab-case"
+      false
     ],
     "use-input-property-decorator": true,
     "use-output-property-decorator": true,

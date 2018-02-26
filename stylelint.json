@@ -9,6 +9,7 @@
     "color-hex-case": "lower",
     "color-no-invalid-hex": true,
 
+    "font-family-no-missing-generic-family-keyword": null,
     "function-calc-no-unspaced-operator": true,
     "function-comma-space-after": "always-single-line",
     "function-comma-space-before": "never",
@@ -48,6 +49,8 @@
         ]
       }
     ],
+
+    "at-rule-no-unknown": null,
 
     "declaration-block-no-duplicate-properties": true,
     "declaration-block-trailing-semicolon": "always",
@@ -176,6 +179,7 @@
             "white-space",
             "text-align",
             "text-shadow",
+            "text-decoration",
             "text-transform",
             "text-overflow",
             "letter-spacing",

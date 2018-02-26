@@ -1,0 +1,40 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "project": {
+    "name": "ngx-example-app"
+  },
+  "apps": [
+    {
+      "root": "src",
+      "outDir": "dist",
+      "assets": [
+        "assets",
+        "favicon.ico"
+      ],
+      "index": "index.html",
+      "main": "main.ts",
+      "polyfills": "polyfills.ts",
+      "test": "test.ts",
+      "tsconfig": "tsconfig.json",
+      "testTsconfig": "tsconfig.json",
+      "prefix": "app",
+      "styles": [],
+      "scripts": [],
+      "environmentSource": "env/environment.ts",
+      "environments": {
+        "dev": "env/environment.ts",
+        "prod": "env/environment.prod.ts"
+      }
+    }
+  ],
+  "e2e": {
+  },
+  "lint": [
+  ],
+  "test": {
+  },
+  "defaults": {
+    "styleExt": "css",
+    "component": {}
+  }
+}

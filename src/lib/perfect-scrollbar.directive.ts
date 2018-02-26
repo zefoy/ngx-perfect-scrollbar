@@ -1,4 +1,4 @@
-import * as PerfectScrollbar from 'perfect-scrollbar';
+import PerfectScrollbar from 'perfect-scrollbar';
 
 import ResizeObserver from 'resize-observer-polyfill';
 
@@ -12,8 +12,7 @@ import { Geometry, Position } from './perfect-scrollbar.interfaces';
 
 import { PERFECT_SCROLLBAR_CONFIG } from './perfect-scrollbar.interfaces';
 
-import { PerfectScrollbarEvents, PerfectScrollbarConfig,
-  PerfectScrollbarConfigInterface } from './perfect-scrollbar.interfaces';
+import { PerfectScrollbarConfig, PerfectScrollbarConfigInterface } from './perfect-scrollbar.interfaces';
 
 @Directive({
   selector: '[perfectScrollbar]',

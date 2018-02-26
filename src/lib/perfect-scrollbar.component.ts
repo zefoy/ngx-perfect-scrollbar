@@ -3,10 +3,10 @@ import { Subscription } from 'rxjs/Subscription';
 
 import { distinctUntilChanged } from 'rxjs/operators';
 
-import { Component, ViewEncapsulation,
+import { Component,
+  ViewChild, EventEmitter, HostBinding,
   OnInit, OnDestroy, DoCheck, Input, Output,
-  ViewChild, EventEmitter, HostBinding, HostListener,
-  ElementRef, ChangeDetectorRef } from '@angular/core';
+  ViewEncapsulation, ChangeDetectorRef } from '@angular/core';
 
 import { PerfectScrollbarDirective } from './perfect-scrollbar.directive';
 import { PerfectScrollbarConfigInterface } from './perfect-scrollbar.interfaces';
@@ -71,7 +71,7 @@ export class PerfectScrollbarComponent implements OnInit, OnDestroy, DoCheck {
   @Output('psXReachEnd'      ) PS_X_REACH_END         = new EventEmitter<any>();
   @Output('psXReachStart'    ) PS_X_REACH_START       = new EventEmitter<any>();
 
-  constructor(private cdRef: ChangeDetectorRef, private elementRef: ElementRef) {}
+  constructor(private cdRef: ChangeDetectorRef) {}
 
   ngOnInit() {
     this.stateSub = this.stateUpdate

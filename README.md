@@ -10,7 +10,7 @@ This documentation is for the latest 5.x.x version which requires Angular 5. For
 
 [Example application](https://zefoy.github.io/ngx-perfect-scrollbar/)
  |
-[Plunker template](http://plnkr.co/edit/dC7oQyXhvycn2cVLbZJF?p=preview)
+[StackBlitz example](https://stackblitz.com/github/zefoy/ngx-perfect-scrollbar/tree/master/example)
  |
 [Perfect Scrollbar documentation](https://github.com/utatti/perfect-scrollbar/)
 
