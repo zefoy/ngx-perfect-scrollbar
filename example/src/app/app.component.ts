@@ -21,15 +21,15 @@ export class AppComponent {
 
   constructor() {}
 
-  public toggleType() {
+  public toggleType(): void {
     this.type = (this.type === 'component') ? 'directive' : 'component';
   }
 
-  public toggleDisabled() {
+  public toggleDisabled(): void {
     this.disabled = !this.disabled;
   }
 
-  public scrollToXY(x: number, y: number) {
+  public scrollToXY(x: number, y: number): void {
     if (this.type === 'directive') {
       this.directiveScroll.scrollTo(x, y, 500);
     } else {
@@ -37,7 +37,7 @@ export class AppComponent {
     }
   }
 
-  public scrollToTop() {
+  public scrollToTop(): void {
     if (this.type === 'directive') {
       this.directiveScroll.scrollToTop();
     } else {
@@ -45,7 +45,7 @@ export class AppComponent {
     }
   }
 
-  public scrollToLeft() {
+  public scrollToLeft(): void {
     if (this.type === 'directive') {
       this.directiveScroll.scrollToLeft();
     } else {
@@ -53,7 +53,7 @@ export class AppComponent {
     }
   }
 
-  public scrollToRight() {
+  public scrollToRight(): void {
     if (this.type === 'directive') {
       this.directiveScroll.scrollToRight();
     } else {
@@ -61,7 +61,7 @@ export class AppComponent {
     }
   }
 
-  public scrollToBottom() {
+  public scrollToBottom(): void {
     if (this.type === 'directive') {
       this.directiveScroll.scrollToBottom();
     } else {

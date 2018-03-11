@@ -8,7 +8,9 @@ var CopyWebpackPlugin = require('copy-webpack-plugin');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
+  mode: 'development',
   devtool: 'cheap-module-source-map',
+  stats: 'errors-only',
   performance: {
     hints: false
   },
@@ -61,6 +63,11 @@ module.exports = {
       from: '**/*',
       to: '../dist/assets'
     }]),
+
+    new ngtools.AngularCompilerPlugin({
+      entryModule: './src/app/app.module#AppModule',
+      tsConfigPath: './src/tsconfig.json'
+    }),
 
     new webpack.ContextReplacementPlugin(
       /@angular(\\|\/)core(\\|\/)/,

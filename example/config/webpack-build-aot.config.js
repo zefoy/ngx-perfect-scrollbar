@@ -8,7 +8,9 @@ var CopyWebpackPlugin = require('copy-webpack-plugin');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
+  mode: 'production',
   devtool: 'cheap-module-source-map',
+  stats: 'errors-only',
   performance: {
     hints: false
   },
@@ -45,7 +47,9 @@ module.exports = {
     modules: [ path.join(__dirname, '../node_modules') ]
   },
   plugins: [
-    new UglifyJSPlugin(),
+    new UglifyJSPlugin({
+      sourceMap: true
+    }),
 
     new HtmlWebpackPlugin({
       template: './src/index.html'

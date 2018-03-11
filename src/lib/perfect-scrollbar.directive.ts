@@ -62,7 +62,7 @@ export class PerfectScrollbarDirective implements OnInit, OnDestroy, DoCheck, On
     public elementRef: ElementRef, @Inject(PLATFORM_ID) private platformId: Object,
     @Optional() @Inject(PERFECT_SCROLLBAR_CONFIG) private defaults: PerfectScrollbarConfigInterface) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     if (!this.disabled && isPlatformBrowser(this.platformId)) {
       const config = new PerfectScrollbarConfig(this.defaults);
 
@@ -92,7 +92,7 @@ export class PerfectScrollbarDirective implements OnInit, OnDestroy, DoCheck, On
     }
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     if (this.ro) {
       this.ro.disconnect();
     }
@@ -110,7 +110,7 @@ export class PerfectScrollbarDirective implements OnInit, OnDestroy, DoCheck, On
     }
   }
 
-  ngDoCheck() {
+  ngDoCheck(): void {
     if (!this.disabled && this.configDiff && isPlatformBrowser(this.platformId)) {
       const changes = this.configDiff.diff(this.config || {});
 
@@ -122,7 +122,7 @@ export class PerfectScrollbarDirective implements OnInit, OnDestroy, DoCheck, On
     }
   }
 
-  ngOnChanges(changes: SimpleChanges) {
+  ngOnChanges(changes: SimpleChanges): void {
     if (changes['disabled'] && !changes['disabled'].isFirstChange()) {
       if (changes['disabled'].currentValue !== changes['disabled'].previousValue) {
         if (changes['disabled'].currentValue === true) {
@@ -134,11 +134,11 @@ export class PerfectScrollbarDirective implements OnInit, OnDestroy, DoCheck, On
     }
   }
 
-  public ps() {
+  public ps(): any {
     return this.instance;
   }
 
-  public update() {
+  public update(): void {
     if (this.timeout) {
       window.clearTimeout(this.timeout);
     }
@@ -195,7 +195,7 @@ export class PerfectScrollbarDirective implements OnInit, OnDestroy, DoCheck, On
     }
   }
 
-  public scrollTo(x: number, y?: number, speed?: number) {
+  public scrollTo(x: number, y?: number, speed?: number): void {
     if (!this.disabled) {
       if (y == null && speed == null) {
         this.animateScrolling('scrollTop', x, speed);
@@ -211,37 +211,37 @@ export class PerfectScrollbarDirective implements OnInit, OnDestroy, DoCheck, On
     }
   }
 
-  public scrollToX(x: number, speed?: number) {
+  public scrollToX(x: number, speed?: number): void {
     this.animateScrolling('scrollLeft', x, speed);
   }
 
-  public scrollToY(y: number, speed?: number) {
+  public scrollToY(y: number, speed?: number): void {
     this.animateScrolling('scrollTop', y, speed);
   }
 
-  public scrollToTop(offset?: number, speed?: number) {
+  public scrollToTop(offset?: number, speed?: number): void {
     this.animateScrolling('scrollTop', (offset || 0), speed);
   }
 
-  public scrollToLeft(offset?: number, speed?: number) {
+  public scrollToLeft(offset?: number, speed?: number): void {
     this.animateScrolling('scrollLeft', (offset || 0), speed);
   }
 
-  public scrollToRight(offset?: number, speed?: number) {
+  public scrollToRight(offset?: number, speed?: number): void {
     const left = this.elementRef.nativeElement.scrollWidth -
       this.elementRef.nativeElement.clientWidth;
 
     this.animateScrolling('scrollLeft', left - (offset || 0), speed);
   }
 
-  public scrollToBottom(offset?: number, speed?: number) {
+  public scrollToBottom(offset?: number, speed?: number): void {
     const top = this.elementRef.nativeElement.scrollHeight -
       this.elementRef.nativeElement.clientHeight;
 
     this.animateScrolling('scrollTop', top - (offset || 0), speed);
   }
 
-  public scrollToElement(qs: string, offset?: number, speed?: number) {
+  public scrollToElement(qs: string, offset?: number, speed?: number): void {
     const element = this.elementRef.nativeElement.querySelector(qs);
 
     if (element) {
@@ -267,7 +267,7 @@ export class PerfectScrollbarDirective implements OnInit, OnDestroy, DoCheck, On
     }
   }
 
-  private animateScrolling(target: string, value: number, speed?: number) {
+  private animateScrolling(target: string, value: number, speed?: number): void {
     if (!speed) {
       const oldValue = this.elementRef.nativeElement[target];
 

@@ -73,7 +73,7 @@ export class PerfectScrollbarComponent implements OnInit, OnDestroy, DoCheck {
 
   constructor(private cdRef: ChangeDetectorRef) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.stateSub = this.stateUpdate
       .pipe(
         distinctUntilChanged((a, b) => (a === b && !this.stateTimeout))
@@ -153,7 +153,7 @@ export class PerfectScrollbarComponent implements OnInit, OnDestroy, DoCheck {
       });
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     if (this.stateSub) {
       this.stateSub.unsubscribe();
     }
@@ -163,7 +163,7 @@ export class PerfectScrollbarComponent implements OnInit, OnDestroy, DoCheck {
     }
   }
 
-  ngDoCheck() {
+  ngDoCheck(): void {
     if (!this.disabled && this.autoPropagation && this.directiveRef) {
       const element = this.directiveRef.elementRef.nativeElement;
 
@@ -173,7 +173,7 @@ export class PerfectScrollbarComponent implements OnInit, OnDestroy, DoCheck {
     }
   }
 
-  private checkPropagation(event: any, deltaX: number, deltaY: number) {
+  private checkPropagation(event: any, deltaX: number, deltaY: number): void {
     this.interaction = true;
 
     const scrollDirectionX = (deltaX < 0) ? -1 : 1;
@@ -202,7 +202,7 @@ export class PerfectScrollbarComponent implements OnInit, OnDestroy, DoCheck {
     this.cdRef.detectChanges();
   }
 
-  public onWheelEvent(event: WheelEvent) {
+  public onWheelEvent(event: WheelEvent): void {
     if (!this.disabled && this.autoPropagation) {
       const scrollDeltaX = event.deltaX;
       const scrollDeltaY = event.deltaY;
@@ -211,7 +211,7 @@ export class PerfectScrollbarComponent implements OnInit, OnDestroy, DoCheck {
     }
   }
 
-  public onTouchEvent(event: TouchEvent) {
+  public onTouchEvent(event: TouchEvent): void {
     if (!this.disabled && this.autoPropagation) {
       const scrollPositionX = event.touches[0].clientX;
       const scrollPositionY = event.touches[0].clientY;
@@ -226,7 +226,7 @@ export class PerfectScrollbarComponent implements OnInit, OnDestroy, DoCheck {
     }
   }
 
-  public onScrollEvent(event: Event, state: string) {
+  public onScrollEvent(event: Event, state: string): void {
     if (!this.disabled && (this.autoPropagation || this.scrollIndicators)) {
       this.stateUpdate.next(state);
     }
