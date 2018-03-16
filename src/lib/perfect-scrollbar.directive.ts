@@ -5,8 +5,12 @@ import ResizeObserver from 'resize-observer-polyfill';
 import { isPlatformBrowser } from '@angular/common';
 import { Directive,
   OnInit, DoCheck, OnChanges, OnDestroy, Input, Output,
-  EventEmitter, HostListener, NgZone, ElementRef, Optional, Inject,
+  EventEmitter, NgZone, ElementRef, Optional, Inject,
   SimpleChanges, KeyValueDiffer, KeyValueDiffers, PLATFORM_ID } from '@angular/core';
+
+import { fromEvent } from 'rxjs/observable/fromEvent';
+import { takeUntil } from 'rxjs/operators/takeUntil';
+import { Subject } from 'rxjs/Subject';
 
 import { Geometry, Position } from './perfect-scrollbar.interfaces';
 
@@ -26,6 +30,8 @@ export class PerfectScrollbarDirective implements OnInit, OnDestroy, DoCheck, On
 
   private configDiff: KeyValueDiffer<string, any>;
 
+  private readonly ngUnsubscribe: Subject<void> = new Subject();
+
   @Input() disabled: boolean = false;
 
   @Input('perfectScrollbar') config: PerfectScrollbarConfigInterface;
@@ -44,19 +50,6 @@ export class PerfectScrollbarDirective implements OnInit, OnDestroy, DoCheck, On
   @Output('psXReachStart'    ) PS_X_REACH_START       = new EventEmitter<any>();
 
   private emit(event: any) { this[event.type.replace(/-/g, '_').toUpperCase()].emit(event); }
-
-  @HostListener('ps-scroll-y', ['$event'])       psScrollY(event: any) { this.emit(event); }
-  @HostListener('ps-scroll-x', ['$event'])       psScrollX(event: any) { this.emit(event); }
-
-  @HostListener('ps-scroll-up', ['$event'])      psScrollUp(event: any) { this.emit(event); }
-  @HostListener('ps-scroll-down', ['$event'])    psScrollDown(event: any) { this.emit(event); }
-  @HostListener('ps-scroll-left', ['$event'])    psScrollLeft(event: any) { this.emit(event); }
-  @HostListener('ps-scroll-right', ['$event'])   psScrollRight(event): any { this.emit(event); }
-
-  @HostListener('ps-y-reach-end', ['$event'])    psReachEndY(event): any { this.emit(event); }
-  @HostListener('ps-y-reach-start', ['$event'])  psReachStartY(event): any { this.emit(event); }
-  @HostListener('ps-x-reach-end', ['$event'])    psReachEndX(event): any { this.emit(event); }
-  @HostListener('ps-x-reach-start', ['$event'])  psReachStartX(event): any { this.emit(event); }
 
   constructor(private zone: NgZone, private differs: KeyValueDiffers,
     public elementRef: ElementRef, @Inject(PLATFORM_ID) private platformId: Object,
@@ -89,6 +82,24 @@ export class PerfectScrollbarDirective implements OnInit, OnDestroy, DoCheck, On
 
         this.ro.observe(this.elementRef.nativeElement);
       });
+
+      this.zone.runOutsideAngular(() => {
+        [
+          'ps-scroll-y',
+          'ps-scroll-x',
+          'ps-scroll-up',
+          'ps-scroll-down',
+          'ps-scroll-left',
+          'ps-scroll-right',
+          'ps-y-reach-end',
+          'ps-y-reach-start',
+          'ps-x-reach-end',
+          'ps-x-reach-start'
+        ].forEach((eventType: string) =>
+          fromEvent(this.elementRef.nativeElement, eventType)
+            .pipe(takeUntil(this.ngUnsubscribe))
+            .subscribe((event: any) => this.emit(event)));
+      });
     }
   }
 
@@ -96,6 +107,9 @@ export class PerfectScrollbarDirective implements OnInit, OnDestroy, DoCheck, On
     if (this.ro) {
       this.ro.disconnect();
     }
+
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.unsubscribe();
 
     if (this.timeout) {
       window.clearTimeout(this.timeout);
