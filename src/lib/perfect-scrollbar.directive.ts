@@ -2,19 +2,22 @@ import PerfectScrollbar from 'perfect-scrollbar';
 
 import ResizeObserver from 'resize-observer-polyfill';
 
+import { Subject } from 'rxjs/Subject';
+
+import { takeUntil } from 'rxjs/operators/takeUntil';
+import { fromEvent } from 'rxjs/observable/fromEvent';
+
+import { debounceTime } from 'rxjs/operators/debounceTime';
+
 import { isPlatformBrowser } from '@angular/common';
 import { Directive,
   OnInit, DoCheck, OnChanges, OnDestroy, Input, Output,
-  EventEmitter, NgZone, ElementRef, Optional, Inject,
-  SimpleChanges, KeyValueDiffer, KeyValueDiffers, PLATFORM_ID } from '@angular/core';
-
-import { fromEvent } from 'rxjs/observable/fromEvent';
-import { takeUntil } from 'rxjs/operators/takeUntil';
-import { Subject } from 'rxjs/Subject';
+  EventEmitter, NgZone, ElementRef, Optional, Inject, SimpleChanges,
+  KeyValueDiffer, KeyValueDiffers, PLATFORM_ID } from '@angular/core';
 
 import { Geometry, Position } from './perfect-scrollbar.interfaces';
 
-import { PERFECT_SCROLLBAR_CONFIG } from './perfect-scrollbar.interfaces';
+import { PerfectScrollbarEvents, PERFECT_SCROLLBAR_CONFIG } from './perfect-scrollbar.interfaces';
 
 import { PerfectScrollbarConfig, PerfectScrollbarConfigInterface } from './perfect-scrollbar.interfaces';
 
@@ -30,7 +33,7 @@ export class PerfectScrollbarDirective implements OnInit, OnDestroy, DoCheck, On
 
   private configDiff: KeyValueDiffer<string, any>;
 
-  private readonly ngUnsubscribe: Subject<void> = new Subject();
+  private readonly ngDestroy: Subject<void> = new Subject();
 
   @Input() disabled: boolean = false;
 
@@ -84,21 +87,16 @@ export class PerfectScrollbarDirective implements OnInit, OnDestroy, DoCheck, On
       });
 
       this.zone.runOutsideAngular(() => {
-        [
-          'ps-scroll-y',
-          'ps-scroll-x',
-          'ps-scroll-up',
-          'ps-scroll-down',
-          'ps-scroll-left',
-          'ps-scroll-right',
-          'ps-y-reach-end',
-          'ps-y-reach-start',
-          'ps-x-reach-end',
-          'ps-x-reach-start'
-        ].forEach((eventType: string) =>
+        PerfectScrollbarEvents.forEach((eventName: string) => {
+          const eventType = eventName.replace(/([A-Z])/g, (c) => `-${c.toLowerCase()}`);
+
           fromEvent(this.elementRef.nativeElement, eventType)
-            .pipe(takeUntil(this.ngUnsubscribe))
-            .subscribe((event: any) => this.emit(event)));
+            .pipe(
+              debounceTime(20),
+              takeUntil(this.ngDestroy)
+            )
+            .subscribe((event: any) => this.emit(event));
+        });
       });
     }
   }
@@ -108,8 +106,8 @@ export class PerfectScrollbarDirective implements OnInit, OnDestroy, DoCheck, On
       this.ro.disconnect();
     }
 
-    this.ngUnsubscribe.next();
-    this.ngUnsubscribe.unsubscribe();
+    this.ngDestroy.next();
+    this.ngDestroy.unsubscribe();
 
     if (this.timeout) {
       window.clearTimeout(this.timeout);

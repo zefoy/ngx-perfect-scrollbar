@@ -68,4 +68,8 @@ export class AppComponent {
       this.componentScroll.directiveRef.scrollToBottom();
     }
   }
+
+  public onScrollEvent(event: any): void {
+    console.log(event);
+  }
 }
