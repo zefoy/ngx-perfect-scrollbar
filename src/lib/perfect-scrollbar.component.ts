@@ -85,7 +85,7 @@ export class PerfectScrollbarComponent implements OnInit, OnDestroy, DoCheck {
         distinctUntilChanged((a, b) => (a === b && !this.stateTimeout))
       )
       .subscribe((state: string) => {
-        if (this.stateTimeout) {
+        if (this.stateTimeout && typeof window !== 'undefined') {
           window.clearTimeout(this.stateTimeout);
 
           this.stateTimeout = null;
@@ -134,7 +134,7 @@ export class PerfectScrollbarComponent implements OnInit, OnDestroy, DoCheck {
             }
           }
 
-          if (this.autoPropagation) {
+          if (this.autoPropagation && typeof window !== 'undefined') {
             this.stateTimeout = window.setTimeout(() => {
               this.indicatorX = false;
               this.indicatorY = false;
@@ -222,7 +222,7 @@ export class PerfectScrollbarComponent implements OnInit, OnDestroy, DoCheck {
     this.ngDestroy.next();
     this.ngDestroy.unsubscribe();
 
-    if (this.stateTimeout) {
+    if (this.stateTimeout && typeof window !== 'undefined') {
       window.clearTimeout(this.stateTimeout);
     }
   }

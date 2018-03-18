@@ -109,7 +109,7 @@ export class PerfectScrollbarDirective implements OnInit, OnDestroy, DoCheck, On
     this.ngDestroy.next();
     this.ngDestroy.unsubscribe();
 
-    if (this.timeout) {
+    if (this.timeout && typeof window !== 'undefined') {
       window.clearTimeout(this.timeout);
     }
 
@@ -151,23 +151,25 @@ export class PerfectScrollbarDirective implements OnInit, OnDestroy, DoCheck, On
   }
 
   public update(): void {
-    if (this.timeout) {
-      window.clearTimeout(this.timeout);
-    }
-
-    this.timeout = window.setTimeout(() => {
-      if (!this.disabled && this.configDiff) {
-        try {
-          this.zone.runOutsideAngular(() => {
-            if (this.instance) {
-              this.instance.update();
-            }
-          });
-        } catch (error) {
-          // Update can be finished after destroy so catch errors
-        }
+    if (typeof window !== 'undefined') {
+      if (this.timeout) {
+        window.clearTimeout(this.timeout);
       }
-    }, 0);
+
+      this.timeout = window.setTimeout(() => {
+        if (!this.disabled && this.configDiff) {
+          try {
+            this.zone.runOutsideAngular(() => {
+              if (this.instance) {
+                this.instance.update();
+              }
+            });
+          } catch (error) {
+            // Update can be finished after destroy so catch errors
+          }
+        }
+      }, 0);
+    }
   }
 
   public geometry(prefix: string = 'scroll'): Geometry {
@@ -280,7 +282,7 @@ export class PerfectScrollbarDirective implements OnInit, OnDestroy, DoCheck, On
   }
 
   private animateScrolling(target: string, value: number, speed?: number): void {
-    if (!speed) {
+    if (!speed || typeof window === 'undefined') {
       const oldValue = this.elementRef.nativeElement[target];
 
       this.elementRef.nativeElement[target] = value;
