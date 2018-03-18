@@ -4,16 +4,16 @@ import ResizeObserver from 'resize-observer-polyfill';
 
 import { Subject } from 'rxjs/Subject';
 
-import { takeUntil } from 'rxjs/operators/takeUntil';
 import { fromEvent } from 'rxjs/observable/fromEvent';
 
+import { takeUntil } from 'rxjs/operators/takeUntil';
 import { debounceTime } from 'rxjs/operators/debounceTime';
 
+import { PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
-import { NgZone, Inject, Optional,
-  Directive, OnInit, DoCheck, OnChanges, OnDestroy,
-  Input, Output, EventEmitter, ElementRef, SimpleChanges,
-  KeyValueDiffer, KeyValueDiffers, PLATFORM_ID } from '@angular/core';
+import { NgZone, Inject, Optional, ElementRef, Directive,
+  OnInit, DoCheck, OnChanges, OnDestroy, Input, Output, EventEmitter,
+  SimpleChanges, KeyValueDiffer, KeyValueDiffers } from '@angular/core';
 
 import { Geometry, Position } from './perfect-scrollbar.interfaces';
 

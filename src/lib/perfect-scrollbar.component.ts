@@ -8,11 +8,11 @@ import { map } from 'rxjs/operators/map';
 import { takeUntil } from 'rxjs/operators/takeUntil';
 import { distinctUntilChanged } from 'rxjs/operators/distinctUntilChanged';
 
+import { PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
-import { NgZone, Inject, ElementRef,
-  Component, OnInit, OnDestroy, DoCheck,
-  Input, Output, EventEmitter, ViewChild, HostBinding,
-  ViewEncapsulation, ChangeDetectorRef, PLATFORM_ID } from '@angular/core';
+import { NgZone, Inject, ElementRef, Component,
+  OnInit, OnDestroy, DoCheck, Input, Output, EventEmitter, HostBinding,
+  ViewChild, ViewEncapsulation, ChangeDetectorRef } from '@angular/core';
 
 import { PerfectScrollbarDirective } from './perfect-scrollbar.directive';
 
