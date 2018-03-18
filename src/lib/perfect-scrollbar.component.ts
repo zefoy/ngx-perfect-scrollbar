@@ -1,12 +1,17 @@
 import { Subject } from 'rxjs/Subject';
 import { Subscription } from 'rxjs/Subscription';
 
+import { merge } from 'rxjs/observable/merge';
+import { fromEvent } from 'rxjs/observable/fromEvent';
+
+import { map } from 'rxjs/operators/map';
+import { takeUntil } from 'rxjs/operators/takeUntil';
 import { distinctUntilChanged } from 'rxjs/operators/distinctUntilChanged';
 
-import { Component,
+import { NgZone, Component,
   ViewChild, EventEmitter, HostBinding,
   OnInit, OnDestroy, DoCheck, Input, Output,
-  ViewEncapsulation, ChangeDetectorRef } from '@angular/core';
+  ElementRef, ViewEncapsulation, ChangeDetectorRef } from '@angular/core';
 
 import { PerfectScrollbarDirective } from './perfect-scrollbar.directive';
 import { PerfectScrollbarConfigInterface } from './perfect-scrollbar.interfaces';
@@ -28,8 +33,6 @@ export class PerfectScrollbarComponent implements OnInit, OnDestroy, DoCheck {
 
   private stateTimeout: number = null;
 
-  private stateSub: Subscription = null;
-
   private scrollPositionX: number = null;
   private scrollPositionY: number = null;
 
@@ -43,6 +46,8 @@ export class PerfectScrollbarComponent implements OnInit, OnDestroy, DoCheck {
   private allowPropagationY: boolean = false;
 
   private stateUpdate: Subject<string> = new Subject();
+
+  private readonly ngDestroy: Subject<void> = new Subject();
 
   @Input() disabled: boolean = false;
 
@@ -71,11 +76,12 @@ export class PerfectScrollbarComponent implements OnInit, OnDestroy, DoCheck {
   @Output('psXReachEnd'      ) PS_X_REACH_END         = new EventEmitter<any>();
   @Output('psXReachStart'    ) PS_X_REACH_START       = new EventEmitter<any>();
 
-  constructor(private cdRef: ChangeDetectorRef) {}
+  constructor(private zone: NgZone, private cdRef: ChangeDetectorRef) {}
 
   ngOnInit(): void {
-    this.stateSub = this.stateUpdate
+    this.stateUpdate
       .pipe(
+        takeUntil(this.ngDestroy),
         distinctUntilChanged((a, b) => (a === b && !this.stateTimeout))
       )
       .subscribe((state: string) => {
@@ -151,12 +157,70 @@ export class PerfectScrollbarComponent implements OnInit, OnDestroy, DoCheck {
         this.cdRef.markForCheck();
         this.cdRef.detectChanges();
       });
+
+    this.zone.runOutsideAngular(() => {
+      const element = this.directiveRef.elementRef.nativeElement;
+
+      fromEvent(element, 'wheel')
+        .pipe(
+          takeUntil(this.ngDestroy)
+        )
+        .subscribe((event: WheelEvent) => {
+          if (!this.disabled && this.autoPropagation) {
+            const scrollDeltaX = event.deltaX;
+            const scrollDeltaY = event.deltaY;
+
+            this.checkPropagation(event, scrollDeltaX, scrollDeltaY);
+          }
+        });
+
+      fromEvent(element, 'touchmove')
+        .pipe(
+          takeUntil(this.ngDestroy)
+        )
+        .subscribe((event: TouchEvent) => {
+          if (!this.disabled && this.autoPropagation) {
+            const scrollPositionX = event.touches[0].clientX;
+            const scrollPositionY = event.touches[0].clientY;
+
+            const scrollDeltaX = scrollPositionX - this.scrollPositionX;
+            const scrollDeltaY = scrollPositionY - this.scrollPositionY;
+
+            this.checkPropagation(event, scrollDeltaX, scrollDeltaY);
+
+            this.scrollPositionX = scrollPositionX;
+            this.scrollPositionY = scrollPositionY;
+          }
+        });
+
+        merge(
+          fromEvent(element, 'ps-scroll-x')
+            .pipe(map((event: any) => event.state = 'x')),
+          fromEvent(element, 'ps-scroll-y')
+            .pipe(map((event: any) => event.state = 'y')),
+          fromEvent(element, 'ps-x-reach-end')
+            .pipe(map((event: any) => event.state = 'right')),
+          fromEvent(element, 'ps-y-reach-end')
+            .pipe(map((event: any) => event.state = 'bottom')),
+          fromEvent(element, 'ps-x-reach-start')
+            .pipe(map((event: any) => event.state = 'left')),
+          fromEvent(element, 'ps-y-reach-start')
+            .pipe(map((event: any) => event.state = 'top')),
+        )
+        .pipe(
+          takeUntil(this.ngDestroy)
+        )
+        .subscribe((event: any) => {
+          if (!this.disabled && (this.autoPropagation || this.scrollIndicators)) {
+            this.stateUpdate.next(event.state);
+          }
+        });
+    });
   }
 
   ngOnDestroy(): void {
-    if (this.stateSub) {
-      this.stateSub.unsubscribe();
-    }
+    this.ngDestroy.next();
+    this.ngDestroy.unsubscribe();
 
     if (this.stateTimeout) {
       window.clearTimeout(this.stateTimeout);
@@ -200,35 +264,5 @@ export class PerfectScrollbarComponent implements OnInit, OnDestroy, DoCheck {
     this.stateUpdate.next('interaction');
 
     this.cdRef.detectChanges();
-  }
-
-  public onWheelEvent(event: WheelEvent): void {
-    if (!this.disabled && this.autoPropagation) {
-      const scrollDeltaX = event.deltaX;
-      const scrollDeltaY = event.deltaY;
-
-      this.checkPropagation(event, scrollDeltaX, scrollDeltaY);
-    }
-  }
-
-  public onTouchEvent(event: TouchEvent): void {
-    if (!this.disabled && this.autoPropagation) {
-      const scrollPositionX = event.touches[0].clientX;
-      const scrollPositionY = event.touches[0].clientY;
-
-      const scrollDeltaX = scrollPositionX - this.scrollPositionX;
-      const scrollDeltaY = scrollPositionY - this.scrollPositionY;
-
-      this.checkPropagation(event, scrollDeltaX, scrollDeltaY);
-
-      this.scrollPositionX = scrollPositionX;
-      this.scrollPositionY = scrollPositionY;
-    }
-  }
-
-  public onScrollEvent(event: Event, state: string): void {
-    if (!this.disabled && (this.autoPropagation || this.scrollIndicators)) {
-      this.stateUpdate.next(state);
-    }
   }
 }

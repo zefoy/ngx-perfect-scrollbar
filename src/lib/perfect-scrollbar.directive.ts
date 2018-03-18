@@ -10,9 +10,9 @@ import { fromEvent } from 'rxjs/observable/fromEvent';
 import { debounceTime } from 'rxjs/operators/debounceTime';
 
 import { isPlatformBrowser } from '@angular/common';
-import { Directive,
+import { NgZone, Directive,
   OnInit, DoCheck, OnChanges, OnDestroy, Input, Output,
-  EventEmitter, NgZone, ElementRef, Optional, Inject, SimpleChanges,
+  EventEmitter, ElementRef, Optional, Inject, SimpleChanges,
   KeyValueDiffer, KeyValueDiffers, PLATFORM_ID } from '@angular/core';
 
 import { Geometry, Position } from './perfect-scrollbar.interfaces';
