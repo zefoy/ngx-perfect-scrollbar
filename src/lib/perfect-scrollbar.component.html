@@ -1,4 +1,4 @@
-<div style="position: static;" [class.ps]="usePSClass" [perfectScrollbar]="config" [disabled]="disabled" (psScrollY)="PS_SCROLL_Y.emit($event)" (psScrollX)="PS_SCROLL_X.emit($event)" (psScrollUp)="PS_SCROLL_UP.emit($event)" (psScrollDown)="PS_SCROLL_DOWN.emit($event)" (psScrollLeft)="PS_SCROLL_LEFT.emit($event)" (psScrollRight)="PS_SCROLL_RIGHT.emit($event)" (psYReachEnd)="PS_Y_REACH_END.emit($event)" (psYReachStart)="PS_Y_REACH_START.emit($event)" (psXReachEnd)="PS_X_REACH_END.emit($event)" (psXReachStart)="PS_X_REACH_START.emit($event)">
+<div style="position: static;" [class.ps]="usePSClass" [perfectScrollbar]="config" [disabled]="disabled">
   <div class="ps-content">
     <ng-content></ng-content>
   </div>

@@ -16,7 +16,7 @@ import { NgZone, Inject, ElementRef, Component,
 
 import { PerfectScrollbarDirective } from './perfect-scrollbar.directive';
 
-import { PerfectScrollbarConfigInterface } from './perfect-scrollbar.interfaces';
+import { PerfectScrollbarEvents, PerfectScrollbarConfigInterface } from './perfect-scrollbar.interfaces';
 
 @Component({
   selector: 'perfect-scrollbar',
@@ -220,6 +220,16 @@ export class PerfectScrollbarComponent implements OnInit, OnDestroy, DoCheck {
             }
           });
       });
+
+      window.setTimeout(() => {
+        if (this.directiveRef) {
+          PerfectScrollbarEvents.forEach((eventName: string) => {
+            eventName = eventName.replace(/([A-Z])/g, (c) => `_${c}`).toUpperCase();
+
+            this.directiveRef[eventName] = this[eventName];
+          });
+        }
+      }, 0);
     }
   }
 
