@@ -8,12 +8,14 @@ import { map } from 'rxjs/operators/map';
 import { takeUntil } from 'rxjs/operators/takeUntil';
 import { distinctUntilChanged } from 'rxjs/operators/distinctUntilChanged';
 
-import { NgZone, Component,
-  ViewChild, EventEmitter, HostBinding,
-  OnInit, OnDestroy, DoCheck, Input, Output,
-  ElementRef, ViewEncapsulation, ChangeDetectorRef } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { NgZone, Inject, ElementRef,
+  Component, OnInit, OnDestroy, DoCheck,
+  Input, Output, EventEmitter, ViewChild, HostBinding,
+  ViewEncapsulation, ChangeDetectorRef, PLATFORM_ID } from '@angular/core';
 
 import { PerfectScrollbarDirective } from './perfect-scrollbar.directive';
+
 import { PerfectScrollbarConfigInterface } from './perfect-scrollbar.interfaces';
 
 @Component({
@@ -45,9 +47,9 @@ export class PerfectScrollbarComponent implements OnInit, OnDestroy, DoCheck {
   private allowPropagationX: boolean = false;
   private allowPropagationY: boolean = false;
 
-  private stateUpdate: Subject<string> = new Subject();
-
   private readonly ngDestroy: Subject<void> = new Subject();
+
+  private readonly stateUpdate: Subject<string> = new Subject();
 
   @Input() disabled: boolean = false;
 
@@ -76,164 +78,171 @@ export class PerfectScrollbarComponent implements OnInit, OnDestroy, DoCheck {
   @Output('psXReachEnd'      ) PS_X_REACH_END         = new EventEmitter<any>();
   @Output('psXReachStart'    ) PS_X_REACH_START       = new EventEmitter<any>();
 
-  constructor(private zone: NgZone, private cdRef: ChangeDetectorRef) {}
+  constructor(private zone: NgZone, private cdRef: ChangeDetectorRef,
+    @Inject(PLATFORM_ID) private platformId: Object) {}
 
   ngOnInit(): void {
-    this.stateUpdate
-      .pipe(
-        takeUntil(this.ngDestroy),
-        distinctUntilChanged((a, b) => (a === b && !this.stateTimeout))
-      )
-      .subscribe((state: string) => {
-        if (this.stateTimeout && typeof window !== 'undefined') {
-          window.clearTimeout(this.stateTimeout);
+    if (isPlatformBrowser(this.platformId)) {
+      this.stateUpdate
+        .pipe(
+          takeUntil(this.ngDestroy),
+          distinctUntilChanged((a, b) => (a === b && !this.stateTimeout))
+        )
+        .subscribe((state: string) => {
+          if (this.stateTimeout && typeof window !== 'undefined') {
+            window.clearTimeout(this.stateTimeout);
 
-          this.stateTimeout = null;
-        }
-
-        if (state === 'x' || state === 'y') {
-          this.interaction = false;
-
-          if (state === 'x') {
-            this.indicatorX = false;
-
-            this.states.left = false;
-            this.states.right = false;
-
-            if (this.autoPropagation && this.usePropagationX) {
-              this.allowPropagationX = false;
-            }
-          } else if (state === 'y') {
-            this.indicatorY = false;
-
-            this.states.top = false;
-            this.states.bottom = false;
-
-            if (this.autoPropagation && this.usePropagationY) {
-              this.allowPropagationY = false;
-            }
-          }
-        } else {
-          if (state === 'left' || state === 'right') {
-            this.states.left = false;
-            this.states.right = false;
-
-            this.states[state] = true;
-
-            if (this.autoPropagation && this.usePropagationX) {
-              this.indicatorX = true;
-            }
-          } else if (state === 'top' || state === 'bottom') {
-            this.states.top = false;
-            this.states.bottom = false;
-
-            this.states[state] = true;
-
-            if (this.autoPropagation && this.usePropagationY) {
-              this.indicatorY = true;
-            }
+            this.stateTimeout = null;
           }
 
-          if (this.autoPropagation && typeof window !== 'undefined') {
-            this.stateTimeout = window.setTimeout(() => {
+          if (state === 'x' || state === 'y') {
+            this.interaction = false;
+
+            if (state === 'x') {
               this.indicatorX = false;
+
+              this.states.left = false;
+              this.states.right = false;
+
+              if (this.autoPropagation && this.usePropagationX) {
+                this.allowPropagationX = false;
+              }
+            } else if (state === 'y') {
               this.indicatorY = false;
 
-              this.stateTimeout = null;
+              this.states.top = false;
+              this.states.bottom = false;
 
-              if (this.interaction && (this.states.left || this.states.right)) {
-                this.allowPropagationX = true;
+              if (this.autoPropagation && this.usePropagationY) {
+                this.allowPropagationY = false;
               }
+            }
+          } else {
+            if (state === 'left' || state === 'right') {
+              this.states.left = false;
+              this.states.right = false;
 
-              if (this.interaction && (this.states.top || this.states.bottom)) {
-                this.allowPropagationY = true;
+              this.states[state] = true;
+
+              if (this.autoPropagation && this.usePropagationX) {
+                this.indicatorX = true;
               }
+            } else if (state === 'top' || state === 'bottom') {
+              this.states.top = false;
+              this.states.bottom = false;
 
-              this.cdRef.markForCheck();
-            }, 500);
+              this.states[state] = true;
+
+              if (this.autoPropagation && this.usePropagationY) {
+                this.indicatorY = true;
+              }
+            }
+
+            if (this.autoPropagation && typeof window !== 'undefined') {
+              this.stateTimeout = window.setTimeout(() => {
+                this.indicatorX = false;
+                this.indicatorY = false;
+
+                this.stateTimeout = null;
+
+                if (this.interaction && (this.states.left || this.states.right)) {
+                  this.allowPropagationX = true;
+                }
+
+                if (this.interaction && (this.states.top || this.states.bottom)) {
+                  this.allowPropagationY = true;
+                }
+
+                this.cdRef.markForCheck();
+              }, 500);
+            }
           }
-        }
 
-        this.cdRef.markForCheck();
-        this.cdRef.detectChanges();
+          this.cdRef.markForCheck();
+          this.cdRef.detectChanges();
+        });
+
+      this.zone.runOutsideAngular(() => {
+        const element = this.directiveRef.elementRef.nativeElement;
+
+        fromEvent(element, 'wheel')
+          .pipe(
+            takeUntil(this.ngDestroy)
+          )
+          .subscribe((event: WheelEvent) => {
+            if (!this.disabled && this.autoPropagation) {
+              const scrollDeltaX = event.deltaX;
+              const scrollDeltaY = event.deltaY;
+
+              this.checkPropagation(event, scrollDeltaX, scrollDeltaY);
+            }
+          });
+
+        fromEvent(element, 'touchmove')
+          .pipe(
+            takeUntil(this.ngDestroy)
+          )
+          .subscribe((event: TouchEvent) => {
+            if (!this.disabled && this.autoPropagation) {
+              const scrollPositionX = event.touches[0].clientX;
+              const scrollPositionY = event.touches[0].clientY;
+
+              const scrollDeltaX = scrollPositionX - this.scrollPositionX;
+              const scrollDeltaY = scrollPositionY - this.scrollPositionY;
+
+              this.checkPropagation(event, scrollDeltaX, scrollDeltaY);
+
+              this.scrollPositionX = scrollPositionX;
+              this.scrollPositionY = scrollPositionY;
+            }
+          });
+
+          merge(
+            fromEvent(element, 'ps-scroll-x')
+              .pipe(map((event: any) => event.state = 'x')),
+            fromEvent(element, 'ps-scroll-y')
+              .pipe(map((event: any) => event.state = 'y')),
+            fromEvent(element, 'ps-x-reach-end')
+              .pipe(map((event: any) => event.state = 'right')),
+            fromEvent(element, 'ps-y-reach-end')
+              .pipe(map((event: any) => event.state = 'bottom')),
+            fromEvent(element, 'ps-x-reach-start')
+              .pipe(map((event: any) => event.state = 'left')),
+            fromEvent(element, 'ps-y-reach-start')
+              .pipe(map((event: any) => event.state = 'top')),
+          )
+          .pipe(
+            takeUntil(this.ngDestroy)
+          )
+          .subscribe((event: any) => {
+            if (!this.disabled && (this.autoPropagation || this.scrollIndicators)) {
+              this.stateUpdate.next(event.state);
+            }
+          });
       });
-
-    this.zone.runOutsideAngular(() => {
-      const element = this.directiveRef.elementRef.nativeElement;
-
-      fromEvent(element, 'wheel')
-        .pipe(
-          takeUntil(this.ngDestroy)
-        )
-        .subscribe((event: WheelEvent) => {
-          if (!this.disabled && this.autoPropagation) {
-            const scrollDeltaX = event.deltaX;
-            const scrollDeltaY = event.deltaY;
-
-            this.checkPropagation(event, scrollDeltaX, scrollDeltaY);
-          }
-        });
-
-      fromEvent(element, 'touchmove')
-        .pipe(
-          takeUntil(this.ngDestroy)
-        )
-        .subscribe((event: TouchEvent) => {
-          if (!this.disabled && this.autoPropagation) {
-            const scrollPositionX = event.touches[0].clientX;
-            const scrollPositionY = event.touches[0].clientY;
-
-            const scrollDeltaX = scrollPositionX - this.scrollPositionX;
-            const scrollDeltaY = scrollPositionY - this.scrollPositionY;
-
-            this.checkPropagation(event, scrollDeltaX, scrollDeltaY);
-
-            this.scrollPositionX = scrollPositionX;
-            this.scrollPositionY = scrollPositionY;
-          }
-        });
-
-        merge(
-          fromEvent(element, 'ps-scroll-x')
-            .pipe(map((event: any) => event.state = 'x')),
-          fromEvent(element, 'ps-scroll-y')
-            .pipe(map((event: any) => event.state = 'y')),
-          fromEvent(element, 'ps-x-reach-end')
-            .pipe(map((event: any) => event.state = 'right')),
-          fromEvent(element, 'ps-y-reach-end')
-            .pipe(map((event: any) => event.state = 'bottom')),
-          fromEvent(element, 'ps-x-reach-start')
-            .pipe(map((event: any) => event.state = 'left')),
-          fromEvent(element, 'ps-y-reach-start')
-            .pipe(map((event: any) => event.state = 'top')),
-        )
-        .pipe(
-          takeUntil(this.ngDestroy)
-        )
-        .subscribe((event: any) => {
-          if (!this.disabled && (this.autoPropagation || this.scrollIndicators)) {
-            this.stateUpdate.next(event.state);
-          }
-        });
-    });
+    }
   }
 
   ngOnDestroy(): void {
-    this.ngDestroy.next();
-    this.ngDestroy.unsubscribe();
+    if (isPlatformBrowser(this.platformId)) {
+      this.ngDestroy.next();
+      this.ngDestroy.unsubscribe();
 
-    if (this.stateTimeout && typeof window !== 'undefined') {
-      window.clearTimeout(this.stateTimeout);
+      if (this.stateTimeout && typeof window !== 'undefined') {
+        window.clearTimeout(this.stateTimeout);
+      }
     }
   }
 
   ngDoCheck(): void {
-    if (!this.disabled && this.autoPropagation && this.directiveRef) {
-      const element = this.directiveRef.elementRef.nativeElement;
+    if (isPlatformBrowser(this.platformId)) {
+      if (!this.disabled && this.autoPropagation && this.directiveRef) {
+        const element = this.directiveRef.elementRef.nativeElement;
 
-      this.usePropagationX = element.classList.contains('ps--active-x');
+        this.usePropagationX = element.classList.contains('ps--active-x');
 
-      this.usePropagationY = element.classList.contains('ps--active-y');
+        this.usePropagationY = element.classList.contains('ps--active-y');
+      }
     }
   }
 

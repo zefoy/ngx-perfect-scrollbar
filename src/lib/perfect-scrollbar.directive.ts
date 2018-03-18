@@ -10,9 +10,9 @@ import { fromEvent } from 'rxjs/observable/fromEvent';
 import { debounceTime } from 'rxjs/operators/debounceTime';
 
 import { isPlatformBrowser } from '@angular/common';
-import { NgZone, Directive,
-  OnInit, DoCheck, OnChanges, OnDestroy, Input, Output,
-  EventEmitter, ElementRef, Optional, Inject, SimpleChanges,
+import { NgZone, Inject, Optional,
+  Directive, OnInit, DoCheck, OnChanges, OnDestroy,
+  Input, Output, EventEmitter, ElementRef, SimpleChanges,
   KeyValueDiffer, KeyValueDiffers, PLATFORM_ID } from '@angular/core';
 
 import { Geometry, Position } from './perfect-scrollbar.interfaces';
@@ -102,23 +102,25 @@ export class PerfectScrollbarDirective implements OnInit, OnDestroy, DoCheck, On
   }
 
   ngOnDestroy(): void {
-    if (this.ro) {
-      this.ro.disconnect();
-    }
+    if (isPlatformBrowser(this.platformId)) {
+      if (this.ro) {
+        this.ro.disconnect();
+      }
 
-    this.ngDestroy.next();
-    this.ngDestroy.unsubscribe();
+      this.ngDestroy.next();
+      this.ngDestroy.unsubscribe();
 
-    if (this.timeout && typeof window !== 'undefined') {
-      window.clearTimeout(this.timeout);
-    }
+      if (this.timeout && typeof window !== 'undefined') {
+        window.clearTimeout(this.timeout);
+      }
 
-    if (this.instance) {
-      this.zone.runOutsideAngular(() => {
-        this.instance.destroy();
-      });
+      if (this.instance) {
+        this.zone.runOutsideAngular(() => {
+          this.instance.destroy();
+        });
 
-      this.instance = null;
+        this.instance = null;
+      }
     }
   }
 
@@ -135,7 +137,7 @@ export class PerfectScrollbarDirective implements OnInit, OnDestroy, DoCheck, On
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['disabled'] && !changes['disabled'].isFirstChange()) {
+    if (changes['disabled'] && !changes['disabled'].isFirstChange() && isPlatformBrowser(this.platformId)) {
       if (changes['disabled'].currentValue !== changes['disabled'].previousValue) {
         if (changes['disabled'].currentValue === true) {
          this.ngOnDestroy();
