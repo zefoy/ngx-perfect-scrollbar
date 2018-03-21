@@ -28,11 +28,21 @@
     }
   ],
   "e2e": {
+    "protractor": {
+      "config": "./config/protractor.conf.js"
+    }
+  },
+  "test": {
+    "karma": {
+      "config": "./config/karma.conf.js"
+    }
   },
   "lint": [
+    {
+      "project": "tsconfig.json",
+      "exclude": "**/node_modules/**"
+    }
   ],
-  "test": {
-  },
   "defaults": {
     "styleExt": "css",
     "component": {}

@@ -1,16 +1,10 @@
-import { Subject } from 'rxjs/Subject';
-import { Subscription } from 'rxjs/Subscription';
+import { Subject, merge, fromEvent } from 'rxjs';
 
-import { merge } from 'rxjs/observable/merge';
-import { fromEvent } from 'rxjs/observable/fromEvent';
-
-import { map } from 'rxjs/operators/map';
-import { takeUntil } from 'rxjs/operators/takeUntil';
-import { distinctUntilChanged } from 'rxjs/operators/distinctUntilChanged';
+import { map, takeUntil, distinctUntilChanged } from 'rxjs/operators';
 
 import { PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
-import { NgZone, Inject, ElementRef, Component,
+import { NgZone, Inject, Component,
   OnInit, OnDestroy, DoCheck, Input, Output, EventEmitter, HostBinding,
   ViewChild, ViewEncapsulation, ChangeDetectorRef } from '@angular/core';
 

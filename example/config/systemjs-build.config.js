@@ -25,6 +25,8 @@
       '@angular/platform-browser': 'npm:@angular/platform-browser/bundles/platform-browser.umd.js',
       '@angular/platform-browser-dynamic': 'npm:@angular/platform-browser-dynamic/bundles/platform-browser-dynamic.umd.js',
       'rxjs': 'npm:rxjs',
+      'rxjs-compat': 'npm:rxjs-compat',
+      'rxjs/operators': 'npm:rxjs/operators',
       'ts': 'npm:plugin-typescript/lib/plugin.js',
       'typescript': 'npm:typescript/lib/typescript.js',
       'perfect-scrollbar': 'npm:perfect-scrollbar/dist/perfect-scrollbar.common.js',
@@ -41,6 +43,15 @@
         }
       },
       'rxjs': {
+        main: 'index.js',
+        defaultExtension: 'js'
+      },
+      'rxjs-compat': {
+        main: 'index.js',
+        defaultExtension: 'js'
+      },
+      'rxjs/operators': {
+        main: 'index.js',
         defaultExtension: 'js'
       }
     }
