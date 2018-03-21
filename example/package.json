@@ -55,7 +55,7 @@
     "@angular/compiler-cli": "6.0.0-rc.0",
     "@ngtools/webpack": "6.0.0-beta.6",
     "@types/node": "^8.5.0",
-    "codelyzer": "^4.1.0",
+    "codelyzer": "^4.2.0",
     "connect-history-api-fallback": "^1.5.0",
     "copy-webpack-plugin": "^4.3.0",
     "deploy-to-git": "^0.1.0",
