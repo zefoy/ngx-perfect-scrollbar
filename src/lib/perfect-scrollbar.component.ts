@@ -15,8 +15,8 @@ import { PerfectScrollbarEvents, PerfectScrollbarConfigInterface } from './perfe
 @Component({
   selector: 'perfect-scrollbar',
   exportAs: 'ngxPerfectScrollbar',
-  templateUrl: './lib/perfect-scrollbar.component.html',
-  styleUrls: [ './lib/perfect-scrollbar.component.css' ],
+  templateUrl: '../../dist/lib/perfect-scrollbar.component.html',
+  styleUrls: [ '../../dist/lib/perfect-scrollbar.component.css' ],
   encapsulation: ViewEncapsulation.None
 })
 export class PerfectScrollbarComponent implements OnInit, OnDestroy, DoCheck {

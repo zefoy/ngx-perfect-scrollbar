@@ -101,6 +101,7 @@ export class PerfectScrollbarDirective implements OnInit, OnDestroy, DoCheck, On
   ngOnDestroy(): void {
     if (isPlatformBrowser(this.platformId)) {
       this.ngDestroy.next();
+      this.ngDestroy.complete();
 
       if (this.ro) {
         this.ro.disconnect();
