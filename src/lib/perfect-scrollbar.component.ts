@@ -10,7 +10,8 @@ import { NgZone, Inject, Component,
 
 import { PerfectScrollbarDirective } from './perfect-scrollbar.directive';
 
-import { PerfectScrollbarEvents, PerfectScrollbarConfigInterface } from './perfect-scrollbar.interfaces';
+import { PerfectScrollbarEvent, PerfectScrollbarEvents,
+  PerfectScrollbarConfigInterface } from './perfect-scrollbar.interfaces';
 
 @Component({
   selector: 'perfect-scrollbar',
@@ -27,19 +28,19 @@ export class PerfectScrollbarComponent implements OnInit, OnDestroy, DoCheck {
 
   public interaction: boolean = false;
 
-  private stateTimeout: number = null;
+  private scrollPositionX: number = 0;
+  private scrollPositionY: number = 0;
 
-  private scrollPositionX: number = null;
-  private scrollPositionY: number = null;
-
-  private scrollDirectionX: number = null;
-  private scrollDirectionY: number = null;
+  private scrollDirectionX: number = 0;
+  private scrollDirectionY: number = 0;
 
   private usePropagationX: boolean = false;
   private usePropagationY: boolean = false;
 
   private allowPropagationX: boolean = false;
   private allowPropagationY: boolean = false;
+
+  private stateTimeout: number | null = null;
 
   private readonly ngDestroy: Subject<void> = new Subject();
 
@@ -55,22 +56,22 @@ export class PerfectScrollbarComponent implements OnInit, OnDestroy, DoCheck {
   @HostBinding('class.ps-show-active')
   @Input() scrollIndicators: boolean = false;
 
-  @Input() config: PerfectScrollbarConfigInterface;
+  @Input() config?: PerfectScrollbarConfigInterface;
 
-  @ViewChild(PerfectScrollbarDirective) directiveRef: PerfectScrollbarDirective;
+  @Output() psScrollY: EventEmitter<any> = new EventEmitter<any>();
+  @Output() psScrollX: EventEmitter<any> = new EventEmitter<any>();
 
-  @Output('psScrollY'        ) PS_SCROLL_Y            = new EventEmitter<any>();
-  @Output('psScrollX'        ) PS_SCROLL_X            = new EventEmitter<any>();
+  @Output() psScrollUp: EventEmitter<any> = new EventEmitter<any>();
+  @Output() psScrollDown: EventEmitter<any> = new EventEmitter<any>();
+  @Output() psScrollLeft: EventEmitter<any> = new EventEmitter<any>();
+  @Output() psScrollRight: EventEmitter<any> = new EventEmitter<any>();
 
-  @Output('psScrollUp'       ) PS_SCROLL_UP           = new EventEmitter<any>();
-  @Output('psScrollDown'     ) PS_SCROLL_DOWN         = new EventEmitter<any>();
-  @Output('psScrollLeft'     ) PS_SCROLL_LEFT         = new EventEmitter<any>();
-  @Output('psScrollRight'    ) PS_SCROLL_RIGHT        = new EventEmitter<any>();
+  @Output() psYReachEnd: EventEmitter<any> = new EventEmitter<any>();
+  @Output() psYReachStart: EventEmitter<any> = new EventEmitter<any>();
+  @Output() psXReachEnd: EventEmitter<any> = new EventEmitter<any>();
+  @Output() psXReachStart: EventEmitter<any> = new EventEmitter<any>();
 
-  @Output('psYReachEnd'      ) PS_Y_REACH_END         = new EventEmitter<any>();
-  @Output('psYReachStart'    ) PS_Y_REACH_START       = new EventEmitter<any>();
-  @Output('psXReachEnd'      ) PS_X_REACH_END         = new EventEmitter<any>();
-  @Output('psXReachStart'    ) PS_X_REACH_START       = new EventEmitter<any>();
+  @ViewChild(PerfectScrollbarDirective) directiveRef?: PerfectScrollbarDirective;
 
   constructor(private zone: NgZone, private cdRef: ChangeDetectorRef,
     @Inject(PLATFORM_ID) private platformId: Object) {}
@@ -157,72 +158,72 @@ export class PerfectScrollbarComponent implements OnInit, OnDestroy, DoCheck {
         });
 
       this.zone.runOutsideAngular(() => {
-        const element = this.directiveRef.elementRef.nativeElement;
+        if (this.directiveRef) {
+          const element = this.directiveRef.elementRef.nativeElement;
 
-        fromEvent(element, 'wheel')
-          .pipe(
-            takeUntil(this.ngDestroy)
-          )
-          .subscribe((event: WheelEvent) => {
-            if (!this.disabled && this.autoPropagation) {
-              const scrollDeltaX = event.deltaX;
-              const scrollDeltaY = event.deltaY;
+          fromEvent<WheelEvent>(element, 'wheel')
+            .pipe(
+              takeUntil(this.ngDestroy)
+            )
+            .subscribe((event: WheelEvent) => {
+              if (!this.disabled && this.autoPropagation) {
+                const scrollDeltaX = event.deltaX;
+                const scrollDeltaY = event.deltaY;
 
-              this.checkPropagation(event, scrollDeltaX, scrollDeltaY);
-            }
-          });
+                this.checkPropagation(event, scrollDeltaX, scrollDeltaY);
+              }
+            });
 
-        fromEvent(element, 'touchmove')
-          .pipe(
-            takeUntil(this.ngDestroy)
-          )
-          .subscribe((event: TouchEvent) => {
-            if (!this.disabled && this.autoPropagation) {
-              const scrollPositionX = event.touches[0].clientX;
-              const scrollPositionY = event.touches[0].clientY;
+          fromEvent<TouchEvent>(element, 'touchmove')
+            .pipe(
+              takeUntil(this.ngDestroy)
+            )
+            .subscribe((event: TouchEvent) => {
+              if (!this.disabled && this.autoPropagation) {
+                const scrollPositionX = event.touches[0].clientX;
+                const scrollPositionY = event.touches[0].clientY;
 
-              const scrollDeltaX = scrollPositionX - this.scrollPositionX;
-              const scrollDeltaY = scrollPositionY - this.scrollPositionY;
+                const scrollDeltaX = scrollPositionX - this.scrollPositionX;
+                const scrollDeltaY = scrollPositionY - this.scrollPositionY;
 
-              this.checkPropagation(event, scrollDeltaX, scrollDeltaY);
+                this.checkPropagation(event, scrollDeltaX, scrollDeltaY);
 
-              this.scrollPositionX = scrollPositionX;
-              this.scrollPositionY = scrollPositionY;
-            }
-          });
+                this.scrollPositionX = scrollPositionX;
+                this.scrollPositionY = scrollPositionY;
+              }
+            });
 
-          merge(
-            fromEvent(element, 'ps-scroll-x')
-              .pipe(map((event: any) => event.state = 'x')),
-            fromEvent(element, 'ps-scroll-y')
-              .pipe(map((event: any) => event.state = 'y')),
-            fromEvent(element, 'ps-x-reach-end')
-              .pipe(map((event: any) => event.state = 'right')),
-            fromEvent(element, 'ps-y-reach-end')
-              .pipe(map((event: any) => event.state = 'bottom')),
-            fromEvent(element, 'ps-x-reach-start')
-              .pipe(map((event: any) => event.state = 'left')),
-            fromEvent(element, 'ps-y-reach-start')
-              .pipe(map((event: any) => event.state = 'top')),
-          )
-          .pipe(
-            takeUntil(this.ngDestroy)
-          )
-          .subscribe((event: any) => {
-            if (!this.disabled && (this.autoPropagation || this.scrollIndicators)) {
-              this.stateUpdate.next(event.state);
-            }
-          });
+            merge(
+              fromEvent(element, 'ps-scroll-x')
+                .pipe(map((event: any) => event.state = 'x')),
+              fromEvent(element, 'ps-scroll-y')
+                .pipe(map((event: any) => event.state = 'y')),
+              fromEvent(element, 'ps-x-reach-end')
+                .pipe(map((event: any) => event.state = 'right')),
+              fromEvent(element, 'ps-y-reach-end')
+                .pipe(map((event: any) => event.state = 'bottom')),
+              fromEvent(element, 'ps-x-reach-start')
+                .pipe(map((event: any) => event.state = 'left')),
+              fromEvent(element, 'ps-y-reach-start')
+                .pipe(map((event: any) => event.state = 'top')),
+            )
+            .pipe(
+              takeUntil(this.ngDestroy)
+            )
+            .subscribe((event: any) => {
+              if (!this.disabled && (this.autoPropagation || this.scrollIndicators)) {
+                this.stateUpdate.next(event.state);
+              }
+            });
+        }
       });
 
       window.setTimeout(() => {
-        if (this.directiveRef) {
-          PerfectScrollbarEvents.forEach((eventName: string) => {
-            eventName = eventName.replace(/([A-Z])/g, (c) => `_${c}`).toUpperCase();
-
+        PerfectScrollbarEvents.forEach((eventName: PerfectScrollbarEvent) => {
+          if (this.directiveRef) {
             this.directiveRef[eventName] = this[eventName];
-          });
-        }
+          }
+        });
       }, 0);
     }
   }

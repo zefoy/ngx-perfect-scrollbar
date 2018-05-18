@@ -27,7 +27,10 @@ export class Position {
   }
 }
 
-export const PerfectScrollbarEvents = [
+export type PerfectScrollbarEvent = 'psScrollY' | 'psScrollX' | 'psScrollUp'| 'psScrollDown' |
+  'psScrollLeft' | 'psScrollRight' | 'psYReachEnd' | 'psYReachStart' | 'psXReachEnd' | 'psXReachStart';
+
+export const PerfectScrollbarEvents: PerfectScrollbarEvent[] = [
   'psScrollY',
   'psScrollX',
 
@@ -64,24 +67,24 @@ export interface PerfectScrollbarConfigInterface {
 }
 
 export class PerfectScrollbarConfig implements PerfectScrollbarConfigInterface {
-  public handlers: string[];
+  public handlers?: string[];
 
-  public wheelSpeed: number;
-  public swipeEasing: boolean;
+  public wheelSpeed?: number;
+  public swipeEasing?: boolean;
 
-  public suppressScrollX: boolean;
-  public suppressScrollY: boolean;
+  public suppressScrollX?: boolean;
+  public suppressScrollY?: boolean;
 
-  public wheelPropagation: boolean;
-  public useBothWheelAxes: boolean;
+  public wheelPropagation?: boolean;
+  public useBothWheelAxes?: boolean;
 
-  public scrollingThreshold: number;
+  public scrollingThreshold?: number;
 
-  public minScrollbarLength: number;
-  public maxScrollbarLength: number;
+  public minScrollbarLength?: number;
+  public maxScrollbarLength?: number;
 
-  public scrollXMarginOffset: number;
-  public scrollYMarginOffset: number;
+  public scrollXMarginOffset?: number;
+  public scrollYMarginOffset?: number;
 
   constructor(config: PerfectScrollbarConfigInterface = {}) {
     this.assign(config);
@@ -89,7 +92,7 @@ export class PerfectScrollbarConfig implements PerfectScrollbarConfigInterface {
 
   public assign(config: PerfectScrollbarConfigInterface = {}) {
     for (const key in config) {
-      this[key] = config[key];
+      this[key as keyof PerfectScrollbarConfig] = config[key as keyof PerfectScrollbarConfigInterface];
     }
   }
 }

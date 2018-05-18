@@ -14,42 +14,40 @@ import { NgZone, Inject, Optional, ElementRef, Directive,
 
 import { Geometry, Position } from './perfect-scrollbar.interfaces';
 
-import { PerfectScrollbarEvents, PERFECT_SCROLLBAR_CONFIG } from './perfect-scrollbar.interfaces';
-
-import { PerfectScrollbarConfig, PerfectScrollbarConfigInterface } from './perfect-scrollbar.interfaces';
+import { PERFECT_SCROLLBAR_CONFIG, PerfectScrollbarConfig, PerfectScrollbarConfigInterface,
+  PerfectScrollbarEvent, PerfectScrollbarEvents } from './perfect-scrollbar.interfaces';
 
 @Directive({
   selector: '[perfectScrollbar]',
   exportAs: 'ngxPerfectScrollbar'
 })
 export class PerfectScrollbarDirective implements OnInit, OnDestroy, DoCheck, OnChanges {
-  private ro: any;
-  private instance: any;
+  private instance: PerfectScrollbar | null = null;
 
-  private timeout: number;
+  private ro: ResizeObserver | null = null;
 
-  private configDiff: KeyValueDiffer<string, any>;
+  private timeout: number | null = null;
+
+  private configDiff: KeyValueDiffer<string, any> | null = null;
 
   private readonly ngDestroy: Subject<void> = new Subject();
 
   @Input() disabled: boolean = false;
 
-  @Input('perfectScrollbar') config: PerfectScrollbarConfigInterface;
+  @Input('perfectScrollbar') config?: PerfectScrollbarConfigInterface;
 
-  @Output('psScrollY'        ) PS_SCROLL_Y            = new EventEmitter<any>();
-  @Output('psScrollX'        ) PS_SCROLL_X            = new EventEmitter<any>();
+  @Output() psScrollY: EventEmitter<any> = new EventEmitter<any>();
+  @Output() psScrollX: EventEmitter<any> = new EventEmitter<any>();
 
-  @Output('psScrollUp'       ) PS_SCROLL_UP           = new EventEmitter<any>();
-  @Output('psScrollDown'     ) PS_SCROLL_DOWN         = new EventEmitter<any>();
-  @Output('psScrollLeft'     ) PS_SCROLL_LEFT         = new EventEmitter<any>();
-  @Output('psScrollRight'    ) PS_SCROLL_RIGHT        = new EventEmitter<any>();
+  @Output() psScrollUp: EventEmitter<any> = new EventEmitter<any>();
+  @Output() psScrollDown: EventEmitter<any> = new EventEmitter<any>();
+  @Output() psScrollLeft: EventEmitter<any> = new EventEmitter<any>();
+  @Output() psScrollRight: EventEmitter<any> = new EventEmitter<any>();
 
-  @Output('psYReachEnd'      ) PS_Y_REACH_END         = new EventEmitter<any>();
-  @Output('psYReachStart'    ) PS_Y_REACH_START       = new EventEmitter<any>();
-  @Output('psXReachEnd'      ) PS_X_REACH_END         = new EventEmitter<any>();
-  @Output('psXReachStart'    ) PS_X_REACH_START       = new EventEmitter<any>();
-
-  private emit(event: any) { this[event.type.replace(/-/g, '_').toUpperCase()].emit(event); }
+  @Output() psYReachEnd: EventEmitter<any> = new EventEmitter<any>();
+  @Output() psYReachStart: EventEmitter<any> = new EventEmitter<any>();
+  @Output() psXReachEnd: EventEmitter<any> = new EventEmitter<any>();
+  @Output() psXReachStart: EventEmitter<any> = new EventEmitter<any>();
 
   constructor(private zone: NgZone, private differs: KeyValueDiffers,
     public elementRef: ElementRef, @Inject(PLATFORM_ID) private platformId: Object,
@@ -84,15 +82,17 @@ export class PerfectScrollbarDirective implements OnInit, OnDestroy, DoCheck, On
       });
 
       this.zone.runOutsideAngular(() => {
-        PerfectScrollbarEvents.forEach((eventName: string) => {
+        PerfectScrollbarEvents.forEach((eventName: PerfectScrollbarEvent) => {
           const eventType = eventName.replace(/([A-Z])/g, (c) => `-${c.toLowerCase()}`);
 
-          fromEvent(this.elementRef.nativeElement, eventType)
+          fromEvent<Event>(this.elementRef.nativeElement, eventType)
             .pipe(
               debounceTime(20),
               takeUntil(this.ngDestroy)
             )
-            .subscribe((event: any) => this.emit(event));
+            .subscribe((event: Event) => {
+              this[eventName].emit(event);
+            });
         });
       });
     }
@@ -111,13 +111,13 @@ export class PerfectScrollbarDirective implements OnInit, OnDestroy, DoCheck, On
         window.clearTimeout(this.timeout);
       }
 
-      if (this.instance) {
-        this.zone.runOutsideAngular(() => {
+      this.zone.runOutsideAngular(() => {
+        if (this.instance) {
           this.instance.destroy();
-        });
+        }
+      });
 
-        this.instance = null;
-      }
+      this.instance = null;
     }
   }
 
@@ -145,7 +145,7 @@ export class PerfectScrollbarDirective implements OnInit, OnDestroy, DoCheck, On
     }
   }
 
-  public ps(): any {
+  public ps(): PerfectScrollbar | null {
     return this.instance;
   }
 
@@ -181,10 +181,10 @@ export class PerfectScrollbarDirective implements OnInit, OnDestroy, DoCheck, On
   }
 
   public position(absolute: boolean = false): Position {
-    if (!absolute) {
+    if (!absolute && this.instance) {
       return new Position(
-        this.instance.reach.x,
-        this.instance.reach.y
+        this.instance.reach.x || 0,
+        this.instance.reach.y || 0
       );
     } else {
       return new Position(
@@ -298,7 +298,7 @@ export class PerfectScrollbarDirective implements OnInit, OnDestroy, DoCheck, On
 
       const cosParameter = (oldValue - value) / 2;
 
-      const step = (newTimestamp) => {
+      const step = (newTimestamp: number) => {
         scrollCount += Math.PI / (speed / (newTimestamp - oldTimestamp));
 
         newValue = Math.round(value + cosParameter + cosParameter * Math.cos(scrollCount));
