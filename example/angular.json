@@ -4,8 +4,9 @@
   "newProjectRoot": "src",
   "projects": {
     "app": {
-      "root": "src",
       "prefix": "app",
+      "root": "",
+      "sourceRoot": "src",
       "projectType": "application",
       "architect": {
         "lint": {
