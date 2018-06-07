@@ -27,6 +27,7 @@ export class PerfectScrollbarDirective implements OnInit, OnDestroy, DoCheck, On
   private ro: ResizeObserver | null = null;
 
   private timeout: number | null = null;
+  private animation: number | null = null;
 
   private configDiff: KeyValueDiffer<string, any> | null = null;
 
@@ -281,14 +282,16 @@ export class PerfectScrollbarDirective implements OnInit, OnDestroy, DoCheck, On
   }
 
   private animateScrolling(target: string, value: number, speed?: number): void {
+    if (this.animation) {
+      window.cancelAnimationFrame(this.animation);
+
+      this.animation = null;
+    }
+
     if (!speed || typeof window === 'undefined') {
       const oldValue = this.elementRef.nativeElement[target];
 
       this.elementRef.nativeElement[target] = value;
-
-      if (this.instance && value !== oldValue) {
-        this.instance.update();
-      }
     } else if (value !== this.elementRef.nativeElement[target]) {
       let newValue = 0;
       let scrollCount = 0;
@@ -313,13 +316,9 @@ export class PerfectScrollbarDirective implements OnInit, OnDestroy, DoCheck, On
             // On a zoomed out page the resulting offset may differ
             oldValue = this.elementRef.nativeElement[target];
 
-            if (this.instance) {
-              this.instance.update();
-            }
-
             oldTimestamp = newTimestamp;
 
-            window.requestAnimationFrame(step);
+            this.animation = window.requestAnimationFrame(step);
           }
         }
       };
