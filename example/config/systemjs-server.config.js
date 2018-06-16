@@ -2,7 +2,8 @@
   System.config({
     transpiler: 'ts',
     typescriptOptions: {
-      tsconfig: 'src/tsconfig.json',
+      tsconfig: true,
+      rootDir: null,
       module: 'system'
     },
     meta: {
@@ -17,12 +18,14 @@
       'app': 'src/',
       '@angular/cdk': 'npm:@angular/cdk/bundles/cdk.umd.js',
       '@angular/cdk/bidi': 'npm:@angular/cdk/bundles/cdk-bidi.umd.js',
+      '@angular/cdk/coercion': 'npm:@angular/cdk/bundles/cdk-coercion.umd.js',
       '@angular/core': 'npm:@angular/core/bundles/core.umd.js',
       '@angular/common': 'npm:@angular/common/bundles/common.umd.js',
       '@angular/compiler': 'npm:@angular/compiler/bundles/compiler.umd.js',
       '@angular/flex-layout': 'npm:@angular/flex-layout/bundles/flex-layout.umd.js',
       '@angular/flex-layout/core': 'npm:@angular/flex-layout/bundles/flex-layout-core.umd.js',
       '@angular/flex-layout/flex': 'npm:@angular/flex-layout/bundles/flex-layout-flex.umd.js',
+      '@angular/flex-layout/grid': 'npm:@angular/flex-layout/bundles/flex-layout-grid.umd.js',
       '@angular/flex-layout/extended': 'npm:@angular/flex-layout/bundles/flex-layout-extended.umd.js',
       '@angular/forms': 'npm:@angular/forms/bundles/forms.umd.js',
       '@angular/http': 'npm:@angular/http/bundles/http.umd.js',
