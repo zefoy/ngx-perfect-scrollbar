@@ -1,6 +1,6 @@
 import { Subject, merge, fromEvent } from 'rxjs';
 
-import { map, takeUntil, distinctUntilChanged } from 'rxjs/operators';
+import { mapTo, takeUntil, distinctUntilChanged } from 'rxjs/operators';
 
 import { PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
@@ -195,24 +195,24 @@ export class PerfectScrollbarComponent implements OnInit, OnDestroy, DoCheck {
 
             merge(
               fromEvent(element, 'ps-scroll-x')
-                .pipe(map((event: any) => event.state = 'x')),
+                .pipe(mapTo('x')),
               fromEvent(element, 'ps-scroll-y')
-                .pipe(map((event: any) => event.state = 'y')),
+                .pipe(mapTo('y')),
               fromEvent(element, 'ps-x-reach-end')
-                .pipe(map((event: any) => event.state = 'right')),
+                .pipe(mapTo('right')),
               fromEvent(element, 'ps-y-reach-end')
-                .pipe(map((event: any) => event.state = 'bottom')),
+                .pipe(mapTo('bottom')),
               fromEvent(element, 'ps-x-reach-start')
-                .pipe(map((event: any) => event.state = 'left')),
+                .pipe(mapTo('left')),
               fromEvent(element, 'ps-y-reach-start')
-                .pipe(map((event: any) => event.state = 'top')),
+                .pipe(mapTo('top')),
             )
             .pipe(
               takeUntil(this.ngDestroy)
             )
-            .subscribe((event: any) => {
+            .subscribe((state: string) => {
               if (!this.disabled && (this.autoPropagation || this.scrollIndicators)) {
-                this.stateUpdate.next(event.state);
+                this.stateUpdate.next(state);
               }
             });
         }
