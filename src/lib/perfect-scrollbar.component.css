@@ -159,7 +159,8 @@ perfect-scrollbar > .ps.ps--active-y > .ps__rail-y {
     background-color 200ms linear;
 }
 
-perfect-scrollbar > .ps.ps--active-y > .ps__rail-y:hover {
+perfect-scrollbar > .ps.ps--active-y > .ps__rail-y:hover,
+perfect-scrollbar > .ps.ps--active-y > .ps__rail-y.ps--clicking {
   width: 15px;
 }
 
@@ -178,7 +179,8 @@ perfect-scrollbar > .ps.ps--active-x > .ps__rail-x {
     background-color 200ms linear;
 }
 
-perfect-scrollbar > .ps.ps--active-x > .ps__rail-x:hover {
+perfect-scrollbar > .ps.ps--active-x > .ps__rail-x:hover,
+perfect-scrollbar > .ps.ps--active-x > .ps__rail-x.ps--clicking {
   height: 15px;
 }
 
