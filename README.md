@@ -169,4 +169,4 @@ scrollToBottom(offset?, speed?)        // Animate scroll to given offset from th
 scrollToElement(qs, offset?, speed?)   // Animate scroll to element matching query selectors.
 ```
 
-Above functions can be accessed through the directive reference (available as directiveRef in the component).
+Above functions can be accessed through the directive reference (available as directiveRef in the component). Position and offset needs to be given in pixels and speed in milliseconds.
