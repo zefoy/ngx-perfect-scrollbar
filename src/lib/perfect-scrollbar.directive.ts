@@ -71,7 +71,7 @@ export class PerfectScrollbarDirective implements OnInit, OnDestroy, DoCheck, On
       }
 
       this.zone.runOutsideAngular(() => {
-        this.ro = new ResizeObserver((entries, observer) => {
+        this.ro = new ResizeObserver(() => {
           this.update();
         });
 
@@ -289,8 +289,6 @@ export class PerfectScrollbarDirective implements OnInit, OnDestroy, DoCheck, On
     }
 
     if (!speed || typeof window === 'undefined') {
-      const oldValue = this.elementRef.nativeElement[target];
-
       this.elementRef.nativeElement[target] = value;
     } else if (value !== this.elementRef.nativeElement[target]) {
       let newValue = 0;
