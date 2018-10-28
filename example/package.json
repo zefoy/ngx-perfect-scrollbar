@@ -70,7 +70,6 @@
     "stylelint-config-standard": "^18.2.0",
     "stylelint-order": "^1.0.0",
     "systemjs": "^2.0.0",
-    "tsickle": "^0.33.0",
     "tslint": "^5.11.0",
     "typescript": "^3.1.0",
     "webpack": "^4.22.0",
