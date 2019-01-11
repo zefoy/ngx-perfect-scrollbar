@@ -3,7 +3,6 @@ import PerfectScrollbar from 'perfect-scrollbar';
 import ResizeObserver from 'resize-observer-polyfill';
 
 import { Subject, fromEvent } from 'rxjs';
-
 import { takeUntil, debounceTime } from 'rxjs/operators';
 
 import { PLATFORM_ID } from '@angular/core';

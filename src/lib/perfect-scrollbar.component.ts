@@ -1,5 +1,4 @@
 import { Subject, merge, fromEvent } from 'rxjs';
-
 import { mapTo, takeUntil, distinctUntilChanged } from 'rxjs/operators';
 
 import { PLATFORM_ID } from '@angular/core';

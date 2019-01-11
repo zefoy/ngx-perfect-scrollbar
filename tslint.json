@@ -21,7 +21,7 @@
     "ordered-imports": [
       true,
       {
-        "grouped-imports": true,
+        "grouped-imports": false,
         "import-sources-order": "any",
         "named-imports-order": "any"
       }
