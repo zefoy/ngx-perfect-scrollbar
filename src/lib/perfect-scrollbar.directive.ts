@@ -3,7 +3,7 @@ import PerfectScrollbar from 'perfect-scrollbar';
 import ResizeObserver from 'resize-observer-polyfill';
 
 import { Subject, fromEvent } from 'rxjs';
-import { takeUntil, debounceTime } from 'rxjs/operators';
+import { auditTime, takeUntil } from 'rxjs/operators';
 
 import { PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
@@ -87,7 +87,7 @@ export class PerfectScrollbarDirective implements OnInit, OnDestroy, DoCheck, On
 
           fromEvent<Event>(this.elementRef.nativeElement, eventType)
             .pipe(
-              debounceTime(20),
+              auditTime(20),
               takeUntil(this.ngDestroy)
             )
             .subscribe((event: Event) => {
