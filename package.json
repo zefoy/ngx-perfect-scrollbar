@@ -14,12 +14,12 @@
     "extends": "./stylelint.json"
   },
   "scripts": {
-    "clean": "rm -rf dist bundles",
+    "clean": "rimraf dist bundles",
     "start": "npm run build && npm run bundle",
-    "watch": "watch --wait=5 'npm run start' src/",
+    "watch": "watch --wait=5 \"npm run start\" src/",
     "lint": "npm run lint:ts && npm run lint:css",
     "build": "npm run build:html && npm run build:css && npm run build:js",
-    "bundle": "npm run bundle:es5 ; npm run bundle:umd ; npm run minify:umd",
+    "bundle": "npm run bundle:es5 && npm run bundle:umd && npm run minify:umd",
     "prepare": "npm run clean && npm run build && npm run bundle",
     "lint:ts": "tslint \"src/**/*.ts\"",
     "lint:css": "stylelint \"src/**/*.css\"",
@@ -28,7 +28,7 @@
     "build:html": "cpx src/lib/perfect-scrollbar.component.html dist/lib/",
     "bundle:es5": "rollup -c config/rollup-es5.config.js --silent",
     "bundle:umd": "rollup -c config/rollup-umd.config.js --silent",
-    "minify:umd": "terser bundles/$npm_package_name.umd.js -o bundles/$npm_package_name.umd.min.js --source-map=\"filename=bundles/$npm_package_name.umd.min.js.map\""
+    "minify:umd": "cross-env-shell 'terser bundles/$npm_package_name.umd.js -o bundles/$npm_package_name.umd.min.js --source-map=\"filename=bundles/$npm_package_name.umd.min.js.map\"'"
   },
   "repository": {
     "type": "git",
@@ -50,6 +50,8 @@
     "codelyzer": "^4.5.0",
     "core-js": "^2.6.0",
     "cpx": "^1.5.0",
+    "cross-env": "^5.2.0",
+    "rimraf": "^2.6.3",
     "rollup": "^1.1.0",
     "rollup-plugin-node-resolve": "^4.0.0",
     "rollup-plugin-sourcemaps": "^0.4.0",
