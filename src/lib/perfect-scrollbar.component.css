@@ -88,6 +88,10 @@ perfect-scrollbar > .ps {
   max-height: inherit;
 }
 
+perfect-scrollbar > .ps textarea {
+  -ms-overflow-style: scrollbar;
+}
+
 perfect-scrollbar > .ps > .ps-overlay {
   position: absolute;
   top: 0;
