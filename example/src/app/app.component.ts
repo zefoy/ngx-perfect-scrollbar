@@ -16,8 +16,8 @@ export class AppComponent {
 
   public config: PerfectScrollbarConfigInterface = {};
 
-  @ViewChild(PerfectScrollbarComponent) componentRef?: PerfectScrollbarComponent;
-  @ViewChild(PerfectScrollbarDirective) directiveRef?: PerfectScrollbarDirective;
+  @ViewChild(PerfectScrollbarComponent, { static: false }) componentRef?: PerfectScrollbarComponent;
+  @ViewChild(PerfectScrollbarDirective, { static: false }) directiveRef?: PerfectScrollbarDirective;
 
   constructor() {}
 

@@ -17,7 +17,9 @@
     "curly": true,
     "eofline": true,
     "forin": false,
-    "import-blacklist": false,
+    "import-blacklist": [
+      true
+    ],
     "ordered-imports": [
       true,
       {
@@ -65,7 +67,7 @@
     "no-eval": true,
     "no-inferrable-types": false,
     "no-misused-new": true,
-    "no-non-null-assertion": true,
+    "no-non-null-assertion": false,
     "no-shadowed-variable": true,
     "no-string-literal": false,
     "no-string-throw": true,
@@ -124,14 +126,17 @@
       "camelCase"
     ],
     "component-selector": [
-      false
+      true,
+      "element",
+      false,
+      "kebab-case"
     ],
-    "use-input-property-decorator": true,
-    "use-output-property-decorator": true,
-    "use-host-property-decorator": true,
+    "no-inputs-metadata-property": true,
+    "no-outputs-metadata-property": true,
+    "no-host-metadata-property": true,
     "no-input-rename": false,
     "no-output-rename": false,
-    "use-life-cycle-interface": true,
+    "use-lifecycle-interface": true,
     "use-pipe-transform-interface": true,
     "component-class-suffix": false,
     "directive-class-suffix": false
