@@ -3,7 +3,7 @@
   "description": "Angular wrapper library for Perfect Scrollbar",
   "bugs": "https://github.com/zefoy/ngx-perfect-scrollbar/issues",
   "license": "MIT",
-  "version": "8.0.0",
+  "version": "9.0.0",
   "main": "./bundles/ngx-perfect-scrollbar.umd.js",
   "module": "./dist/ngx-perfect-scrollbar.es5.js",
   "typings": "./dist/ngx-perfect-scrollbar.d.ts",
@@ -28,7 +28,8 @@
     "build:html": "cpx src/lib/perfect-scrollbar.component.html dist/lib/",
     "bundle:es5": "rollup -c config/rollup-es5.config.js --silent",
     "bundle:umd": "rollup -c config/rollup-umd.config.js --silent",
-    "minify:umd": "terser bundles/$npm_package_name.umd.js -o bundles/$npm_package_name.umd.min.js --source-map=\"filename=bundles/$npm_package_name.umd.min.js.map\""
+    "minify:umd": "terser bundles/$npm_package_name.umd.js -o bundles/$npm_package_name.umd.min.js --source-map=\"filename=bundles/$npm_package_name.umd.min.js.map\"",
+    "prepublishOnly": "node --eval \"console.error('ERROR: Trying to publish a package that has been compiled by NGCC. This is not allowed.\\nPlease delete and rebuild the package, without compiling with NGCC, before attempting to publish.\\nNote that NGCC may have been run by importing this package into another project that is being built with Ivy enabled.\\n')\" && exit 1"
   },
   "repository": {
     "type": "git",
@@ -39,34 +40,43 @@
     "resize-observer-polyfill": "^1.5.0"
   },
   "devDependencies": {
-    "@angular/cli": "^8.0.0",
-    "@angular/common": "^8.0.0",
-    "@angular/compiler": "^8.0.0",
-    "@angular/compiler-cli": "^8.0.0",
-    "@angular/core": "^8.0.0",
-    "@angular/platform-browser": "^8.0.0",
-    "@angular-devkit/build-angular": "^0.800.0",
+    "@angular/cli": "^9.0.0-rc.6",
+    "@angular/common": "^9.0.0-rc.6",
+    "@angular/compiler": "^9.0.0-rc.6",
+    "@angular/compiler-cli": "^9.0.0-rc.6",
+    "@angular/core": "^9.0.0-rc.6",
+    "@angular/platform-browser": "^9.0.0-rc.6",
+    "@angular-devkit/build-angular": "^0.900.0-rc.6",
     "@types/node": "^12.0.0",
-    "codelyzer": "^5.1.0",
-    "core-js": "^3.1.0",
+    "codelyzer": "^5.2.0",
+    "core-js": "^3.6.0",
     "cpx": "^1.5.0",
-    "rollup": "^1.14.0",
-    "rollup-plugin-node-resolve": "^5.0.0",
+    "rollup": "^1.27.0",
+    "rollup-plugin-node-resolve": "^5.2.0",
     "rollup-plugin-sourcemaps": "^0.4.0",
     "rxjs": "^6.5.0",
-    "stylelint": "^10.1.0",
-    "stylelint-config-standard": "^18.3.0",
-    "stylelint-order": "^3.0.0",
-    "terser": "^4.0.0",
-    "tsickle": "^0.35.0",
-    "tslint": "^5.17.0",
-    "typescript": "~3.4.0",
+    "stylelint": "^12.0.0",
+    "stylelint-config-standard": "^19.0.0",
+    "stylelint-order": "^3.1.0",
+    "terser": "^4.4.0",
+    "tsickle": "^0.37.0",
+    "tslint": "^5.20.0",
+    "typescript": "~3.6.0",
     "watch": "^1.0.0",
-    "zone.js": "^0.9.0"
+    "zone.js": "^0.10.0"
   },
   "peerDependencies": {
     "@angular/common": ">=5.0.0",
     "@angular/core": ">=5.0.0",
     "rxjs": ">=6.0.0"
+  },
+  "__processed_by_ivy_ngcc__": {
+    "fesm2015": "9.0.0-rc.7",
+    "fesm5": "9.0.0-rc.7",
+    "es2015": "9.0.0-rc.7",
+    "esm2015": "9.0.0-rc.7",
+    "esm5": "9.0.0-rc.7",
+    "main": "9.0.0-rc.7",
+    "module": "9.0.0-rc.7"
   }
 }

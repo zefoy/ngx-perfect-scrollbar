@@ -3,6 +3,10 @@
   "compilerOptions": {
     "outDir": "../dist"
   },
+  "files": [
+    "main.ts",
+    "polyfills.ts"
+  ],
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true
   }

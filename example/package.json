@@ -3,7 +3,7 @@
   "description": "Example app for the ngx-perfect-scrollbar",
   "private": true,
   "license": "MIT",
-  "version": "8.0.0",
+  "version": "9.0.0",
   "tslint": {
     "extends": "./tslint.json"
   },
@@ -32,31 +32,31 @@
     }
   },
   "dependencies": {
-    "@angular/cdk": "^8.0.0",
-    "@angular/common": "^8.0.0",
-    "@angular/compiler": "^8.0.0",
-    "@angular/core": "^8.0.0",
-    "@angular/flex-layout": "8.0.0-beta.26",
-    "@angular/platform-browser": "^8.0.0",
-    "@angular/platform-browser-dynamic": "^8.0.0",
-    "core-js": "^3.1.0",
+    "@angular/cdk": "^9.0.0-rc.5",
+    "@angular/common": "^9.0.0-rc.6",
+    "@angular/compiler": "^9.0.0-rc.6",
+    "@angular/core": "^9.0.0-rc.6",
+    "@angular/flex-layout": "8.0.0-beta.27",
+    "@angular/platform-browser": "^9.0.0-rc.6",
+    "@angular/platform-browser-dynamic": "^9.0.0-rc.6",
+    "core-js": "^3.6.0",
     "ngx-perfect-scrollbar": "^8.0.0",
     "resize-observer-polyfill": "^1.5.0",
     "rxjs": "^6.5.0",
-    "zone.js": "^0.9.0"
+    "zone.js": "^0.10.0"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "^0.800.0",
-    "@angular/cli": "^8.0.0",
-    "@angular/compiler-cli": "^8.0.0",
-    "@ngtools/webpack": "^8.0.0",
-    "@types/node": "^12.0.0",
-    "codelyzer": "^5.1.0",
+    "@angular-devkit/build-angular": "^0.900.0-rc.6",
+    "@angular/cli": "^9.0.0-rc.6",
+    "@angular/compiler-cli": "^9.0.0-rc.6",
+    "@ngtools/webpack": "^9.0.0-rc.6",
+    "@types/node": "^12.12.0",
+    "codelyzer": "^5.2.0",
     "deploy-to-git": "^0.1.0",
-    "stylelint": "^10.1.0",
-    "stylelint-config-standard": "^18.3.0",
-    "stylelint-order": "^3.0.0",
-    "tslint": "^5.17.0",
-    "typescript": "~3.4.0"
+    "stylelint": "^12.0.0",
+    "stylelint-config-standard": "^19.0.0",
+    "stylelint-order": "^3.1.0",
+    "tslint": "^5.20.0",
+    "typescript": "~3.6.0"
   }
 }
