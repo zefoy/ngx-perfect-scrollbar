@@ -18,24 +18,14 @@ This documentation is for the latest 5/6.x.x version which requires Angular 5 or
 
 ```bash
 npm install
-npm start
+npm run build
 ```
 
 ### Running the example
 
 ```bash
-cd example
 npm install
-npm start
-```
-
-### Library development
-
-
-```bash
-npm link
-cd example
-npm link ngx-perfect-scrollbar
+npm run start
 ```
 
 ### Installing and usage
