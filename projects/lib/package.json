@@ -1,0 +1,12 @@
+{
+  "name": "ngx-perfect-scrollbar",
+  "description": "Angular wrapper library for Perfect Scrollbar",
+  "bugs": "https://github.com/zefoy/ngx-perfect-scrollbar/issues",
+  "version": "9.0.0-1",
+  "license": "MIT",
+  "peerDependencies": {
+    "@angular/common": "^9.0.0",
+    "@angular/core": "^9.0.0",
+    "tslib": "^1.10.0"
+  }
+}
