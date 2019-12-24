@@ -4,6 +4,10 @@
   "bugs": "https://github.com/zefoy/ngx-perfect-scrollbar/issues",
   "version": "9.0.0-2",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zefoy/ngx-perfect-scrollbar.git"
+  },
   "dependencies": {
     "perfect-scrollbar": "^1.4.0"
   },
