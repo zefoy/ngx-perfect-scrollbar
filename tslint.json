@@ -128,8 +128,7 @@
     "component-selector": [
       true,
       "element",
-      false,
-      "kebab-case"
+      false
     ],
     "no-inputs-metadata-property": true,
     "no-outputs-metadata-property": true,
