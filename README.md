@@ -6,6 +6,10 @@ This is an Angular wrapper library for the [Perfect Scrollbar](https://utatti.gi
 
 This documentation is for the latest 5/6.x.x version which requires Angular 5 or newer. For Angular 4 you need to use the latest 4.x.x version. Documentation for the 4.x.x can be found from <a href="https://github.com/zefoy/ngx-perfect-scrollbar/tree/4.x.x/">here</a>.
 
+### EOL Notice
+
+Version 10.0.0 will most likely be the last release of this library. I recommend you to switch to using native Angular scrollbar libraries such as ngx-scrollbar. 
+
 ### Quick links
 
 [Example application](https://zefoy.github.io/ngx-perfect-scrollbar/)
