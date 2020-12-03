@@ -254,9 +254,7 @@ export class PerfectScrollbarDirective implements OnInit, OnDestroy, DoCheck, On
     this.animateScrolling('scrollTop', top - (offset || 0), speed);
   }
 
-  public scrollToElement(qs: string, offset?: number, speed?: number): void {
-    const element = this.elementRef.nativeElement.querySelector(qs);
-
+  public scrollToHtmlElement(element: HTMLElement, offset?: number, speed?: number): void {
     if (element) {
       const elementPos = element.getBoundingClientRect();
 
@@ -278,6 +276,11 @@ export class PerfectScrollbarDirective implements OnInit, OnDestroy, DoCheck, On
         this.animateScrolling('scrollTop', position + (offset || 0), speed);
       }
     }
+  }
+
+  public scrollToElement(qs: string, offset?: number, speed?: number): void {
+    const element = this.elementRef.nativeElement.querySelector(qs);
+    this.scrollToHtmlElement(element, offset, speed);
   }
 
   private animateScrolling(target: string, value: number, speed?: number): void {
