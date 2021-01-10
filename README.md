@@ -160,7 +160,8 @@ scrollToTop(offset?, speed?)                // Animate scroll to given offset fr
 scrollToLeft(offset?, speed?)               // Animate scroll to given offset from the left.
 scrollToRight(offset?, speed?)              // Animate scroll to given offset from the right.
 scrollToBottom(offset?, speed?)             // Animate scroll to given offset from the bottom.
-scrollToElement(element, offset?, speed?)   // Animate scroll to element (accepts an element or a query selector string).
+scrollToElement(element, offset?, speed?)   // Animate scroll to given or matching HTML element.
+                                            // Input can be HTMLElement or a query selector string.
 ```
 
 Above functions can be accessed through the directive reference (available as directiveRef in the component). Position and offset needs to be given in pixels and speed in milliseconds.
