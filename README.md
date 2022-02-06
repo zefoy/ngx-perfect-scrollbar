@@ -8,7 +8,7 @@ This documentation is for the latest 5/6.x.x version which requires Angular 5 or
 
 ### EOL Notice
 
-Version 10.0.0 will most likely be the last release of this library. I recommend you to switch to using native Angular scrollbar libraries such as ngx-scrollbar. 
+Version 10.0.0 will be the last release of this library. I recommend you to switch to using native Angular scrollbar libraries such as ngx-scrollbar. 
 
 ### Quick links
 
