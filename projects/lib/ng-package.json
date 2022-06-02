@@ -8,7 +8,7 @@
       "resize-observer-polyfill": "ResizeObserver"
     }
   },
-  "whitelistedNonPeerDependencies": [
+  "allowedNonPeerDependencies": [
     "perfect-scrollbar",
     "resize-observer-polyfill"
   ]
