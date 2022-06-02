@@ -43,11 +43,11 @@
     "@angular/common": "^11.2.14",
     "@angular/compiler": "^11.2.14",
     "@angular/core": "^11.2.14",
-    "@angular/flex-layout": "10.0.0-beta.32",
+    "@angular/flex-layout": "13.0.0-beta.38",
     "@angular/platform-browser": "^11.2.14",
     "@angular/platform-browser-dynamic": "^11.2.14",
-    "perfect-scrollbar": "^1.5.0",
-    "resize-observer-polyfill": "^1.5.0"
+    "perfect-scrollbar": "^1.5.5",
+    "resize-observer-polyfill": "^1.5.1"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^0.1102.19",
