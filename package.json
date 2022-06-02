@@ -1,10 +1,10 @@
 {
-  "name": "ngx-perfect-scrollbar",
-  "description": "Angular wrapper library for Perfect Scrollbar",
-  "bugs": "https://github.com/zefoy/ngx-perfect-scrollbar/issues",
-  "version": "10.1.1",
+  "name": "perfect-scrollbar-angular",
+  "description": "Angular 13 wrapper library for Perfect Scrollbar",
+  "bugs": "https://github.com/gethari/ngx-perfect-scrollbar/issues",
+  "version": "13.0.0",
   "license": "MIT",
-  "private": true,
+  "private": false,
   "scripts": {
     "ng": "ng",
     "lint": "ng lint",
@@ -23,18 +23,18 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/zefoy/ngx-perfect-scrollbar.git"
+    "url": "https://github.com/gethari/ngx-perfect-scrollbar.git"
   },
   "config": {
     "deployToGit": {
-      "repository": "git@github.com:zefoy/ngx-perfect-scrollbar.git",
+      "repository": "git@github.com:gethari/ngx-perfect-scrollbar.git",
       "branch": "gh-pages",
       "folder": "dist/app",
       "script": "ng build app --prod -- --base-href=ngx-perfect-scrollbar --delete-output-path=false",
       "commit": "Publishing $npm_package_version",
       "user": {
-        "name": "ZEF Devel",
-        "email": "devel@zef.fi"
+        "name": "HariHaran Subramanian",
+        "email": "hharan618@gmail.com"
       }
     }
   },
