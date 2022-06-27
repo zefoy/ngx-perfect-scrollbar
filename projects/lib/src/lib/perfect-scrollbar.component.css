@@ -63,7 +63,7 @@ perfect-scrollbar[fxlayout] > .ps > .ps-content {
 }
 
 perfect-scrollbar[fxlayout='row'] > .ps,
-perfect-scrollbar[fxlayout='row'] > .ps > .ps-content, {
+perfect-scrollbar[fxlayout='row'] > .ps > .ps-content {
   flex-direction: row !important;
 
   -webkit-box-direction: row !important;

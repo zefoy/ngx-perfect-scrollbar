@@ -1,17 +1,17 @@
 {
-  "name": "ngx-perfect-scrollbar",
-  "description": "Angular wrapper library for Perfect Scrollbar",
-  "bugs": "https://github.com/zefoy/ngx-perfect-scrollbar/issues",
-  "version": "10.1.1",
+  "name": "perfect-scrollbar-angular",
+  "description": "Angular 13 wrapper library for Perfect Scrollbar",
+  "bugs": "https://github.com/gethari/ngx-perfect-scrollbar/issues",
+  "version": "13.0.0",
   "license": "MIT",
-  "private": true,
+  "private": false,
   "scripts": {
     "ng": "ng",
     "lint": "ng lint",
     "start": "ng serve app",
     "build": "ng build lib",
     "deploy": "deploy-to-git",
-    "prepare": "ng build lib --prod",
+    "prepare": "ng build lib --configuration production",
     "publish": "npm publish ./dist/lib",
     "predeploy": "rimraf ./dist/app && mkdirp ./dist/app"
   },
@@ -23,55 +23,54 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/zefoy/ngx-perfect-scrollbar.git"
+    "url": "https://github.com/gethari/ngx-perfect-scrollbar.git"
   },
   "config": {
     "deployToGit": {
-      "repository": "git@github.com:zefoy/ngx-perfect-scrollbar.git",
+      "repository": "git@github.com:gethari/ngx-perfect-scrollbar.git",
       "branch": "gh-pages",
       "folder": "dist/app",
       "script": "ng build app --prod -- --base-href=ngx-perfect-scrollbar --delete-output-path=false",
       "commit": "Publishing $npm_package_version",
       "user": {
-        "name": "ZEF Devel",
-        "email": "devel@zef.fi"
+        "name": "HariHaran Subramanian",
+        "email": "hharan618@gmail.com"
       }
     }
   },
   "dependencies": {
-    "@angular/cdk": "^10.0.0",
-    "@angular/common": "^10.0.0",
-    "@angular/compiler": "^10.0.0",
-    "@angular/core": "^10.0.0",
-    "@angular/flex-layout": "10.0.0-beta.32",
-    "@angular/platform-browser": "^10.0.0",
-    "@angular/platform-browser-dynamic": "^10.0.0",
-    "perfect-scrollbar": "^1.5.0",
-    "resize-observer-polyfill": "^1.5.0"
+    "@angular/cdk": "^13.3.8",
+    "@angular/common": "^13.3.11",
+    "@angular/compiler": "^13.3.11",
+    "@angular/core": "^13.3.11",
+    "@angular/flex-layout": "13.0.0-beta.38",
+    "@angular/platform-browser": "^13.3.11",
+    "@angular/platform-browser-dynamic": "^13.3.11",
+    "perfect-scrollbar": "^1.5.5",
+    "resize-observer-polyfill": "^1.5.1"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "^0.1000.0",
-    "@angular-devkit/build-ng-packagr": "^0.1000.0",
-    "@angular/cli": "^10.0.0",
-    "@angular/compiler-cli": "^10.0.0",
+    "@angular-devkit/build-angular": "^13.3.7",
+    "@angular/cli": "^13.3.7",
+    "@angular/compiler-cli": "^13.3.11",
     "@types/node": "^12.12.0",
-    "codelyzer": "^6.0.0",
+    "codelyzer": "^6.0.2",
     "core-js": "^3.6.0",
     "cpx": "^1.5.0",
-    "deploy-to-git": "^0.1.0",
+    "deploy-to-git": "^0.1.11",
     "mkdirp": "^1.0.0",
-    "ng-packagr": "^10.0.0",
+    "ng-packagr": "^13.3.1",
     "rimraf": "^3.0.0",
     "rxjs": "^6.6.0",
-    "stylelint": "^13.6.0",
+    "stylelint": "^14.8.5",
     "stylelint-config-standard": "^20.0.0",
     "stylelint-order": "^4.1.0",
     "terser": "^5.0.0",
     "ts-node": "^8.10.0",
     "tsickle": "^0.39.0",
     "tslint": "^6.1.0",
-    "typescript": "~3.9.0",
+    "typescript": "~4.6.4",
     "watch": "^1.0.0",
-    "zone.js": "^0.10.0"
+    "zone.js": "^0.11.5"
   }
 }

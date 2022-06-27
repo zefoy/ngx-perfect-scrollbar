@@ -8,3 +8,4 @@ node_modules/
 example/dist/
 example/npm-debug.log
 example/node_modules/
+.angular
