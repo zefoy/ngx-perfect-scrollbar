@@ -34,7 +34,7 @@ npm run start
 ### Installing and usage
 
 ```bash
-npm install ngx-perfect-scrollbar --save
+npm install perfect-scrollbar-angular
 ```
 
 ##### Load the module for your app (with global configuration):
