@@ -46,7 +46,7 @@
     "@angular/flex-layout": "10.0.0-beta.32",
     "@angular/platform-browser": "^10.0.0",
     "@angular/platform-browser-dynamic": "^10.0.0",
-    "perfect-scrollbar": "^1.5.0",
+    "perfect-scrollbar": "^1.5.5",
     "resize-observer-polyfill": "^1.5.0"
   },
   "devDependencies": {
