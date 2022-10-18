@@ -42,7 +42,7 @@
     "@angular/cdk": "^10.0.0",
     "@angular/common": "^10.0.0",
     "@angular/compiler": "^10.0.0",
-    "@angular/core": "^10.0.0",
+    "@angular/core": "^11.0.5",
     "@angular/flex-layout": "10.0.0-beta.32",
     "@angular/platform-browser": "^10.0.0",
     "@angular/platform-browser-dynamic": "^10.0.0",
