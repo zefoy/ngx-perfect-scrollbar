@@ -1,3 +1,7 @@
+# Update July 2023
+
+13.0.1, will shortly update the lib to support Angular 14,15 & 16
+
 # Update June 2022
 
 This fork of the lib is updated to support the latest version of `Angular 13`

@@ -2,7 +2,7 @@
   "name": "perfect-scrollbar-angular",
   "description": "Angular 13 wrapper library for Perfect Scrollbar",
   "bugs": "https://github.com/gethari/ngx-perfect-scrollbar/issues",
-  "version": "13.0.0",
+  "version": "13.0.1",
   "license": "MIT",
   "private": false,
   "scripts": {
